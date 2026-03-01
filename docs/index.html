@@ -563,6 +563,34 @@
         </div>
     </section>
 
+    <!-- ── Why ─────────────────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">The Core Insight</div>
+                <h2 class="section-title">Not More Intelligence — Better Infrastructure</h2>
+                <p class="section-subtitle">Claude is already smart. What it lacks is structure, memory, and habits.</p>
+            </div>
+            <div class="why-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 900px; margin: 0 auto;">
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">🧠</div>
+                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Memory</h4>
+                    <p style="color: var(--text-muted); font-size: 13px;">Decisions, context, and preferences persist across sessions — not just within one.</p>
+                </div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Habits</h4>
+                    <p style="color: var(--text-muted); font-size: 13px;">Skills encode your best workflows. No more re-explaining the same steps every time.</p>
+                </div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">🔄</div>
+                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Quality Loops</h4>
+                    <p style="color: var(--text-muted); font-size: 13px;">The Evaluator-Optimizer pattern catches issues that single-pass generation misses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── Architecture ──────────────────────────── -->
     <section class="section">
         <div class="container">
@@ -726,6 +754,45 @@
                 <div class="section-label">The Bigger Picture</div>
                 <h2 class="section-title">This Is Just the Foundation</h2>
                 <p class="section-subtitle">The starter kit gives you the building blocks. The full system goes much deeper.</p>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 40px; overflow-x: auto;">
+                <pre style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--text-muted); margin: 0; white-space: pre; overflow-x: auto;"><span style="color: var(--text);">YOU:</span> "Analyze the market data and write a summary"
+          │
+          ▼
+┌──────────────────────────────────────────────────────────┐
+│  <span style="color: var(--blue);">🧠 CLAUDE.md — THE ORCHESTRATOR BRAIN</span>                    │
+│                                                          │
+│  <span style="color: var(--text);">Routing Rules</span>  ·  <span style="color: var(--text);">User Patterns</span>  ·  <span style="color: var(--text);">Workflow Chains</span>  │
+│  100+ mappings     learned prefs     15+ sequences       │
+│                                                          │
+│  matches "analyze" + "write" → chain: analyze → express  │
+└─────────────────────────┬────────────────────────────────┘
+                          │
+                          ▼
+┌──────────────────────────────────────────────────────────┐
+│  <span style="color: var(--green);">⚡ SKILLS</span> (20+ in full system, 6 in starter kit)         │
+│                                                          │
+│  <span style="color: var(--accent);">capture  distill  express  analyze  signal-check  handoff</span>│
+│  <span style="color: var(--text-muted);">research  decide  innovate  strategy  ...14+ more</span>       │
+│                                                          │
+│  Each skill = SKILL.md with workflow, rules, format      │
+└────────────┬─────────────────────┬───────────────────────┘
+             │                     │
+             ▼                     ▼
+┌─────────────────┐  ┌─────────────────┐  ┌────────────────┐
+│ <span style="color: var(--accent);">💾 SHORT-TERM</span>   │  │ <span style="color: var(--blue);">📋 MID-TERM</span>    │  │ <span style="color: var(--purple);">🏛️ LONG-TERM</span>   │
+│ Context window  │  │ Routing log    │  │ CLAUDE.md      │
+│ 1 session       │  │ Handoff files  │  │ memory/        │
+│                 │  │ Weeks–months   │  │ Permanent      │
+└─────────────────┘  └────────────────┘  └──────┬─────────┘
+                                                │
+                                   ┌────────────┴────────────┐
+                                   ▼                         ▼
+                        ┌──────────────────┐   ┌───────────────────┐
+                        │ <span style="color: var(--purple);">🟣 Obsidian</span>       │   │ <span style="color: var(--orange);">🗃️ SQLite DB</span>       │
+                        │ Your notes =     │   │ Research items,   │
+                        │ Claude's KB      │   │ datasets, stats   │
+                        └──────────────────┘   └───────────────────┘</pre>
             </div>
             <table class="comparison-table">
                 <thead>
