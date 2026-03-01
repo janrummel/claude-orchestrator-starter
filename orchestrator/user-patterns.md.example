@@ -1,0 +1,28 @@
+# User Patterns — Learned Preferences
+
+> This file captures your personal preferences and vocabulary.
+> Claude reads it at session start and adapts accordingly.
+> Update it as you discover what works for you.
+
+## Communication Style
+- Preferred language: [English / Deutsch / ...]
+- Tone: [Direct / Conversational / Formal]
+- Detail level: [Concise / Thorough / Depends on topic]
+
+## Vocabulary Mappings
+<!-- Map your personal shorthand to system actions -->
+| You say | Claude understands |
+|---------|-------------------|
+| "note this" | → invoke `capture` skill |
+| "check this" | → invoke `signal-check` skill |
+| "wrap up" | → invoke `handoff` skill |
+
+## Routing Corrections
+<!-- Log corrections here so Claude learns from mistakes -->
+<!-- Example: -->
+<!-- - 2026-03-01: Said "review this" → Claude routed to code review, but I meant quality check → signal-check -->
+
+## Preferences
+- [ ] Always suggest next skills after output
+- [ ] Auto-save to Obsidian when capturing
+- [ ] Prefer tables over bullet lists for comparisons

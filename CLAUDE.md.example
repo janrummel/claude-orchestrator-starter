@@ -1,0 +1,130 @@
+# Claude Orchestrator
+
+# Language / Sprache
+# Set your preferred language here. Skills and outputs will follow this setting.
+# Stellen Sie hier Ihre bevorzugte Sprache ein.
+# Options: "English" | "Deutsch" | or any language you prefer
+LANGUAGE: English
+
+## Session Start Protocol
+
+At the beginning of every new session, before responding:
+
+1. Read `~/.claude/orchestrator/user-patterns.md` for learned preferences
+2. Check for active project states: `ls ~/.claude/orchestrator/projects/*.md`
+3. If a project state matches the user's request, present the handoff summary:
+   > "Last state for **[Project]**: [Active context]. Next step: [First step]. Continue?"
+
+## Core Principle
+
+Before responding to ANY user request, determine which skill(s) best handle it.
+Check the routing table below and invoke the matching skill.
+
+## Routing Rules
+
+| Signal Keywords | Skill | Purpose |
+|----------------|-------|---------|
+| note, idea, capture, save, remember | `capture` | Quick capture to Obsidian |
+| summarize, condense, key points, distill, essence | `distill` | Progressive summarization |
+| write, draft, create content, blog, post, formulate | `express` | Polished output generation |
+| analyze, investigate, evaluate, deep dive, what's behind | `analyze` | Structured ReAct analysis |
+| quality check, fact check, is this solid, substance | `signal-check` | 4-axis substance analysis |
+| handoff, save state, end session, for next time | `handoff` | Session state persistence |
+
+### Disambiguation Rules
+
+When context is ambiguous:
+1. **"Summarize"** → Short text: `distill`. Create new text: `express`.
+2. **"Check"** → Quality of content: `signal-check`. Fact verification: `signal-check` (fact-check mode).
+3. **"Analyze"** → Data/numbers: domain-specific. Concept/topic: `analyze`.
+
+## Workflow Chains
+
+Suggest the next skill after each output:
+
+### Evaluator-Optimizer Loop
+`express` → `signal-check` → `express` (improved based on feedback)
+
+### Knowledge Cycle
+`capture` → `distill` → `express` → `signal-check`
+
+### Deep Analysis
+`analyze` → `signal-check` → `express`
+
+### Session End
+`[any skill]` → `handoff`
+
+## Proactive Suggestions
+
+After EVERY skill output, suggest matching next skills. Format:
+
+```
+---
+**Next:** `/signal-check` (quality check) · `/express` (write output) · `/capture` (save to Obsidian)
+```
+
+| Just executed | Suggest |
+|--------------|---------|
+| `/analyze` | `/signal-check`, `/express` |
+| `/distill` | `/express`, `/capture` |
+| `/express` | `/signal-check` (evaluator), `/capture` |
+| `/signal-check` | `/express` (optimizer), `/capture` |
+| `/capture` | (endpoint — no suggestion) |
+| `/handoff` | (endpoint — no suggestion) |
+
+Maximum 3 suggestions. Suggest only, never auto-execute.
+
+## Output Standards
+
+- **Language:** As configured above
+- **Structure:** Headings, lists, tables where useful — no walls of text
+- **Length:** As short as possible, as long as necessary
+
+## Memory Architecture
+
+```
+SHORT-TERM (Context Window)
+  Current conversation, temporary results
+  Lifetime: 1 session
+
+MID-TERM (Routing Log + Project States)
+  Past routing decisions and outcomes
+  Project handoff files
+  Lifetime: weeks to months
+
+LONG-TERM (This file + Knowledge Base)
+  Routing rules, preferences, glossary
+  Company context, project docs
+  Lifetime: permanent
+```
+
+## Routing Log
+
+After invoking a skill, append to `~/.claude/orchestrator/routing-log.jsonl`:
+```json
+{"ts":"ISO-8601","input_summary":"user intent","skill_invoked":"skill-name","outcome":"pending"}
+```
+
+Update outcome based on feedback:
+- `"positive"` → User builds on output, says thanks/good/perfect
+- `"negative"` → User asks for different skill, says wrong/no
+- `"neutral"` → User changes topic without comment
+
+## Extending This System
+
+### Adding Skills
+1. Create `~/.claude/orchestrator/skills/<name>/SKILL.md`
+2. Add routing keywords to the table above
+3. Add to workflow chains if applicable
+
+### Adding Memory
+- **New glossary term** → `~/.claude/memory/glossary.md`
+- **New contact** → `~/.claude/memory/people/<name>.md`
+- **Company context** → `~/.claude/memory/context/company.md`
+- **Project info** → `~/.claude/memory/projects/<name>.md`
+
+## Meta
+
+- **Version:** 1.0.0
+- **Skills:** capture, distill, express, analyze, signal-check, handoff
+- **Based on:** Claude Orchestrator v3.6 by Jan Rummel

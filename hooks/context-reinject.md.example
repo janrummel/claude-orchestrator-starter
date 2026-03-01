@@ -1,0 +1,10 @@
+# Context Re-Injection — Core Rules
+
+These rules ALWAYS apply, even after context compression:
+
+1. **Routing:** Before every response, check which skill fits (CLAUDE.md routing rules)
+2. **Language:** As configured in CLAUDE.md
+3. **Memory:** Check existing knowledge before external research
+4. **Paths:** Skills in `~/.claude/orchestrator/skills/`, Memory in `~/.claude/memory/`
+5. **Logging:** Log every skill usage to routing log
+6. **Evaluator-Optimizer:** After larger outputs suggest `/signal-check`

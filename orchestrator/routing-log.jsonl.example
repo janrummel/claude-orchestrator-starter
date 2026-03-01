@@ -1,0 +1,4 @@
+{"ts":"2026-03-01T10:00:00Z","input_summary":"user asked to summarize article","skill_invoked":"distill","outcome":"positive"}
+{"ts":"2026-03-01T10:15:00Z","input_summary":"user asked to write LinkedIn post","skill_invoked":"express","outcome":"positive"}
+{"ts":"2026-03-01T10:30:00Z","input_summary":"user asked to check quality of draft","skill_invoked":"signal-check","outcome":"positive"}
+{"ts":"2026-03-01T11:00:00Z","input_summary":"user ending session","skill_invoked":"handoff","outcome":"positive"}

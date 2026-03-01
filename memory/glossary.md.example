@@ -1,0 +1,23 @@
+# Glossary
+
+> Domain terms, abbreviations, and jargon that Claude should know.
+
+## General
+| Term | Meaning |
+|------|---------|
+| PARA | Projects, Areas, Resources, Archive — organization method |
+| Second Brain | Personal knowledge management system |
+| PKM | Personal Knowledge Management |
+
+## Your Domain
+<!-- Add terms specific to your work here -->
+| Term | Meaning |
+|------|---------|
+| | |
+
+## Tools & Tech
+| Term | Meaning |
+|------|---------|
+| Claude Code | Anthropic's CLI coding assistant |
+| MCP | Model Context Protocol — connects Claude to external tools |
+| Obsidian | Markdown-based note-taking app |
