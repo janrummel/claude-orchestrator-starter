@@ -1,0 +1,16 @@
+#!/bin/bash
+# Session Start Hook — Context Essentials
+# Injects minimal context at every session start.
+# Output is delivered as a system message to Claude.
+
+# Customize the values below for your setup:
+USER_NAME="Your Name"
+USER_ROLE="Your Role"
+USER_INDUSTRY="Your Industry"
+SKILLS="capture, distill, express, analyze, signal-check, handoff"
+
+cat <<EOF
+{
+  "systemMessage": "Session context loaded. ${USER_NAME} is a ${USER_ROLE} in ${USER_INDUSTRY}. Available skills: ${SKILLS}. Project states: ~/.claude/orchestrator/projects/. Memory: ~/.claude/memory/."
+}
+EOF

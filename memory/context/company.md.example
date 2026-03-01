@@ -1,0 +1,24 @@
+# Company & Role Context
+
+> Your professional context. Claude uses this to understand your work environment.
+
+## About You
+- **Name:** [Your name]
+- **Role:** [Your current role]
+- **Company:** [Company name]
+- **Industry:** [Your industry]
+- **Location:** [City, Country]
+
+## Your Work
+- **Main responsibilities:** [What you do day-to-day]
+- **Key tools:** [Tools you use regularly]
+- **Team:** [Team size, structure]
+
+## Communication
+- **Preferred language:** [English / German / ...]
+- **Internal tools:** [Slack, Teams, Email, ...]
+- **External presence:** [LinkedIn, GitHub, ...]
+
+## Current Focus
+- [What you're working on right now]
+- [Key priorities this quarter]
