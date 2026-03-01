@@ -20,6 +20,33 @@ At the beginning of every new session, before responding:
 Before responding to ANY user request, determine which skill(s) best handle it.
 Check the routing table below and invoke the matching skill.
 
+## Cognitive Mode Detection (Pre-Routing)
+
+**BEFORE** matching keywords: Recognize the user's cognitive mode. This improves skill selection, especially for ambiguous requests.
+
+### The 4 Modes (based on Tey Bannerman's "The Four Modes")
+
+| Mode | Signals | User State | Preferred Skill Cluster |
+|------|---------|-----------|------------------------|
+| **Compression** | "too much", "overview", "summarize", "what matters", "key points", "TL;DR" | Overwhelmed by information — needs reduction | `distill`, `signal-check` |
+| **Expansion** | "ideas", "alternatives", "what else", "stuck", "creative", "how might we" | Stuck — needs new directions | `analyze`, `express` |
+| **Reflection** | "does this hold up", "am I sure", "objections", "blind spots", "what am I missing", "robust enough" | Has a draft/decision — needs validation | `challenge`, `signal-check` |
+| **Execution** | "write", "create", "draft", "make this into", "finalize", "output", "build" | Knows what — needs production | `express`, `capture`, `handoff` |
+
+### Application
+
+1. **Detect mode** — Read the emotional/cognitive state, not just keywords
+2. **Prioritize cluster** — When ambiguous: prefer skills from the detected mode cluster
+3. **Then match keywords** — Normal keyword routing within the prioritized cluster
+
+**Examples:**
+- "I have 5 options and can't decide" → **Compression** → `distill` or decision support, not brainstorming
+- "My plan is ready, but something's off" → **Reflection** → `challenge` or `signal-check`, not `express`
+- "I'm going in circles" → **Expansion** → open up thinking, not narrow down
+- "This needs to go out now" → **Execution** → `express`, not `signal-check`
+
+**Important:** Mode Detection does NOT replace keyword routing — it supplements it. For explicit keywords (e.g. "write a blog post") route directly. Mode Detection helps with vague or emotional requests where the user doesn't precisely name their need.
+
 ## Routing Rules
 
 | Signal Keywords | Skill | Purpose |
@@ -29,14 +56,16 @@ Check the routing table below and invoke the matching skill.
 | write, draft, create content, blog, post, formulate | `express` | Polished output generation |
 | analyze, investigate, evaluate, deep dive, what's behind | `analyze` | Structured ReAct analysis |
 | quality check, fact check, is this solid, substance | `signal-check` | 4-axis substance analysis |
+| challenge, stress-test, red team, objections, counter-arguments, what could go wrong, weaknesses, devil's advocate, blind spots, find holes, robust enough | `challenge` | Adversarial stress-testing |
 | handoff, save state, end session, for next time | `handoff` | Session state persistence |
 
 ### Disambiguation Rules
 
 When context is ambiguous:
 1. **"Summarize"** → Short text: `distill`. Create new text: `express`.
-2. **"Check"** → Quality of content: `signal-check`. Fact verification: `signal-check` (fact-check mode).
+2. **"Check"** → Substance/facts: `signal-check`. Weaknesses/objections: `challenge`. Data: domain-specific.
 3. **"Analyze"** → Data/numbers: domain-specific. Concept/topic: `analyze`.
+4. **"Review"** → Content quality: `signal-check`. Stress-test: `challenge`.
 
 ## Workflow Chains
 
@@ -44,6 +73,12 @@ Suggest the next skill after each output:
 
 ### Evaluator-Optimizer Loop
 `express` → `signal-check` → `express` (improved based on feedback)
+
+### Evaluator-Challenger Loop
+`express` → `challenge` → `express` (hardened against objections)
+
+### Decision Hardening
+`analyze` → `challenge` → `express` (stress-tested conclusions)
 
 ### Knowledge Cycle
 `capture` → `distill` → `express` → `signal-check`
@@ -60,15 +95,16 @@ After EVERY skill output, suggest matching next skills. Format:
 
 ```
 ---
-**Next:** `/signal-check` (quality check) · `/express` (write output) · `/capture` (save to Obsidian)
+**Next:** `/signal-check` (quality check) · `/challenge` (stress-test) · `/capture` (save to Obsidian)
 ```
 
 | Just executed | Suggest |
 |--------------|---------|
-| `/analyze` | `/signal-check`, `/express` |
+| `/analyze` | `/signal-check`, `/challenge`, `/express` |
 | `/distill` | `/express`, `/capture` |
-| `/express` | `/signal-check` (evaluator), `/capture` |
+| `/express` | `/signal-check` (evaluator), `/challenge` (stress-test), `/capture` |
 | `/signal-check` | `/express` (optimizer), `/capture` |
+| `/challenge` | `/express` (make robust), `/capture` |
 | `/capture` | (endpoint — no suggestion) |
 | `/handoff` | (endpoint — no suggestion) |
 
@@ -125,6 +161,7 @@ Update outcome based on feedback:
 
 ## Meta
 
-- **Version:** 1.0.0
-- **Skills:** capture, distill, express, analyze, signal-check, handoff
-- **Based on:** Claude Orchestrator v3.6 by Jan Rummel
+- **Version:** 2.0.0
+- **Skills:** capture, distill, express, analyze, signal-check, challenge, handoff
+- **Features:** Cognitive Mode Detection (Pre-Routing), Evaluator-Challenger Pattern
+- **Based on:** Claude Orchestrator v3.8 by Jan Rummel
