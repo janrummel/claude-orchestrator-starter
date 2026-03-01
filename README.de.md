@@ -1,118 +1,201 @@
-# Claude Orchestrator Starter Kit
+<p align="center">
+  <h1 align="center">Claude Orchestrator Starter Kit</h1>
+  <p align="center">
+    Mache aus Claude Code einen persoenlichen KI-Assistenten — mit persistentem Gedaechtnis, eigenen Skills und Obsidian als Wissensbasis.
+  </p>
+  <p align="center">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/Lizenz-MIT-blue.svg" alt="MIT Lizenz"></a>
+    <a href="https://docs.anthropic.com/en/docs/claude-code"><img src="https://img.shields.io/badge/gebaut_fuer-Claude_Code-cc785c.svg" alt="Gebaut fuer Claude Code"></a>
+    <img src="https://img.shields.io/badge/keine_Abhaengigkeiten-nur_Markdown-brightgreen.svg" alt="Keine Abhaengigkeiten">
+    <a href="https://obsidian.md"><img src="https://img.shields.io/badge/integriert_mit-Obsidian-7C3AED.svg" alt="Obsidian Integration">
+    </a>
+  </p>
+  <p align="center">
+    <strong>Deutsch</strong> | <a href="README.md">English</a>
+  </p>
+</p>
 
-> Mache aus Claude Code einen persoenlichen KI-Assistenten — mit persistentem Gedaechtnis, eigenen Skills und Obsidian als Wissensbasis.
+---
 
-**[English version](README.md)**
+> **Dieses Starter Kit ist aus einem realen persoenlichen Orchestrator extrahiert**, der taeglich fuer Engineering, Recherche und Wissensmanagement im Einsatz ist. Das vollstaendige System umfasst 20+ eigene Skills, 6 verbundene Obsidian-Vaults, eine SQLite-Wissensdatenbank und automatisierte Session-Handoffs. Was du hier siehst, sind die **grundlegenden Bausteine** — die Architektur und Muster, die alles andere erst ermöglichen.
 
-## Was ist das?
+---
 
-Ein Starter Kit, um einen **persoenlichen Orchestrator** auf [Claude Code](https://docs.anthropic.com/en/docs/claude-code) aufzubauen. Statt Claude als zustandslosen Chatbot zu nutzen, bekommt es damit:
+## Das Problem
 
-- **Gedaechtnis** das ueber Sessions hinweg bestehen bleibt (Kurzzeit, Mittelzeit, Langzeit)
-- **Skills** — wiederverwendbare Workflows, ausgeloest durch natuerliche Sprache oder `/Befehle`
-- **Routing** — automatische Erkennung, welcher Skill zu deiner Anfrage passt
-- **Obsidian-Integration** — deine Notizen werden Claudes Wissensbasis
+Jede Claude Code Session startet bei Null. Kein Gedaechtnis an gestrige Entscheidungen. Keine Ahnung, woran du arbeitest. Keine wiederverwendbaren Workflows. Du erklaerst immer wieder das Gleiche.
+
+**Dieses Kit aendert das.**
+
+## Was du bekommst
 
 ```
-┌──────────────────────────────────────────────────┐
-│  KURZZEIT (Context Window)                       │
-│  Aktuelle Konversation, temporaere Ergebnisse    │
-│  Lebensdauer: 1 Session                          │
-├──────────────────────────────────────────────────┤
-│  MITTELZEIT (Episodic Memory + State-Dateien)    │
-│  Vergangene Sessions, Routing-Entscheidungen     │
-│  Lebensdauer: Wochen bis Monate                  │
-├──────────────────────────────────────────────────┤
-│  LANGZEIT (CLAUDE.md + Wissensbasis)             │
-│  Routing-Regeln, Praeferenzen, Glossar,          │
-│  Unternehmenskontext, Projektdokumentation       │
-│  Lebensdauer: Permanent                          │
-└──────────────────────────────────────────────────┘
+Du                                      Claude (mit Orchestrator)
+─────────────────────────────           ──────────────────────────────────
+"Fasse diesen Artikel zusammen"         → Ruft distill Skill auf
+                                          Prueft vorhandenes Wissen zuerst
+                                          Liefert strukturierten Output
+                                          Schlaegt vor: /signal-check oder /capture
+
+"Ist diese Analyse solide?"             → Ruft signal-check Skill auf
+                                          Evaluiert ueber 4 Achsen
+                                          Markiert Luecken und Framing
+                                          Schlaegt vor: /express zum Verbessern
+
+"Zustand sichern fuer naechstes Mal"   → Ruft handoff Skill auf
+                                          Erfasst Entscheidungen + Kontext
+                                          Schreibt Projekt-State-Datei
+                                          Naechste Session knuepft nahtlos an
 ```
 
-## Schnellstart (5 Minuten)
+## Wie es funktioniert
 
-### Voraussetzungen
+```mermaid
+flowchart TB
+    subgraph INPUT ["🎯 Deine Nachricht"]
+        direction LR
+        msg["'Fasse diesen Artikel zusammen'"]
+    end
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installiert und funktionsfaehig
-- Ein Terminal
+    subgraph BRAIN ["🧠 CLAUDE.md — Das Orchestrator-Gehirn"]
+        direction TB
+        route["Routing-Regeln<br/><i>Schluesselwort → Skill-Zuordnung</i>"]
+        patterns["User Patterns<br/><i>Gelernte Praeferenzen</i>"]
+    end
 
-### Einrichtung
+    subgraph SKILLS ["⚡ Skills"]
+        direction LR
+        capture["📥 capture"]
+        distill["🔬 distill"]
+        express["✍️ express"]
+        analyze["🔍 analyze"]
+        signal["🎯 signal-check"]
+        handoff["💾 handoff"]
+    end
 
-```bash
-# 1. Repo klonen
-git clone https://github.com/janrummel/claude-orchestrator-starter.git
-cd claude-orchestrator-starter
+    subgraph MEMORY ["💾 Drei-Schichten-Gedaechtnis"]
+        direction TB
+        short["Kurzzeit<br/><i>Context Window (1 Session)</i>"]
+        mid["Mittelzeit<br/><i>Routing-Log + Handoffs (Wochen)</i>"]
+        long["Langzeit<br/><i>CLAUDE.md + Obsidian (Permanent)</i>"]
+    end
 
-# 2. Orchestrator in deine Claude-Konfiguration kopieren
-cp CLAUDE.md.example ~/.claude/CLAUDE.md
-cp -r orchestrator/ ~/.claude/orchestrator/
-cp -r memory/ ~/.claude/memory/
-cp -r hooks/ ~/.claude/hooks/
+    subgraph OUTPUT ["📤 Output"]
+        result["Strukturiertes Ergebnis<br/>+ naechste Skill-Vorschlaege"]
+    end
 
-# 3. Claude Code starten — fertig.
-claude
+    INPUT --> BRAIN
+    BRAIN --> SKILLS
+    SKILLS --> MEMORY
+    MEMORY --> SKILLS
+    SKILLS --> OUTPUT
+
+    style INPUT fill:#1a1a2e,stroke:#e94560,color:#fff
+    style BRAIN fill:#1a1a2e,stroke:#0f3460,color:#fff
+    style SKILLS fill:#1a1a2e,stroke:#16213e,color:#fff
+    style MEMORY fill:#1a1a2e,stroke:#533483,color:#fff
+    style OUTPUT fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-Claude wird jetzt:
-- `CLAUDE.md` beim Start lesen und seine Rolle verstehen
-- Deine Anfragen an passende Skills weiterleiten
-- Das Gedaechtnissystem nutzen, um Kontext ueber Sessions hinweg zu behalten
+## Die Architektur
 
-### Optional: Obsidian-Integration
+### Drei-Schichten-Gedaechtnis
 
-Falls du [Obsidian](https://obsidian.md) als Notiz-App nutzt, siehe [Obsidian-Einrichtung](obsidian/README.md) um deinen Vault als Claudes Wissensbasis zu verbinden.
+| | Schicht | Was | Wo | Lebensdauer |
+|---|---------|-----|-----|-------------|
+| **1** | Kurzzeit | Aktuelle Konversation | Context Window | 1 Session |
+| **2** | Mittelzeit | Vergangene Sessions, Routing-Log | `orchestrator/routing-log.jsonl`, Projekt-States | Wochen bis Monate |
+| **3** | Langzeit | Regeln, Praeferenzen, Wissen | `CLAUDE.md`, `memory/`, Obsidian | Permanent |
 
-### Optional: Wissensdatenbank
-
-Fuer strukturierte Datenspeicherung (Recherche-Ergebnisse, importierte Datensaetze), siehe [Knowledge DB Setup](knowledge-db/README.md).
-
-## Architektur
-
-### Die drei Schichten
-
-| Schicht | Was | Wo | Lebensdauer |
-|---------|-----|-----|-------------|
-| **Kurzzeit** | Aktuelle Konversation | Context Window | 1 Session |
-| **Mittelzeit** | Vergangene Sessions, Routing-Log | `orchestrator/routing-log.jsonl`, Episodic Memory | Wochen–Monate |
-| **Langzeit** | Regeln, Praeferenzen, Wissen | `CLAUDE.md`, `memory/`, Obsidian | Permanent |
-
-### Skills
-
-Skills sind wiederverwendbare Workflows, definiert als `SKILL.md`-Dateien. Jeder Skill sagt Claude, **wie** es eine bestimmte Art von Anfrage bearbeiten soll.
-
-Dieses Starter Kit enthaelt 6 Kern-Skills:
-
-| Skill | Zweck | Trigger-Beispiele |
-|-------|-------|------------------|
-| `capture` | Schnelle Notizen in Obsidian | "Notiere das", "Idee festhalten" |
-| `distill` | Zusammenfassen und verdichten | "Zusammenfassen", "Kernaussagen" |
-| `express` | Ausgefeilten Output schreiben | "Schreibe", "Formuliere" |
-| `analyze` | Tiefenanalyse mit strukturiertem Denken | "Analysiere", "Untersuche" |
-| `signal-check` | Qualitaetspruefung / Faktencheck | "Ist das solide?", "Substanz-Check" |
-| `handoff` | Session-Zustand fuer naechstes Mal sichern | "Zustand sichern", "Handoff" |
-
-Diese 6 bilden zwei zentrale Schleifen:
-
-**Evaluator-Optimizer-Schleife:**
 ```
-express → signal-check → express (verbessert)
+┌─────────────────────────────────────────────────────┐
+│  ░░░░░░░░ KURZZEIT  (Context Window) ░░░░░░░░░░░░  │
+│  Aktuelle Konversation, temporaere Ergebnisse        │
+│  ⏱ Lebensdauer: 1 Session                           │
+├─────────────────────────────────────────────────────┤
+│  ▒▒▒▒▒▒▒ MITTELZEIT  (State + Episodic) ▒▒▒▒▒▒▒▒  │
+│  Vergangene Sessions, Routing-Entscheidungen         │
+│  ⏱ Lebensdauer: Wochen bis Monate                   │
+├─────────────────────────────────────────────────────┤
+│  ████████ LANGZEIT  (CLAUDE.md + Wissen) ██████████  │
+│  Routing-Regeln, Praeferenzen, Glossar, Kontext      │
+│  ⏱ Lebensdauer: Permanent                           │
+└─────────────────────────────────────────────────────┘
 ```
 
-**Wissenszyklus:**
+### Sechs Kern-Skills
+
+Jeder Skill ist eine `SKILL.md`-Datei — **Anweisungen, kein Code**. Sie sagen Claude, wie es sich verhalten, welche Tools es nutzen und welchen Output es produzieren soll.
+
+| | Skill | Zweck | Du sagst... |
+|---|-------|-------|------------|
+| 📥 | **capture** | Schnelle Notizen in Obsidian | "Notiere das", "Idee festhalten" |
+| 🔬 | **distill** | Zusammenfassen und verdichten | "Zusammenfassen", "Kernaussagen" |
+| ✍️ | **express** | Ausgefeilten Output schreiben | "Schreibe", "Formuliere" |
+| 🔍 | **analyze** | Tiefenanalyse mit strukturiertem Denken | "Analysiere", "Untersuche" |
+| 🎯 | **signal-check** | Qualitaetspruefung / Faktencheck | "Ist das solide?", "Substanz-Check" |
+| 💾 | **handoff** | Session-Zustand fuer naechstes Mal sichern | "Zustand sichern", "Handoff" |
+
+### Zwei zentrale Schleifen
+
+Diese 6 Skills bilden zwei kraftvolle Feedback-Schleifen:
+
+**Evaluator-Optimizer-Schleife** — Schreiben, evaluieren, verbessern:
+
+```mermaid
+flowchart LR
+    E["✍️ express<br/><i>Output generieren</i>"]
+    S["🎯 signal-check<br/><i>Qualitaet evaluieren</i>"]
+    E2["✍️ express<br/><i>Basierend auf Feedback optimieren</i>"]
+
+    E -->|"evaluieren"| S
+    S -->|"optimieren"| E2
+
+    style E fill:#16213e,stroke:#e94560,color:#fff
+    style S fill:#16213e,stroke:#0f3460,color:#fff
+    style E2 fill:#16213e,stroke:#e94560,color:#fff
 ```
-capture → distill → express → signal-check
-    ↑                              │
-    └──── analyze ← handoff ←─────┘
+
+**Wissenszyklus** — Erfassen, verarbeiten, ausgeben, pruefen:
+
+```mermaid
+flowchart LR
+    C["📥 capture"]
+    D["🔬 distill"]
+    X["✍️ express"]
+    S["🎯 signal-check"]
+    A["🔍 analyze"]
+    H["💾 handoff"]
+
+    C --> D --> X --> S
+    S -.->|"zurueck zu"| A
+    A -.-> H
+    H -.-> C
+
+    style C fill:#16213e,stroke:#533483,color:#fff
+    style D fill:#16213e,stroke:#533483,color:#fff
+    style X fill:#16213e,stroke:#e94560,color:#fff
+    style S fill:#16213e,stroke:#0f3460,color:#fff
+    style A fill:#16213e,stroke:#16213e,color:#fff
+    style H fill:#16213e,stroke:#16213e,color:#fff
 ```
 
 ### Routing
 
 Die `CLAUDE.md`-Datei enthaelt Routing-Regeln, die Schluesselwoerter auf Skills abbilden. Wenn du etwas sagst, prueft Claude auf passende Muster und ruft automatisch den richtigen Skill auf.
 
-Beispiel:
-- "Fasse diesen Artikel zusammen" → erkennt "zusammenfassen" → ruft `distill` auf
-- "Ist diese Analyse solide?" → erkennt "Qualitaetspruefung" → ruft `signal-check` auf
+```
+Du: "Fasse diesen Artikel zusammen"
+     │
+     ▼
+CLAUDE.md Routing-Tabelle
+     │ erkennt "zusammenfassen" → distill
+     ▼
+Ruft distill Skill auf
+     │
+     ▼
+Strukturierte Zusammenfassung + schlaegt vor: /signal-check · /express · /capture
+```
 
 ### Gedaechtnis
 
@@ -129,9 +212,51 @@ memory/
 └── workflows/           — Bewaehrte Workflows und Best Practices
 ```
 
+## Schnellstart
+
+> **Dauer:** ~5 Minuten | **Voraussetzungen:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) + ein Terminal
+
+```bash
+# 1. Klonen
+git clone https://github.com/janrummel/claude-orchestrator-starter.git
+cd claude-orchestrator-starter
+
+# 2. In deine Claude-Konfiguration kopieren
+cp CLAUDE.md.example ~/.claude/CLAUDE.md
+cp -r orchestrator/ ~/.claude/orchestrator/
+cp -r memory/ ~/.claude/memory/
+cp -r hooks/ ~/.claude/hooks/
+
+# 3. Claude Code starten — fertig.
+claude
+```
+
+Claude wird jetzt:
+- **`CLAUDE.md` beim Start lesen** und seine Rolle verstehen
+- **Deine Anfragen weiterleiten** an passende Skills
+- **Kontext merken** ueber Sessions hinweg via Memory-Dateien
+
+### Optionale Erweiterungen
+
+<details>
+<summary>🟣 Obsidian-Integration</summary>
+
+Verbinde deinen [Obsidian](https://obsidian.md)-Vault als Claudes Wissensbasis. Skills wie `capture` schreiben hinein, `analyze` und `express` lesen daraus.
+
+Siehe [Obsidian-Einrichtung](obsidian/README.md) fuer die Anleitung.
+</details>
+
+<details>
+<summary>🗃️ Wissensdatenbank (SQLite)</summary>
+
+Fuer strukturierte Datenspeicherung (Recherche-Ergebnisse, importierte Datensaetze, Skill-Nutzungsstatistiken).
+
+Siehe [Knowledge DB Setup](knowledge-db/README.md) fuer die Anleitung.
+</details>
+
 ## Eigene Skills entwickeln
 
-Siehe [Skill Development Guide](docs/skill-development.md) fuer eine Schritt-fuer-Schritt-Anleitung zum Erstellen eigener Skills.
+Siehe den [Skill Development Guide](docs/skill-development.md) fuer eine ausfuehrliche Anleitung.
 
 Die Kurzversion:
 
@@ -160,24 +285,72 @@ EOF
 # Schluesselwort → Skill-Zuordnung zur Routing-Tabelle hinzufuegen
 ```
 
-## Was NICHT enthalten ist
+## Das groessere Bild
 
-Dies ist ein **Starter Kit**, kein fertiges System. Du wirst vermutlich:
+Dieses Starter Kit gibt dir die **Architektur und Muster**. Es ist bewusst minimal gehalten — 6 Skills, einfaches Routing, grundlegendes Gedaechtnis.
 
-- Skills fuer deine Domaene ergaenzen (Engineering, Sales, Forschung, etc.)
-- Routing-Regeln an dein Vokabular anpassen
-- Unternehmenskontext, Glossar und Kontakte ausfuellen
-- Die Ausgabesprache anpassen (dieses Kit ist standardmaessig auf Englisch)
-- Deine(n) Obsidian-Vault(s) anbinden, falls du Obsidian nutzt
+Das System, aus dem es extrahiert ist, sieht so aus:
 
-## Inspiration
+| | Starter Kit | Vollstaendiges System |
+|---|-------------|----------------------|
+| **Skills** | 6 Kern-Skills | 20+ domainenspezifische Skills |
+| **Routing** | 6 Schluesselwort-Zuordnungen | 100+ Zuordnungen mit Disambiguation |
+| **Gedaechtnis** | Template-Dateien | Gefuellt mit Monaten an Kontext |
+| **Obsidian** | 1 Vault (optional) | 6 Vaults, 930+ Notizen |
+| **Datenbank** | Leeres Schema | Research-Items, Datensaetze, Nutzungsstatistiken |
+| **Workflow-Ketten** | 2 Basis-Schleifen | 15+ mehrstufige Ketten |
+| **Self-Improvement** | Manuelle Updates | Automatisierte Routing-Analyse |
 
-Dieses Starter Kit basiert auf einem realen System, das taeglich fuer Engineering, Recherche und Wissensmanagement im Einsatz ist. Das vollstaendige System umfasst 20+ eigene Skills, 6 verbundene Obsidian-Vaults, eine SQLite-Wissensdatenbank und automatisierte Session-Handoffs.
+Das Ziel ist nicht, dir alles zu geben. Es ist, dir die **Bausteine** zu zeigen — damit du dein eigenes System darauf aufbauen kannst.
+
+## Projektstruktur
+
+```
+claude-orchestrator-starter/
+│
+├── CLAUDE.md.example          ← Das Gehirn: Routing-Regeln + Gedaechtnis-Architektur
+│
+├── orchestrator/
+│   ├── skills/
+│   │   ├── capture/           ← 📥 Schnelles Erfassen in Obsidian
+│   │   ├── distill/           ← 🔬 Zusammenfassen und verdichten
+│   │   ├── express/           ← ✍️ Ausgefeilten Output schreiben
+│   │   ├── analyze/           ← 🔍 Tiefe strukturierte Analyse
+│   │   ├── signal-check/      ← 🎯 Qualitaets- und Substanz-Check
+│   │   └── handoff/           ← 💾 Session-Zustand sichern
+│   ├── routing-log.jsonl.example
+│   ├── user-patterns.md.example
+│   └── workflow-templates.md
+│
+├── memory/                    ← Langzeit-Wissensbasis
+│   ├── glossary.md.example
+│   ├── context/company.md.example
+│   ├── people/
+│   ├── projects/
+│   ├── decisions/
+│   └── workflows/
+│
+├── hooks/                     ← Session-Lifecycle-Hooks
+├── obsidian/                  ← Obsidian-Vault-Integrationsanleitung
+├── knowledge-db/              ← SQLite-Wissensdatenbank
+└── docs/                      ← Architektur, Anleitungen, FAQ
+```
+
+## Weiterfuehrend
+
+| Ressource | Beschreibung |
+|-----------|-------------|
+| [Getting Started](docs/getting-started.md) | Schritt-fuer-Schritt-Einrichtung |
+| [Architektur](docs/architecture.md) | Deep Dive ins Drei-Schichten-Modell |
+| [Skill Development](docs/skill-development.md) | Eigene Skills erstellen |
+| [FAQ](docs/faq.md) | Haeufige Fragen beantwortet |
+| [Obsidian-Einrichtung](obsidian/README.md) | Obsidian-Vault verbinden |
+| [Knowledge DB](knowledge-db/README.md) | SQLite-Datenbank einrichten |
 
 ## Lizenz
 
-MIT — nutzen, forken, zu deinem machen.
+[MIT](LICENSE) — nutzen, forken, zu deinem machen.
 
 ## Mitmachen
 
-Siehe [CONTRIBUTING.md](CONTRIBUTING.md).
+Beitraege willkommen! Siehe [CONTRIBUTING.md](CONTRIBUTING.md).
