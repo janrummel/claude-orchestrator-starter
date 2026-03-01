@@ -34,7 +34,7 @@ You can use an SQLite MCP server to give Claude direct database access:
   "mcpServers": {
     "knowledge-db": {
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-sqlite", "~/.claude/data/knowledge.db"]
+      "args": ["-y", "@modelcontextprotocol/server-sqlite", "~/.claude/data/knowledge.db"]
     }
   }
 }

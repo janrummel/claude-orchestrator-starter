@@ -61,11 +61,11 @@ Claude wird jetzt:
 
 ### Optional: Obsidian-Integration
 
-Falls du [Obsidian](https://obsidian.md) als Notiz-App nutzt, siehe [Obsidian-Einrichtung](docs/obsidian-setup.md) um deinen Vault als Claudes Wissensbasis zu verbinden.
+Falls du [Obsidian](https://obsidian.md) als Notiz-App nutzt, siehe [Obsidian-Einrichtung](obsidian/README.md) um deinen Vault als Claudes Wissensbasis zu verbinden.
 
 ### Optional: Wissensdatenbank
 
-Fuer strukturierte Datenspeicherung (Recherche-Ergebnisse, importierte Datensaetze), siehe [Knowledge DB Setup](docs/knowledge-db-setup.md).
+Fuer strukturierte Datenspeicherung (Recherche-Ergebnisse, importierte Datensaetze), siehe [Knowledge DB Setup](knowledge-db/README.md).
 
 ## Architektur
 

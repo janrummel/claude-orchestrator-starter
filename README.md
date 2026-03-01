@@ -61,11 +61,11 @@ Claude will now:
 
 ### Optional: Obsidian Integration
 
-If you use [Obsidian](https://obsidian.md) as your note-taking app, see [Obsidian Setup](docs/obsidian-setup.md) for connecting your vault as Claude's knowledge base.
+If you use [Obsidian](https://obsidian.md) as your note-taking app, see [Obsidian Setup](obsidian/README.md) for connecting your vault as Claude's knowledge base.
 
 ### Optional: Knowledge Database
 
-For structured data storage (research items, imported datasets), see [Knowledge DB Setup](docs/knowledge-db-setup.md).
+For structured data storage (research items, imported datasets), see [Knowledge DB Setup](knowledge-db/README.md).
 
 ## Architecture
 

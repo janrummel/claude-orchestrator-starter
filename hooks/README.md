@@ -12,7 +12,7 @@ Core rules that survive context window compression. When Claude's context gets c
 
 ## Setup
 
-Copy the example files (remove `.example` suffix):
+### 1. Copy Files
 
 ```bash
 cp hooks/session-start.sh.example ~/.claude/hooks/session-start.sh
@@ -20,7 +20,26 @@ cp hooks/context-reinject.md.example ~/.claude/hooks/context-reinject.md
 chmod +x ~/.claude/hooks/session-start.sh
 ```
 
-## Customization
+### 2. Wire Hooks in Claude Code
+
+Add to your `.claude/settings.json` (create it if it doesn't exist):
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bash ~/.claude/hooks/session-start.sh"
+      }
+    ]
+  }
+}
+```
+
+> **Note:** Hook support depends on your Claude Code version. Check `claude --help` or the [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code) for the latest hook configuration format.
+
+### 3. Customize
 
 Edit `session-start.sh` to include:
 - Your name and role
