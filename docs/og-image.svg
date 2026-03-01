@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Central warm glow -->
+    <radialGradient id="warmGlow" cx="50%" cy="48%" r="45%" fx="50%" fy="48%">
+      <stop offset="0%" stop-color="#D97757" stop-opacity="0.18"/>
+      <stop offset="40%" stop-color="#D97757" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#D97757" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subtle secondary glow, slightly lower -->
+    <radialGradient id="secondaryGlow" cx="50%" cy="55%" r="35%" fx="50%" fy="55%">
+      <stop offset="0%" stop-color="#D97757" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#D97757" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Very subtle top-edge vignette -->
+    <linearGradient id="topVignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D0B09" stop-opacity="0.5"/>
+      <stop offset="30%" stop-color="#151311" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Bottom vignette -->
+    <linearGradient id="bottomVignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="70%" stop-color="#151311" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0D0B09" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#151311"/>
+
+  <!-- Warm glow layers -->
+  <rect width="1200" height="630" fill="url(#warmGlow)"/>
+  <rect width="1200" height="630" fill="url(#secondaryGlow)"/>
+
+  <!-- Vignette edges -->
+  <rect width="1200" height="630" fill="url(#topVignette)"/>
+  <rect width="1200" height="630" fill="url(#bottomVignette)"/>
+
+  <!-- Thin subtle horizontal line as visual separator above footer -->
+  <line x1="400" y1="500" x2="800" y2="500" stroke="#D97757" stroke-opacity="0.12" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="600" y="265" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#EDE5D8" letter-spacing="0.5">
+    Claude Orchestrator
+  </text>
+  <text x="600" y="330" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#EDE5D8" letter-spacing="0.5">
+    Starter Kit
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="385" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#9C8E7C" letter-spacing="0.3">
+    Turn Claude Code into a personal AI assistant
+  </text>
+
+  <!-- Footer stats -->
+  <text x="600" y="545" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#9C8E7C" letter-spacing="1.5">
+    7 Skills  &#xB7;  3 Loops  &#xB7;  Persistent Memory
+  </text>
+</svg>
