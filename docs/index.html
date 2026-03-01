@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Orchestrator Starter Kit</title>
+    <meta name="description" content="Turn Claude Code into a personal AI assistant with persistent memory, custom skills, and Obsidian integration.">
+    <meta property="og:title" content="Claude Orchestrator Starter Kit">
+    <meta property="og:description" content="Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and Obsidian as your second brain.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a2e;
+            --text: #e0e0e8;
+            --text-muted: #8888a0;
+            --accent: #e94560;
+            --accent2: #0f3460;
+            --purple: #7C3AED;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --orange: #f59e0b;
+            --border: #1e1e2e;
+            --glow: rgba(233, 69, 96, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        code, pre, .mono {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+        a:hover { opacity: 0.8; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Hero ─────────────────────────────────── */
+        .hero {
+            text-align: center;
+            padding: 100px 24px 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        .badge-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge--mit { background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge--claude { background: rgba(233, 69, 96, 0.15); color: var(--accent); border: 1px solid rgba(233, 69, 96, 0.3); }
+        .badge--md { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge--obsidian { background: rgba(124, 58, 237, 0.15); color: var(--purple); border: 1px solid rgba(124, 58, 237, 0.3); }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #c0c0d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn--primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn--primary:hover {
+            background: #d63651;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn--secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn--secondary:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ── Problem ──────────────────────────────── */
+        .problem {
+            padding: 60px 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .problem-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .problem-card.bad { border-left: 3px solid #ef4444; }
+        .problem-card.good { border-left: 3px solid var(--green); }
+
+        .problem-card h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .problem-card.bad h3 { color: #ef4444; }
+        .problem-card.good h3 { color: var(--green); }
+
+        .problem-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .problem-card li {
+            color: var(--text-muted);
+            font-size: 14px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .problem-card.bad li::before { content: '✗'; position: absolute; left: 0; color: #ef4444; }
+        .problem-card.good li::before { content: '✓'; position: absolute; left: 0; color: var(--green); }
+
+        /* ── Section Headers ──────────────────────── */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-size: 1rem;
+        }
+
+        /* ── Architecture Diagram ─────────────────── */
+        .arch-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .arch-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 32px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .arch-node:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .arch-node .icon { font-size: 24px; margin-bottom: 8px; }
+        .arch-node .label { font-weight: 600; font-size: 16px; }
+        .arch-node .desc { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+
+        .arch-arrow {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        .arch-node--input { border-color: var(--accent); }
+        .arch-node--brain { border-color: var(--blue); }
+        .arch-node--skills { border-color: var(--green); }
+        .arch-node--memory { border-color: var(--purple); }
+        .arch-node--output { border-color: var(--orange); }
+
+        /* ── Memory Layers ────────────────────────── */
+        .memory-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .memory-layer {
+            padding: 24px 28px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .memory-layer:first-child { border-radius: 12px 12px 0 0; }
+        .memory-layer:last-child { border-radius: 0 0 12px 12px; }
+        .memory-layer + .memory-layer { border-top: none; }
+
+        .memory-layer .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .memory-layer--short { background: rgba(233, 69, 96, 0.05); }
+        .memory-layer--short .tag { background: rgba(233, 69, 96, 0.15); color: var(--accent); }
+
+        .memory-layer--mid { background: rgba(59, 130, 246, 0.05); }
+        .memory-layer--mid .tag { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+
+        .memory-layer--long { background: rgba(124, 58, 237, 0.05); }
+        .memory-layer--long .tag { background: rgba(124, 58, 237, 0.15); color: var(--purple); }
+
+        .memory-layer h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .memory-layer p { font-size: 13px; color: var(--text-muted); }
+
+        /* ── Skills Grid ──────────────────────────── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .skill-card .emoji { font-size: 28px; margin-bottom: 12px; }
+        .skill-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .skill-card .skill-name { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+        .skill-card p { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
+
+        /* ── Loops ────────────────────────────────── */
+        .loops-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .loop-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .loop-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .loop-card .desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .loop-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .loop-step {
+            background: var(--bg-card-hover);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .loop-arrow { color: var(--text-muted); font-size: 16px; }
+
+        /* ── Comparison ───────────────────────────── */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 14px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 500;
+        }
+
+        .comparison-table td:nth-child(2) {
+            color: var(--text-muted);
+        }
+
+        .comparison-table td:nth-child(3) {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ── Quickstart ───────────────────────────── */
+        .quickstart-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quickstart-block pre {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .quickstart-block pre .comment { color: #555570; }
+        .quickstart-block pre .cmd { color: var(--green); }
+
+        .quickstart-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .quickstart-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .step-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            padding-top: 3px;
+        }
+
+        .step-text strong { color: var(--text); }
+
+        /* ── Footer ───────────────────────────────── */
+        .footer {
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .footer a { color: var(--text); }
+
+        /* ── Responsive ───────────────────────────── */
+        @media (max-width: 768px) {
+            .problem-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr 1fr; }
+            .loops-grid { grid-template-columns: 1fr; }
+            .hero { padding: 60px 24px 40px; }
+            .section { padding: 48px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Hero ─────────────────────────────────── -->
+    <section class="hero">
+        <div class="badge-row">
+            <span class="badge badge--mit">MIT License</span>
+            <span class="badge badge--claude">Claude Code</span>
+            <span class="badge badge--md">Just Markdown</span>
+            <span class="badge badge--obsidian">Obsidian</span>
+        </div>
+        <h1>Claude Orchestrator<br>Starter Kit</h1>
+        <p class="subtitle">
+            Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and Obsidian as your second brain.
+        </p>
+        <div class="cta-row">
+            <a href="https://github.com/janrummel/claude-orchestrator-starter" class="btn btn--primary">
+                View on GitHub
+            </a>
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/getting-started.md" class="btn btn--secondary">
+                Getting Started
+            </a>
+        </div>
+    </section>
+
+    <!-- ── Problem ────────────────────────────────── -->
+    <section class="problem">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-card bad">
+                    <h3>Without Orchestrator</h3>
+                    <ul>
+                        <li>Every session starts from zero</li>
+                        <li>No memory of yesterday's decisions</li>
+                        <li>Explain the same things over and over</li>
+                        <li>No reusable workflows</li>
+                        <li>Generic, inconsistent outputs</li>
+                    </ul>
+                </div>
+                <div class="problem-card good">
+                    <h3>With Orchestrator</h3>
+                    <ul>
+                        <li>Sessions pick up where you left off</li>
+                        <li>Three-layer memory persists context</li>
+                        <li>Skills automate common workflows</li>
+                        <li>Keyword routing invokes the right skill</li>
+                        <li>Structured, consistent, quality-checked output</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Architecture ──────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Architecture</div>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Your message flows through four stages — from intent to structured output.</p>
+            </div>
+            <div class="arch-flow">
+                <div class="arch-node arch-node--input">
+                    <div class="icon">🎯</div>
+                    <div class="label">Your Message</div>
+                    <div class="desc">"Summarize this article"</div>
+                </div>
+                <div class="arch-arrow">▼</div>
+                <div class="arch-node arch-node--brain">
+                    <div class="icon">🧠</div>
+                    <div class="label">CLAUDE.md — The Brain</div>
+                    <div class="desc">Routing rules match keywords to skills. Learned patterns improve over time.</div>
+                </div>
+                <div class="arch-arrow">▼</div>
+                <div class="arch-node arch-node--skills">
+                    <div class="icon">⚡</div>
+                    <div class="label">Skill Execution</div>
+                    <div class="desc">The matched skill (e.g. distill) runs its workflow — checking memory, processing input, generating output.</div>
+                </div>
+                <div class="arch-arrow">▼</div>
+                <div class="arch-node arch-node--memory">
+                    <div class="icon">💾</div>
+                    <div class="label">Three-Layer Memory</div>
+                    <div class="desc">Short-term (session) · Mid-term (weeks) · Long-term (permanent)</div>
+                </div>
+                <div class="arch-arrow">▼</div>
+                <div class="arch-node arch-node--output">
+                    <div class="icon">📤</div>
+                    <div class="label">Structured Output</div>
+                    <div class="desc">Result + next skill suggestions</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Memory ────────────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Memory</div>
+                <h2 class="section-title">Three-Layer Memory</h2>
+                <p class="section-subtitle">Context that persists — from one conversation to months of knowledge.</p>
+            </div>
+            <div class="memory-stack">
+                <div class="memory-layer memory-layer--short">
+                    <span class="tag">Short-term</span>
+                    <h4>Context Window</h4>
+                    <p>Current conversation and temporary results. Lifetime: 1 session.</p>
+                </div>
+                <div class="memory-layer memory-layer--mid">
+                    <span class="tag">Mid-term</span>
+                    <h4>State Files + Routing Log</h4>
+                    <p>Past session handoffs, routing decisions, and project states. Lifetime: weeks to months.</p>
+                </div>
+                <div class="memory-layer memory-layer--long">
+                    <span class="tag">Long-term</span>
+                    <h4>CLAUDE.md + Obsidian + Knowledge Base</h4>
+                    <p>Routing rules, preferences, glossary, contacts, and domain knowledge. Lifetime: permanent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Skills ────────────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Skills</div>
+                <h2 class="section-title">Six Core Skills</h2>
+                <p class="section-subtitle">Reusable workflows defined as markdown files — instructions, not code.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="emoji">📥</div>
+                    <div class="skill-name">capture</div>
+                    <h4>Quick Capture</h4>
+                    <p>Save notes and ideas directly to Obsidian. Fast input, structured storage.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">🔬</div>
+                    <div class="skill-name">distill</div>
+                    <h4>Summarize &amp; Condense</h4>
+                    <p>Progressive summarization. Extract key takeaways from any text.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">✍️</div>
+                    <div class="skill-name">express</div>
+                    <h4>Write Output</h4>
+                    <p>Generate polished, structured content — articles, posts, emails, concepts.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">🔍</div>
+                    <div class="skill-name">analyze</div>
+                    <h4>Deep Analysis</h4>
+                    <p>Structured ReAct analysis. Investigate topics with iterative reasoning.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">🎯</div>
+                    <div class="skill-name">signal-check</div>
+                    <h4>Quality Check</h4>
+                    <p>4-axis substance analysis: meaning, facts, framing, context. Signal vs. noise.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="emoji">💾</div>
+                    <div class="skill-name">handoff</div>
+                    <h4>Session Handoff</h4>
+                    <p>Save decisions, context, and next steps. Next session picks up seamlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Loops ─────────────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Patterns</div>
+                <h2 class="section-title">Two Key Feedback Loops</h2>
+                <p class="section-subtitle">Skills chain together into powerful workflows.</p>
+            </div>
+            <div class="loops-grid">
+                <div class="loop-card">
+                    <h4>Evaluator-Optimizer</h4>
+                    <p class="desc">Write, evaluate, improve — like a human review cycle.</p>
+                    <div class="loop-flow">
+                        <span class="loop-step">✍️ express</span>
+                        <span class="loop-arrow">→</span>
+                        <span class="loop-step">🎯 signal-check</span>
+                        <span class="loop-arrow">→</span>
+                        <span class="loop-step">✍️ express</span>
+                    </div>
+                </div>
+                <div class="loop-card">
+                    <h4>Knowledge Cycle</h4>
+                    <p class="desc">Capture, process, output, verify — continuous learning.</p>
+                    <div class="loop-flow">
+                        <span class="loop-step">📥 capture</span>
+                        <span class="loop-arrow">→</span>
+                        <span class="loop-step">🔬 distill</span>
+                        <span class="loop-arrow">→</span>
+                        <span class="loop-step">✍️ express</span>
+                        <span class="loop-arrow">→</span>
+                        <span class="loop-step">🎯 check</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Bigger Picture ────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">The Bigger Picture</div>
+                <h2 class="section-title">This Is Just the Foundation</h2>
+                <p class="section-subtitle">The starter kit gives you the building blocks. The full system goes much deeper.</p>
+            </div>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Starter Kit</th>
+                        <th>Full System</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Skills</td>
+                        <td>6 core skills</td>
+                        <td>20+ domain-specific skills</td>
+                    </tr>
+                    <tr>
+                        <td>Routing</td>
+                        <td>6 keyword mappings</td>
+                        <td>100+ mappings with disambiguation</td>
+                    </tr>
+                    <tr>
+                        <td>Memory</td>
+                        <td>Template files</td>
+                        <td>Months of accumulated context</td>
+                    </tr>
+                    <tr>
+                        <td>Obsidian</td>
+                        <td>1 vault (optional)</td>
+                        <td>6 connected vaults, 930+ notes</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td>Empty schema</td>
+                        <td>Research items, datasets, usage stats</td>
+                    </tr>
+                    <tr>
+                        <td>Workflow Chains</td>
+                        <td>2 basic loops</td>
+                        <td>15+ multi-step chains</td>
+                    </tr>
+                    <tr>
+                        <td>Self-Improvement</td>
+                        <td>Manual updates</td>
+                        <td>Automated routing analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ── Quickstart ────────────────────────────── -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Get Started</div>
+                <h2 class="section-title">Up and Running in 5 Minutes</h2>
+            </div>
+            <div class="quickstart-block">
+                <pre><span class="comment"># Clone the repo</span>
+<span class="cmd">git clone https://github.com/janrummel/claude-orchestrator-starter.git</span>
+<span class="cmd">cd claude-orchestrator-starter</span>
+
+<span class="comment"># Copy to your Claude config</span>
+<span class="cmd">cp CLAUDE.md.example ~/.claude/CLAUDE.md</span>
+<span class="cmd">cp -r orchestrator/ ~/.claude/orchestrator/</span>
+<span class="cmd">cp -r memory/ ~/.claude/memory/</span>
+<span class="cmd">cp -r hooks/ ~/.claude/hooks/</span>
+
+<span class="comment"># Start Claude Code</span>
+<span class="cmd">claude</span></pre>
+                <div class="quickstart-steps">
+                    <div class="quickstart-step">
+                        <span class="step-num">1</span>
+                        <span class="step-text"><strong>CLAUDE.md</strong> is read at startup — Claude understands its role</span>
+                    </div>
+                    <div class="quickstart-step">
+                        <span class="step-num">2</span>
+                        <span class="step-text"><strong>Routing rules</strong> match your keywords to skills automatically</span>
+                    </div>
+                    <div class="quickstart-step">
+                        <span class="step-num">3</span>
+                        <span class="step-text"><strong>Memory files</strong> persist context across sessions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Footer ────────────────────────────────── -->
+    <footer class="footer">
+        <p>
+            <a href="https://github.com/janrummel/claude-orchestrator-starter">GitHub</a> ·
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/architecture.md">Architecture</a> ·
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/skill-development.md">Build Skills</a> ·
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/faq.md">FAQ</a>
+        </p>
+        <p style="margin-top: 16px; font-size: 13px; color: #555570;">
+            MIT License · Built with Claude Code · No dependencies, just markdown.
+        </p>
+    </footer>
+
+</body>
+</html>
