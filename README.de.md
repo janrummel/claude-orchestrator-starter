@@ -285,11 +285,90 @@ EOF
 # Schluesselwort → Skill-Zuordnung zur Routing-Tabelle hinzufuegen
 ```
 
+## Warum das Ganze?
+
+Die meisten nutzen Claude Code als **zustandsloses Tool** — maechtig, aber vergesslich. Jede Session ist ein leeres Blatt.
+
+Dieses Starter Kit macht daraus einen **zustandsbehafteten Assistenten**, der mit dir waechst:
+
+| | Ohne Orchestrator | Mit Orchestrator |
+|---|---|---|
+| **Gedaechtnis** | Vergisst alles nach jeder Session | Erinnert Entscheidungen, Kontext, Praeferenzen |
+| **Workflows** | Du beschreibst die gleichen Schritte jedes Mal | Skills automatisieren deine gaengigen Muster |
+| **Qualitaet** | Output-Qualitaet schwankt unberechenbar | Evaluator-Optimizer-Schleife erkennt Schwaechen |
+| **Wissen** | Verstreut ueber Tools und Notizen | Zentralisiert in Obsidian + SQLite |
+| **Kontinuitaet** | "Wo waren wir?" jeden Morgen | Handoff knuepft genau dort an, wo du aufgehoert hast |
+
+**Die Kernerkenntnis:** Claude ist bereits intelligent. Was ihm fehlt, ist **Struktur, Gedaechtnis und Gewohnheiten**. Genau das liefert ein Orchestrator — nicht mehr Intelligenz, sondern bessere Infrastruktur drumherum.
+
 ## Das groessere Bild
 
 Dieses Starter Kit gibt dir die **Architektur und Muster**. Es ist bewusst minimal gehalten — 6 Skills, einfaches Routing, grundlegendes Gedaechtnis.
 
-Das System, aus dem es extrahiert ist, sieht so aus:
+So sieht das vollstaendige System aus — dasjenige, aus dem dieses Kit extrahiert ist:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                     │
+│    DU: "Analysiere die Marktdaten und schreibe eine Zusammenfassung"│
+│                                                                     │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  🧠 CLAUDE.md — DAS ORCHESTRATOR-GEHIRN                             │
+│                                                                     │
+│  ┌─────────────────┐  ┌──────────────────┐  ┌───────────────────┐  │
+│  │  Routing-Regeln  │  │  User Patterns    │  │  Workflow-Ketten  │  │
+│  │  100+ Schluessel-│  │  gelernt aus      │  │  15+ mehrstufige  │  │
+│  │  wort-Zuordnungen│  │  Korrekturen      │  │  Skill-Sequenzen  │  │
+│  └────────┬────────┘  └──────────────────┘  └───────────────────┘  │
+│           │                                                         │
+│           │  erkennt "analysiere" + "schreibe" → Kette: analyze →   │
+│           │  express                                                │
+└───────────┼─────────────────────────────────────────────────────────┘
+            │
+            ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  ⚡ SKILLS (20+ im Vollsystem, 6 im Starter Kit)                    │
+│                                                                     │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌───────┐ │
+│  │capture │ │distill │ │express │ │analyze │ │signal- │ │handoff│ │
+│  │   📥   │ │   🔬   │ │   ✍️   │ │   🔍   │ │check🎯│ │  💾   │ │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └───────┘ │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
+│  │research│ │decide  │ │innovate│ │strategy│ │ ...14+ │           │
+│  │pipeline│ │        │ │        │ │        │ │ weitere│           │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘           │
+│                                                                     │
+│  Jeder Skill = eine SKILL.md-Datei mit Workflow, Regeln, Format     │
+└──────────────────────────────┬──────────────────────────────────────┘
+                               │
+           ┌───────────────────┼───────────────────┐
+           ▼                   ▼                   ▼
+┌────────────────┐  ┌────────────────┐  ┌────────────────────────────┐
+│ 💾 KURZZEIT    │  │ 📋 MITTELZEIT  │  │ 🏛️ LANGZEIT                │
+│                │  │                │  │                            │
+│ Context Window │  │ Routing-Log    │  │ CLAUDE.md (Routing-Regeln) │
+│ Aktuelle       │  │ Projekt-States │  │ memory/ (Glossar, Kontakte,│
+│ Konversation   │  │ Handoff-Dateien│  │   Projekte, Entscheidungen)│
+│                │  │                │  │                            │
+│ 1 Session      │  │ Wochen–Monate  │  │ Permanent                  │
+└────────────────┘  └────────────────┘  └─────┬──────────┬───────────┘
+                                              │          │
+                                    ┌─────────┘          └──────────┐
+                                    ▼                               ▼
+                         ┌─────────────────────┐     ┌──────────────────────┐
+                         │ 🟣 Obsidian Vaults   │     │ 🗃️ SQLite Wissens-    │
+                         │                     │     │    datenbank          │
+                         │ Deine Notizen werden│     │                      │
+                         │ Claudes Wissens-    │     │ Research-Items,      │
+                         │ basis. Lesen +      │     │ importierte Daten,   │
+                         │ Schreiben via MCP.  │     │ Skill-Nutzungsstatistik│
+                         └─────────────────────┘     └──────────────────────┘
+```
+
+**Starter Kit vs. Vollsystem:**
 
 | | Starter Kit | Vollstaendiges System |
 |---|-------------|----------------------|
