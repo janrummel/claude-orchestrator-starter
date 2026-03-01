@@ -11,6 +11,7 @@
     </a>
   </p>
   <p align="center">
+    <a href="https://janrummel.github.io/claude-orchestrator-starter/">🌐 Website</a> ·
     <strong>Deutsch</strong> | <a href="README.md">English</a>
   </p>
 </p>
@@ -42,6 +43,11 @@ Du                                      Claude (mit Orchestrator)
                                           Markiert Luecken und Framing
                                           Schlaegt vor: /express zum Verbessern
 
+"Was kann an dem Plan schiefgehen?"     → Erkennt Reflection-Modus
+                                          Ruft challenge Skill auf
+                                          Stress-Test aus 3 Perspektiven
+                                          Schlaegt vor: /express zum Haerten
+
 "Zustand sichern fuer naechstes Mal"   → Ruft handoff Skill auf
                                           Erfasst Entscheidungen + Kontext
                                           Schreibt Projekt-State-Datei
@@ -59,6 +65,7 @@ flowchart TB
 
     subgraph BRAIN ["🧠 CLAUDE.md — Das Orchestrator-Gehirn"]
         direction TB
+        mode["Modus-Erkennung<br/><i>Kognitiver Zustand → Skill-Cluster</i>"]
         route["Routing-Regeln<br/><i>Schluesselwort → Skill-Zuordnung</i>"]
         patterns["User Patterns<br/><i>Gelernte Praeferenzen</i>"]
     end
@@ -70,6 +77,7 @@ flowchart TB
         express["✍️ express"]
         analyze["🔍 analyze"]
         signal["🎯 signal-check"]
+        challenge["⚔️ challenge"]
         handoff["💾 handoff"]
     end
 
@@ -123,7 +131,7 @@ flowchart TB
 └─────────────────────────────────────────────────────┘
 ```
 
-### Sechs Kern-Skills
+### Sieben Kern-Skills
 
 Jeder Skill ist eine `SKILL.md`-Datei — **Anweisungen, kein Code**. Sie sagen Claude, wie es sich verhalten, welche Tools es nutzen und welchen Output es produzieren soll.
 
@@ -134,11 +142,12 @@ Jeder Skill ist eine `SKILL.md`-Datei — **Anweisungen, kein Code**. Sie sagen 
 | ✍️ | **express** | Ausgefeilten Output schreiben | "Schreibe", "Formuliere" |
 | 🔍 | **analyze** | Tiefenanalyse mit strukturiertem Denken | "Analysiere", "Untersuche" |
 | 🎯 | **signal-check** | Qualitaetspruefung / Faktencheck | "Ist das solide?", "Substanz-Check" |
+| ⚔️ | **challenge** | Adversarischer Stress-Test | "Was kann schiefgehen?", "Stress-Test" |
 | 💾 | **handoff** | Session-Zustand fuer naechstes Mal sichern | "Zustand sichern", "Handoff" |
 
-### Zwei zentrale Schleifen
+### Drei zentrale Schleifen
 
-Diese 6 Skills bilden zwei kraftvolle Feedback-Schleifen:
+Diese 7 Skills bilden drei kraftvolle Feedback-Schleifen:
 
 **Evaluator-Optimizer-Schleife** — Schreiben, evaluieren, verbessern:
 
@@ -153,6 +162,22 @@ flowchart LR
 
     style E fill:#16213e,stroke:#e94560,color:#fff
     style S fill:#16213e,stroke:#0f3460,color:#fff
+    style E2 fill:#16213e,stroke:#e94560,color:#fff
+```
+
+**Evaluator-Challenger-Schleife** — Schreiben, Stress-Test, haerten:
+
+```mermaid
+flowchart LR
+    E["✍️ express<br/><i>Output generieren</i>"]
+    CH["⚔️ challenge<br/><i>Adversarischer Stress-Test</i>"]
+    E2["✍️ express<br/><i>Gegen Einwaende haerten</i>"]
+
+    E -->|"stress-testen"| CH
+    CH -->|"haerten"| E2
+
+    style E fill:#16213e,stroke:#e94560,color:#fff
+    style CH fill:#16213e,stroke:#e94560,color:#fff
     style E2 fill:#16213e,stroke:#e94560,color:#fff
 ```
 
@@ -303,7 +328,7 @@ Dieses Starter Kit macht daraus einen **zustandsbehafteten Assistenten**, der mi
 
 ## Das groessere Bild
 
-Dieses Starter Kit gibt dir die **Architektur und Muster**. Es ist bewusst minimal gehalten — 6 Skills, einfaches Routing, grundlegendes Gedaechtnis.
+Dieses Starter Kit gibt dir die **Architektur und Muster**. Es ist bewusst fokussiert — 7 Skills, modusbewusstes Routing, grundlegendes Gedaechtnis.
 
 So sieht das vollstaendige System aus — dasjenige, aus dem dieses Kit extrahiert ist:
 
@@ -330,12 +355,16 @@ So sieht das vollstaendige System aus — dasjenige, aus dem dieses Kit extrahie
             │
             ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│  ⚡ SKILLS (20+ im Vollsystem, 6 im Starter Kit)                    │
+│  ⚡ SKILLS (20+ im Vollsystem, 7 im Starter Kit)                    │
 │                                                                     │
 │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌───────┐ │
 │  │capture │ │distill │ │express │ │analyze │ │signal- │ │handoff│ │
 │  │   📥   │ │   🔬   │ │   ✍️   │ │   🔍   │ │check🎯│ │  💾   │ │
 │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └───────┘ │
+│  ┌────────┐                                                        │
+│  │challen-│                                                        │
+│  │ge  ⚔️  │                                                        │
+│  └────────┘                                                        │
 │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
 │  │research│ │decide  │ │innovate│ │strategy│ │ ...14+ │           │
 │  │pipeline│ │        │ │        │ │        │ │ weitere│           │
@@ -372,12 +401,12 @@ So sieht das vollstaendige System aus — dasjenige, aus dem dieses Kit extrahie
 
 | | Starter Kit | Vollstaendiges System |
 |---|-------------|----------------------|
-| **Skills** | 6 Kern-Skills | 20+ domainenspezifische Skills |
-| **Routing** | 6 Schluesselwort-Zuordnungen | 100+ Zuordnungen mit Disambiguation |
+| **Skills** | 7 Kern-Skills | 20+ domainenspezifische Skills |
+| **Routing** | 7 Schluesselwort-Zuordnungen + Modus-Erkennung | 100+ Zuordnungen mit Disambiguation |
 | **Gedaechtnis** | Template-Dateien | Gefuellt mit Monaten an Kontext |
 | **Obsidian** | 1 Vault (optional) | 6 Vaults, 930+ Notizen |
 | **Datenbank** | Leeres Schema | Research-Items, Datensaetze, Nutzungsstatistiken |
-| **Workflow-Ketten** | 2 Basis-Schleifen | 15+ mehrstufige Ketten |
+| **Workflow-Ketten** | 3 Feedback-Schleifen | 15+ mehrstufige Ketten |
 | **Self-Improvement** | Manuelle Updates | Automatisierte Routing-Analyse |
 
 Das Ziel ist nicht, dir alles zu geben. Es ist, dir die **Bausteine** zu zeigen — damit du dein eigenes System darauf aufbauen kannst.
@@ -396,6 +425,7 @@ claude-orchestrator-starter/
 │   │   ├── express/           ← ✍️ Ausgefeilten Output schreiben
 │   │   ├── analyze/           ← 🔍 Tiefe strukturierte Analyse
 │   │   ├── signal-check/      ← 🎯 Qualitaets- und Substanz-Check
+│   │   ├── challenge/         ← ⚔️ Adversarischer Stress-Test
 │   │   └── handoff/           ← 💾 Session-Zustand sichern
 │   ├── routing-log.jsonl.example
 │   ├── user-patterns.md.example

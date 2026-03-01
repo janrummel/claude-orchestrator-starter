@@ -10,31 +10,31 @@
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a2e;
-            --text: #e0e0e8;
-            --text-muted: #8888a0;
-            --accent: #e94560;
-            --accent2: #0f3460;
-            --purple: #7C3AED;
-            --blue: #3b82f6;
-            --green: #10b981;
-            --orange: #f59e0b;
-            --border: #1e1e2e;
-            --glow: rgba(233, 69, 96, 0.15);
-            --glow-blue: rgba(59, 130, 246, 0.15);
-            --glow-purple: rgba(124, 58, 237, 0.15);
-            --glow-green: rgba(16, 185, 129, 0.15);
+            --bg: #151311;
+            --bg-card: #1E1B18;
+            --bg-card-hover: #282420;
+            --text: #EDE5D8;
+            --text-muted: #9C8E7C;
+            --accent: #D97757;
+            --accent2: #1A1510;
+            --purple: #8B7EC8;
+            --blue: #5B9BD5;
+            --green: #7BAF7E;
+            --orange: #E0944D;
+            --border: #2A2520;
+            --glow: rgba(217, 119, 87, 0.15);
+            --glow-blue: rgba(91, 155, 213, 0.15);
+            --glow-purple: rgba(139, 126, 200, 0.15);
+            --glow-green: rgba(123, 175, 126, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -123,7 +123,7 @@
             top: -100px; left: 50%;
             transform: translateX(-50%);
             width: 800px; height: 800px;
-            background: radial-gradient(circle, var(--glow) 0%, rgba(124, 58, 237, 0.08) 40%, transparent 70%);
+            background: radial-gradient(circle, var(--glow) 0%, rgba(139, 126, 200, 0.08) 40%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -158,17 +158,17 @@
             transform: translateY(-1px);
         }
 
-        .badge--mit { background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
-        .badge--claude { background: rgba(233, 69, 96, 0.15); color: var(--accent); border: 1px solid rgba(233, 69, 96, 0.3); }
-        .badge--md { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .badge--obsidian { background: rgba(124, 58, 237, 0.15); color: var(--purple); border: 1px solid rgba(124, 58, 237, 0.3); }
+        .badge--mit { background: rgba(91, 155, 213, 0.15); color: var(--blue); border: 1px solid rgba(91, 155, 213, 0.3); }
+        .badge--claude { background: rgba(217, 119, 87, 0.15); color: var(--accent); border: 1px solid rgba(217, 119, 87, 0.3); }
+        .badge--md { background: rgba(123, 175, 126, 0.15); color: var(--green); border: 1px solid rgba(123, 175, 126, 0.3); }
+        .badge--obsidian { background: rgba(139, 126, 200, 0.15); color: var(--purple); border: 1px solid rgba(139, 126, 200, 0.3); }
 
         .hero h1 {
             font-size: clamp(2.5rem, 5vw, 3.8rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #c0c0d0 50%, var(--accent) 100%);
+            background: linear-gradient(135deg, #FFF8F0 0%, #D4C4B0 50%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -202,14 +202,14 @@
         }
 
         .btn--primary {
-            background: linear-gradient(135deg, var(--accent) 0%, #c2185b 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, #B85530 100%);
             color: #fff;
-            box-shadow: 0 4px 16px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 4px 16px rgba(217, 119, 87, 0.3);
         }
 
         .btn--primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.4);
+            box-shadow: 0 8px 32px rgba(217, 119, 87, 0.4);
         }
 
         .btn--secondary {
@@ -255,11 +255,11 @@
         }
 
         .problem-card.bad {
-            border-left: 3px solid #ef4444;
+            border-left: 3px solid #D95050;
         }
 
         .problem-card.bad:hover {
-            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+            box-shadow: 0 8px 32px rgba(217, 80, 80, 0.1);
         }
 
         .problem-card.good {
@@ -267,7 +267,7 @@
         }
 
         .problem-card.good:hover {
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 8px 32px rgba(123, 175, 126, 0.1);
         }
 
         .problem-card h3 {
@@ -285,7 +285,7 @@
             height: 18px;
         }
 
-        .problem-card.bad h3 { color: #ef4444; }
+        .problem-card.bad h3 { color: #D95050; }
         .problem-card.good h3 { color: var(--green); }
 
         .problem-card ul {
@@ -303,7 +303,7 @@
             line-height: 1.5;
         }
 
-        .problem-card.bad li::before { content: '✗'; position: absolute; left: 0; color: #ef4444; font-weight: 600; }
+        .problem-card.bad li::before { content: '✗'; position: absolute; left: 0; color: #D95050; font-weight: 600; }
         .problem-card.good li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 600; }
 
         /* ── Section Headers ──────────────────────── */
@@ -328,7 +328,7 @@
         .section-title {
             font-size: clamp(1.8rem, 3vw, 2.4rem);
             font-weight: 700;
-            background: linear-gradient(135deg, #fff 0%, #a0a0b8 100%);
+            background: linear-gradient(135deg, #FFF8F0 0%, #C4B8A0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -380,7 +380,7 @@
         .why-card--memory:hover { box-shadow: 0 8px 32px var(--glow-purple); }
 
         .why-card--habits::before { background: linear-gradient(90deg, var(--orange), var(--accent)); }
-        .why-card--habits:hover { box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); }
+        .why-card--habits:hover { box-shadow: 0 8px 32px rgba(224, 148, 77, 0.15); }
 
         .why-card--loops::before { background: linear-gradient(90deg, var(--green), var(--blue)); }
         .why-card--loops:hover { box-shadow: 0 8px 32px var(--glow-green); }
@@ -395,9 +395,9 @@
             justify-content: center;
         }
 
-        .why-card--memory .why-card-icon { background: rgba(124, 58, 237, 0.12); }
-        .why-card--habits .why-card-icon { background: rgba(245, 158, 11, 0.12); }
-        .why-card--loops .why-card-icon { background: rgba(16, 185, 129, 0.12); }
+        .why-card--memory .why-card-icon { background: rgba(139, 126, 200, 0.12); }
+        .why-card--habits .why-card-icon { background: rgba(224, 148, 77, 0.12); }
+        .why-card--loops .why-card-icon { background: rgba(123, 175, 126, 0.12); }
 
         .why-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
         .why-card p { color: var(--text-muted); font-size: 13px; line-height: 1.6; }
@@ -414,7 +414,7 @@
         }
 
         .arch-svg-container text {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         /* ── Memory Layers ────────────────────────── */
@@ -468,14 +468,14 @@
             margin-bottom: 8px;
         }
 
-        .memory-layer--short { background: rgba(233, 69, 96, 0.05); }
-        .memory-layer--short .tag { background: rgba(233, 69, 96, 0.15); color: var(--accent); }
+        .memory-layer--short { background: rgba(217, 119, 87, 0.05); }
+        .memory-layer--short .tag { background: rgba(217, 119, 87, 0.15); color: var(--accent); }
 
-        .memory-layer--mid { background: rgba(59, 130, 246, 0.05); }
-        .memory-layer--mid .tag { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+        .memory-layer--mid { background: rgba(91, 155, 213, 0.05); }
+        .memory-layer--mid .tag { background: rgba(91, 155, 213, 0.15); color: var(--blue); }
 
-        .memory-layer--long { background: rgba(124, 58, 237, 0.05); }
-        .memory-layer--long .tag { background: rgba(124, 58, 237, 0.15); color: var(--purple); }
+        .memory-layer--long { background: rgba(139, 126, 200, 0.05); }
+        .memory-layer--long .tag { background: rgba(139, 126, 200, 0.15); color: var(--purple); }
 
         .memory-layer h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
         .memory-layer p { font-size: 13px; color: var(--text-muted); }
@@ -512,11 +512,11 @@
             border-color: transparent;
         }
 
-        .skill-card:nth-child(1):hover { box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15); }
+        .skill-card:nth-child(1):hover { box-shadow: 0 8px 32px rgba(91, 155, 213, 0.15); }
         .skill-card:nth-child(2):hover { box-shadow: 0 8px 32px var(--glow-purple); }
-        .skill-card:nth-child(3):hover { box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); }
+        .skill-card:nth-child(3):hover { box-shadow: 0 8px 32px rgba(224, 148, 77, 0.15); }
         .skill-card:nth-child(4):hover { box-shadow: 0 8px 32px var(--glow-green); }
-        .skill-card:nth-child(5):hover { box-shadow: 0 8px 32px rgba(233, 69, 96, 0.15); }
+        .skill-card:nth-child(5):hover { box-shadow: 0 8px 32px rgba(217, 119, 87, 0.15); }
         .skill-card:nth-child(6):hover { box-shadow: 0 8px 32px var(--glow-blue); }
 
         .skill-icon {
@@ -529,12 +529,12 @@
             margin-bottom: 16px;
         }
 
-        .skill-icon--capture { background: rgba(59, 130, 246, 0.12); }
-        .skill-icon--distill { background: rgba(124, 58, 237, 0.12); }
-        .skill-icon--express { background: rgba(245, 158, 11, 0.12); }
-        .skill-icon--analyze { background: rgba(16, 185, 129, 0.12); }
-        .skill-icon--signal { background: rgba(233, 69, 96, 0.12); }
-        .skill-icon--handoff { background: rgba(59, 130, 246, 0.12); }
+        .skill-icon--capture { background: rgba(91, 155, 213, 0.12); }
+        .skill-icon--distill { background: rgba(139, 126, 200, 0.12); }
+        .skill-icon--express { background: rgba(224, 148, 77, 0.12); }
+        .skill-icon--analyze { background: rgba(123, 175, 126, 0.12); }
+        .skill-icon--signal { background: rgba(217, 119, 87, 0.12); }
+        .skill-icon--handoff { background: rgba(91, 155, 213, 0.12); }
 
         .skill-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
         .skill-card .skill-name { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
@@ -543,8 +543,8 @@
         /* ── Loops ────────────────────────────────── */
         .loops-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .loop-card {
@@ -671,7 +671,7 @@
             color: var(--text-muted);
         }
 
-        .quickstart-block pre .comment { color: #555570; }
+        .quickstart-block pre .comment { color: #6B5F50; }
         .quickstart-block pre .cmd { color: var(--green); }
 
         .quickstart-steps {
@@ -694,12 +694,12 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), #c2185b);
+            background: linear-gradient(135deg, var(--accent), #B85530);
             color: #fff;
             font-size: 13px;
             font-weight: 700;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 4px 12px rgba(217, 119, 87, 0.3);
         }
 
         .step-text {
@@ -745,7 +745,7 @@
         @media (max-width: 768px) {
             .problem-grid { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr 1fr; }
-            .loops-grid { grid-template-columns: 1fr; }
+            .loops-grid { grid-template-columns: 1fr 1fr; }
             .why-grid { grid-template-columns: 1fr; }
             .hero { padding: 60px 24px 40px; }
             .section { padding: 48px 0; }
@@ -767,7 +767,7 @@
                 <!-- Grid pattern -->
                 <defs>
                     <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1e1e2e" stroke-width="0.5"/>
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#2A2520" stroke-width="0.5"/>
                     </pattern>
                     <radialGradient id="grid-fade" cx="50%" cy="50%" r="50%">
                         <stop offset="0%" stop-color="white" stop-opacity="1"/>
@@ -779,29 +779,29 @@
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" mask="url(#grid-mask)"/>
                 <!-- Floating nodes -->
-                <circle cx="200" cy="150" r="4" fill="#e94560" opacity="0.3">
+                <circle cx="200" cy="150" r="4" fill="#D97757" opacity="0.3">
                     <animate attributeName="cy" values="150;140;150" dur="4s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="400" cy="300" r="3" fill="#3b82f6" opacity="0.3">
+                <circle cx="400" cy="300" r="3" fill="#5B9BD5" opacity="0.3">
                     <animate attributeName="cy" values="300;310;300" dur="5s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="800" cy="200" r="5" fill="#7C3AED" opacity="0.2">
+                <circle cx="800" cy="200" r="5" fill="#8B7EC8" opacity="0.2">
                     <animate attributeName="cy" values="200;190;200" dur="6s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="1000" cy="400" r="3" fill="#10b981" opacity="0.3">
+                <circle cx="1000" cy="400" r="3" fill="#7BAF7E" opacity="0.3">
                     <animate attributeName="cy" values="400;390;400" dur="4.5s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="600" cy="100" r="4" fill="#f59e0b" opacity="0.2">
+                <circle cx="600" cy="100" r="4" fill="#E0944D" opacity="0.2">
                     <animate attributeName="cy" values="100;110;100" dur="5.5s" repeatCount="indefinite"/>
                 </circle>
                 <!-- Connection lines -->
-                <line x1="200" y1="150" x2="400" y2="300" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                <line x1="200" y1="150" x2="400" y2="300" stroke="#2A2520" stroke-width="0.5" stroke-dasharray="4,8">
                     <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="3s" repeatCount="indefinite"/>
                 </line>
-                <line x1="400" y1="300" x2="800" y2="200" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                <line x1="400" y1="300" x2="800" y2="200" stroke="#2A2520" stroke-width="0.5" stroke-dasharray="4,8">
                     <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="4s" repeatCount="indefinite"/>
                 </line>
-                <line x1="800" y1="200" x2="1000" y2="400" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                <line x1="800" y1="200" x2="1000" y2="400" stroke="#2A2520" stroke-width="0.5" stroke-dasharray="4,8">
                     <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="3.5s" repeatCount="indefinite"/>
                 </line>
             </svg>
@@ -810,12 +810,12 @@
         <!-- Hero Icon SVG -->
         <div class="hero-icon">
             <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="8" width="64" height="64" rx="16" fill="#12121a" stroke="#1e1e2e" stroke-width="1.5"/>
-                <circle cx="40" cy="34" r="12" stroke="#e94560" stroke-width="2" fill="none" opacity="0.8"/>
-                <circle cx="40" cy="34" r="5" fill="#e94560" opacity="0.6"/>
-                <path d="M24 52 C24 52 28 46 40 46 C52 46 56 52 56 52" stroke="#7C3AED" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
-                <path d="M20 60 L60 60" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-                <path d="M26 66 L54 66" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+                <rect x="8" y="8" width="64" height="64" rx="16" fill="#1E1B18" stroke="#2A2520" stroke-width="1.5"/>
+                <circle cx="40" cy="34" r="12" stroke="#D97757" stroke-width="2" fill="none" opacity="0.8"/>
+                <circle cx="40" cy="34" r="5" fill="#D97757" opacity="0.6"/>
+                <path d="M24 52 C24 52 28 46 40 46 C52 46 56 52 56 52" stroke="#8B7EC8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <path d="M20 60 L60 60" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                <path d="M26 66 L54 66" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
             </svg>
         </div>
 
@@ -846,7 +846,7 @@
             <div class="problem-grid">
                 <div class="problem-card bad animate-in">
                     <h3>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#D95050" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
                         Without Orchestrator
                     </h3>
                     <ul>
@@ -859,7 +859,7 @@
                 </div>
                 <div class="problem-card good animate-in">
                     <h3>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#7BAF7E" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>
                         With Orchestrator
                     </h3>
                     <ul>
@@ -886,10 +886,10 @@
                 <div class="why-card why-card--memory animate-in">
                     <div class="why-card-icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="16" cy="12" r="8" stroke="#7C3AED" stroke-width="2"/>
-                            <circle cx="16" cy="12" r="3" fill="#7C3AED" opacity="0.6"/>
-                            <path d="M8 24 C8 20 12 18 16 18 C20 18 24 20 24 24" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
-                            <line x1="6" y1="28" x2="26" y2="28" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                            <circle cx="16" cy="12" r="8" stroke="#8B7EC8" stroke-width="2"/>
+                            <circle cx="16" cy="12" r="3" fill="#8B7EC8" opacity="0.6"/>
+                            <path d="M8 24 C8 20 12 18 16 18 C20 18 24 20 24 24" stroke="#8B7EC8" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="6" y1="28" x2="26" y2="28" stroke="#8B7EC8" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
                         </svg>
                     </div>
                     <h4>Memory</h4>
@@ -898,11 +898,11 @@
                 <div class="why-card why-card--habits animate-in">
                     <div class="why-card-icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 4 L16 14" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-                            <polygon points="16,14 12,10 20,10" fill="#f59e0b" opacity="0.6"/>
-                            <rect x="6" y="18" width="20" height="10" rx="3" stroke="#f59e0b" stroke-width="2" fill="none"/>
-                            <line x1="12" y1="22" x2="20" y2="22" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-                            <line x1="12" y1="25" x2="17" y2="25" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                            <path d="M16 4 L16 14" stroke="#E0944D" stroke-width="2" stroke-linecap="round"/>
+                            <polygon points="16,14 12,10 20,10" fill="#E0944D" opacity="0.6"/>
+                            <rect x="6" y="18" width="20" height="10" rx="3" stroke="#E0944D" stroke-width="2" fill="none"/>
+                            <line x1="12" y1="22" x2="20" y2="22" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                            <line x1="12" y1="25" x2="17" y2="25" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
                         </svg>
                     </div>
                     <h4>Habits</h4>
@@ -911,10 +911,10 @@
                 <div class="why-card why-card--loops animate-in">
                     <div class="why-card-icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 10 A8 8 0 0 1 22 22" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round"/>
-                            <path d="M10 22 A8 8 0 0 1 10 10" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round"/>
-                            <polygon points="22,10 25,13 19,13" fill="#10b981"/>
-                            <polygon points="10,22 7,19 13,19" fill="#10b981"/>
+                            <path d="M22 10 A8 8 0 0 1 22 22" stroke="#7BAF7E" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <path d="M10 22 A8 8 0 0 1 10 10" stroke="#7BAF7E" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <polygon points="22,10 25,13 19,13" fill="#7BAF7E"/>
+                            <polygon points="10,22 7,19 13,19" fill="#7BAF7E"/>
                         </svg>
                     </div>
                     <h4>Quality Loops</h4>
@@ -925,7 +925,7 @@
     </section>
 
     <!-- ── Architecture ──────────────────────────── -->
-    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.03), transparent);">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(139, 126, 200, 0.03), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Architecture</div>
@@ -946,82 +946,82 @@
                     </defs>
 
                     <!-- Connection lines with animation -->
-                    <line x1="300" y1="68" x2="300" y2="102" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                    <line x1="300" y1="68" x2="300" y2="102" stroke="#3A3430" stroke-width="2" stroke-dasharray="4,4">
                         <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
                     </line>
-                    <line x1="300" y1="168" x2="300" y2="202" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                    <line x1="300" y1="168" x2="300" y2="202" stroke="#3A3430" stroke-width="2" stroke-dasharray="4,4">
                         <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
                     </line>
-                    <line x1="300" y1="268" x2="300" y2="302" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                    <line x1="300" y1="268" x2="300" y2="302" stroke="#3A3430" stroke-width="2" stroke-dasharray="4,4">
                         <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
                     </line>
-                    <line x1="300" y1="368" x2="300" y2="402" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                    <line x1="300" y1="368" x2="300" y2="402" stroke="#3A3430" stroke-width="2" stroke-dasharray="4,4">
                         <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
                     </line>
 
                     <!-- Arrows -->
-                    <polygon points="300,100 295,92 305,92" fill="#2a2a3e"/>
-                    <polygon points="300,200 295,192 305,192" fill="#2a2a3e"/>
-                    <polygon points="300,300 295,292 305,292" fill="#2a2a3e"/>
-                    <polygon points="300,400 295,392 305,392" fill="#2a2a3e"/>
+                    <polygon points="300,100 295,92 305,92" fill="#3A3430"/>
+                    <polygon points="300,200 295,192 305,192" fill="#3A3430"/>
+                    <polygon points="300,300 295,292 305,292" fill="#3A3430"/>
+                    <polygon points="300,400 295,392 305,392" fill="#3A3430"/>
 
                     <!-- Node 1: Your Message -->
-                    <rect x="120" y="10" width="360" height="60" rx="12" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
-                    <circle cx="160" cy="40" r="14" fill="rgba(233,69,96,0.12)"/>
+                    <rect x="120" y="10" width="360" height="60" rx="12" fill="#1E1B18" stroke="#D97757" stroke-width="1.5"/>
+                    <circle cx="160" cy="40" r="14" fill="rgba(217,119,87,0.12)"/>
                     <svg x="150" y="30" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="4" fill="#e94560"/>
-                        <circle cx="12" cy="12" r="9" stroke="#e94560" stroke-width="1.5" fill="none"/>
+                        <circle cx="12" cy="12" r="4" fill="#D97757"/>
+                        <circle cx="12" cy="12" r="9" stroke="#D97757" stroke-width="1.5" fill="none"/>
                     </svg>
-                    <text x="190" y="36" font-size="14" font-weight="600" fill="#e0e0e8">Your Message</text>
-                    <text x="190" y="52" font-size="11" fill="#8888a0">"Summarize this article"</text>
+                    <text x="190" y="36" font-size="14" font-weight="600" fill="#EDE5D8">Your Message</text>
+                    <text x="190" y="52" font-size="11" fill="#9C8E7C">"Summarize this article"</text>
 
                     <!-- Node 2: CLAUDE.md -->
-                    <rect x="120" y="110" width="360" height="60" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
+                    <rect x="120" y="110" width="360" height="60" rx="12" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1.5"/>
                     <circle cx="160" cy="140" r="14" fill="rgba(59,130,246,0.12)"/>
                     <svg x="148" y="128" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="10" r="6" stroke="#3b82f6" stroke-width="1.5"/>
-                        <circle cx="12" cy="10" r="2.5" fill="#3b82f6" opacity="0.6"/>
-                        <path d="M6 20 C6 17 9 15 12 15 C15 15 18 17 18 20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="12" cy="10" r="6" stroke="#5B9BD5" stroke-width="1.5"/>
+                        <circle cx="12" cy="10" r="2.5" fill="#5B9BD5" opacity="0.6"/>
+                        <path d="M6 20 C6 17 9 15 12 15 C15 15 18 17 18 20" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    <text x="190" y="136" font-size="14" font-weight="600" fill="#e0e0e8">CLAUDE.md — The Brain</text>
-                    <text x="190" y="152" font-size="11" fill="#8888a0">Routes keywords → skills, loads context</text>
+                    <text x="190" y="136" font-size="14" font-weight="600" fill="#EDE5D8">CLAUDE.md — The Brain</text>
+                    <text x="190" y="152" font-size="11" fill="#9C8E7C">Routes keywords → skills, loads context</text>
 
                     <!-- Node 3: Skill Execution -->
-                    <rect x="120" y="210" width="360" height="60" rx="12" fill="#12121a" stroke="#10b981" stroke-width="1.5"/>
+                    <rect x="120" y="210" width="360" height="60" rx="12" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1.5"/>
                     <circle cx="160" cy="240" r="14" fill="rgba(16,185,129,0.12)"/>
                     <svg x="148" y="228" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round" fill="rgba(16,185,129,0.2)"/>
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#7BAF7E" stroke-width="1.5" stroke-linejoin="round" fill="rgba(16,185,129,0.2)"/>
                     </svg>
-                    <text x="190" y="236" font-size="14" font-weight="600" fill="#e0e0e8">Skill Execution</text>
-                    <text x="190" y="252" font-size="11" fill="#8888a0">Matched skill runs its workflow</text>
+                    <text x="190" y="236" font-size="14" font-weight="600" fill="#EDE5D8">Skill Execution</text>
+                    <text x="190" y="252" font-size="11" fill="#9C8E7C">Matched skill runs its workflow</text>
 
                     <!-- Node 4: Memory -->
-                    <rect x="120" y="310" width="360" height="60" rx="12" fill="#12121a" stroke="#7C3AED" stroke-width="1.5"/>
+                    <rect x="120" y="310" width="360" height="60" rx="12" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1.5"/>
                     <circle cx="160" cy="340" r="14" fill="rgba(124,58,237,0.12)"/>
                     <svg x="148" y="328" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect x="4" y="4" width="16" height="16" rx="3" stroke="#7C3AED" stroke-width="1.5"/>
-                        <line x1="4" y1="10" x2="20" y2="10" stroke="#7C3AED" stroke-width="1" opacity="0.5"/>
-                        <line x1="4" y1="15" x2="20" y2="15" stroke="#7C3AED" stroke-width="1" opacity="0.3"/>
-                        <circle cx="12" cy="7" r="1.5" fill="#7C3AED" opacity="0.6"/>
+                        <rect x="4" y="4" width="16" height="16" rx="3" stroke="#8B7EC8" stroke-width="1.5"/>
+                        <line x1="4" y1="10" x2="20" y2="10" stroke="#8B7EC8" stroke-width="1" opacity="0.5"/>
+                        <line x1="4" y1="15" x2="20" y2="15" stroke="#8B7EC8" stroke-width="1" opacity="0.3"/>
+                        <circle cx="12" cy="7" r="1.5" fill="#8B7EC8" opacity="0.6"/>
                     </svg>
-                    <text x="190" y="336" font-size="14" font-weight="600" fill="#e0e0e8">Three-Layer Memory</text>
-                    <text x="190" y="352" font-size="11" fill="#8888a0">Short · Mid · Long-term persistence</text>
+                    <text x="190" y="336" font-size="14" font-weight="600" fill="#EDE5D8">Three-Layer Memory</text>
+                    <text x="190" y="352" font-size="11" fill="#9C8E7C">Short · Mid · Long-term persistence</text>
 
                     <!-- Node 5: Output -->
-                    <rect x="120" y="410" width="360" height="60" rx="12" fill="#12121a" stroke="#f59e0b" stroke-width="1.5"/>
+                    <rect x="120" y="410" width="360" height="60" rx="12" fill="#1E1B18" stroke="#E0944D" stroke-width="1.5"/>
                     <circle cx="160" cy="440" r="14" fill="rgba(245,158,11,0.12)"/>
                     <svg x="148" y="428" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="#f59e0b" stroke-width="1.5"/>
-                        <path d="M8 12 L11 15 L16 9" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="#E0944D" stroke-width="1.5"/>
+                        <path d="M8 12 L11 15 L16 9" stroke="#E0944D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <text x="190" y="436" font-size="14" font-weight="600" fill="#e0e0e8">Structured Output</text>
-                    <text x="190" y="452" font-size="11" fill="#8888a0">Result + next skill suggestions</text>
+                    <text x="190" y="436" font-size="14" font-weight="600" fill="#EDE5D8">Structured Output</text>
+                    <text x="190" y="452" font-size="11" fill="#9C8E7C">Result + next skill suggestions</text>
 
                     <!-- Feedback arrow from Output back to Brain -->
-                    <path d="M 486 440 C 540 440 540 140 486 140" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="4,4" fill="none">
+                    <path d="M 486 440 C 540 440 540 140 486 140" stroke="#3A3430" stroke-width="1" stroke-dasharray="4,4" fill="none">
                         <animate attributeName="stroke-dashoffset" from="0" to="16" dur="3s" repeatCount="indefinite"/>
                     </path>
-                    <text x="536" y="290" font-size="10" fill="#555570" transform="rotate(90, 536, 290)">feedback loop</text>
+                    <text x="536" y="290" font-size="10" fill="#6B5F50" transform="rotate(90, 536, 290)">feedback loop</text>
                 </svg>
             </div>
         </div>
@@ -1039,30 +1039,30 @@
                 <div class="memory-svg animate-in">
                     <svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg" fill="none">
                         <!-- Layer 3 (bottom) - Long-term -->
-                        <rect x="10" y="180" width="220" height="80" rx="12" fill="#12121a" stroke="#7C3AED" stroke-width="1.5"/>
-                        <text x="120" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="#7C3AED">LONG-TERM</text>
-                        <text x="120" y="232" text-anchor="middle" font-size="9" fill="#8888a0">CLAUDE.md · Obsidian · SQLite</text>
-                        <text x="120" y="248" text-anchor="middle" font-size="9" fill="#555570">permanent</text>
+                        <rect x="10" y="180" width="220" height="80" rx="12" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1.5"/>
+                        <text x="120" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="#8B7EC8">LONG-TERM</text>
+                        <text x="120" y="232" text-anchor="middle" font-size="9" fill="#9C8E7C">CLAUDE.md · Obsidian · SQLite</text>
+                        <text x="120" y="248" text-anchor="middle" font-size="9" fill="#6B5F50">permanent</text>
 
                         <!-- Layer 2 (middle) - Mid-term -->
-                        <rect x="30" y="100" width="180" height="70" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
-                        <text x="120" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#3b82f6">MID-TERM</text>
-                        <text x="120" y="147" text-anchor="middle" font-size="9" fill="#8888a0">Handoffs · Routing Log</text>
-                        <text x="120" y="160" text-anchor="middle" font-size="9" fill="#555570">weeks – months</text>
+                        <rect x="30" y="100" width="180" height="70" rx="12" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1.5"/>
+                        <text x="120" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#5B9BD5">MID-TERM</text>
+                        <text x="120" y="147" text-anchor="middle" font-size="9" fill="#9C8E7C">Handoffs · Routing Log</text>
+                        <text x="120" y="160" text-anchor="middle" font-size="9" fill="#6B5F50">weeks – months</text>
 
                         <!-- Layer 1 (top) - Short-term -->
-                        <rect x="50" y="30" width="140" height="60" rx="12" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
-                        <text x="120" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#e94560">SHORT-TERM</text>
-                        <text x="120" y="73" text-anchor="middle" font-size="9" fill="#8888a0">Context Window</text>
+                        <rect x="50" y="30" width="140" height="60" rx="12" fill="#1E1B18" stroke="#D97757" stroke-width="1.5"/>
+                        <text x="120" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#D97757">SHORT-TERM</text>
+                        <text x="120" y="73" text-anchor="middle" font-size="9" fill="#9C8E7C">Context Window</text>
 
                         <!-- Connection dots -->
-                        <circle cx="120" cy="92" r="2" fill="#2a2a3e"/>
-                        <circle cx="120" cy="172" r="2" fill="#2a2a3e"/>
+                        <circle cx="120" cy="92" r="2" fill="#3A3430"/>
+                        <circle cx="120" cy="172" r="2" fill="#3A3430"/>
 
                         <!-- Glow effects -->
-                        <circle cx="120" cy="60" r="30" fill="#e94560" opacity="0.04"/>
-                        <circle cx="120" cy="135" r="35" fill="#3b82f6" opacity="0.04"/>
-                        <circle cx="120" cy="220" r="45" fill="#7C3AED" opacity="0.04"/>
+                        <circle cx="120" cy="60" r="30" fill="#D97757" opacity="0.04"/>
+                        <circle cx="120" cy="135" r="35" fill="#5B9BD5" opacity="0.04"/>
+                        <circle cx="120" cy="220" r="45" fill="#8B7EC8" opacity="0.04"/>
                     </svg>
                 </div>
                 <div class="memory-stack animate-in">
@@ -1087,19 +1087,19 @@
     </section>
 
     <!-- ── Skills ────────────────────────────────── -->
-    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(233, 69, 96, 0.02), transparent);">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(217, 119, 87, 0.02), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Skills</div>
-                <h2 class="section-title">Six Core Skills</h2>
+                <h2 class="section-title">Seven Core Skills</h2>
                 <p class="section-subtitle">Reusable workflows defined as markdown files — instructions, not code.</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--capture">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="4" width="16" height="16" rx="3" stroke="#3b82f6" stroke-width="1.5"/>
-                            <path d="M12 8 L12 16 M8 12 L16 12" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+                            <rect x="4" y="4" width="16" height="16" rx="3" stroke="#5B9BD5" stroke-width="1.5"/>
+                            <path d="M12 8 L12 16 M8 12 L16 12" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </div>
                     <div class="skill-name">capture</div>
@@ -1109,9 +1109,9 @@
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--distill">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 3 L9 9 L4 15 L4 20 C4 20.5 4.5 21 5 21 L19 21 C19.5 21 20 20.5 20 20 L20 15 L15 9 L15 3" stroke="#7C3AED" stroke-width="1.5" stroke-linejoin="round"/>
-                            <line x1="8" y1="3" x2="16" y2="3" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
-                            <line x1="7" y1="15" x2="17" y2="15" stroke="#7C3AED" stroke-width="1" opacity="0.4" stroke-dasharray="2,2"/>
+                            <path d="M9 3 L9 9 L4 15 L4 20 C4 20.5 4.5 21 5 21 L19 21 C19.5 21 20 20.5 20 20 L20 15 L15 9 L15 3" stroke="#8B7EC8" stroke-width="1.5" stroke-linejoin="round"/>
+                            <line x1="8" y1="3" x2="16" y2="3" stroke="#8B7EC8" stroke-width="1.5" stroke-linecap="round"/>
+                            <line x1="7" y1="15" x2="17" y2="15" stroke="#8B7EC8" stroke-width="1" opacity="0.4" stroke-dasharray="2,2"/>
                         </svg>
                     </div>
                     <div class="skill-name">distill</div>
@@ -1121,11 +1121,11 @@
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--express">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 6 L8 6" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M4 10 L14 10" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M4 14 L18 14" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M4 18 L12 18" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M17 4 L21 8 L12 17 L10 19 L10.5 16.5 L17 4" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" fill="rgba(245,158,11,0.15)"/>
+                            <path d="M4 6 L8 6" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 10 L14 10" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 14 L18 14" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 18 L12 18" stroke="#E0944D" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M17 4 L21 8 L12 17 L10 19 L10.5 16.5 L17 4" stroke="#E0944D" stroke-width="1.5" stroke-linejoin="round" fill="rgba(245,158,11,0.15)"/>
                         </svg>
                     </div>
                     <div class="skill-name">express</div>
@@ -1135,9 +1135,9 @@
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--analyze">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="11" cy="11" r="7" stroke="#10b981" stroke-width="1.5"/>
-                            <path d="M16 16 L21 21" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M8 11 L10 13 L14 9" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+                            <circle cx="11" cy="11" r="7" stroke="#7BAF7E" stroke-width="1.5"/>
+                            <path d="M16 16 L21 21" stroke="#7BAF7E" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8 11 L10 13 L14 9" stroke="#7BAF7E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
                         </svg>
                     </div>
                     <div class="skill-name">analyze</div>
@@ -1147,11 +1147,11 @@
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--signal">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="3" fill="#e94560" opacity="0.6"/>
-                            <circle cx="12" cy="12" r="7" stroke="#e94560" stroke-width="1.5" fill="none"/>
-                            <circle cx="12" cy="12" r="10" stroke="#e94560" stroke-width="1" fill="none" opacity="0.3"/>
-                            <line x1="12" y1="2" x2="12" y2="5" stroke="#e94560" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
-                            <line x1="12" y1="19" x2="12" y2="22" stroke="#e94560" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+                            <circle cx="12" cy="12" r="3" fill="#D97757" opacity="0.6"/>
+                            <circle cx="12" cy="12" r="7" stroke="#D97757" stroke-width="1.5" fill="none"/>
+                            <circle cx="12" cy="12" r="10" stroke="#D97757" stroke-width="1" fill="none" opacity="0.3"/>
+                            <line x1="12" y1="2" x2="12" y2="5" stroke="#D97757" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+                            <line x1="12" y1="19" x2="12" y2="22" stroke="#D97757" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
                         </svg>
                     </div>
                     <div class="skill-name">signal-check</div>
@@ -1159,12 +1159,25 @@
                     <p>4-axis substance analysis: meaning, facts, framing, context. Signal vs. noise.</p>
                 </div>
                 <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--signal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 4 L18 12 L6 20 Z" stroke="#D97757" stroke-width="1.5" fill="rgba(217,119,87,0.1)" stroke-linejoin="round"/>
+                            <path d="M10 8 L16 12 L10 16" stroke="#D97757" stroke-width="1" fill="none" opacity="0.4"/>
+                            <line x1="3" y1="12" x2="6" y2="12" stroke="#D97757" stroke-width="1.5" stroke-linecap="round"/>
+                            <line x1="18" y1="12" x2="21" y2="12" stroke="#D97757" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="skill-name">challenge</div>
+                    <h4>Stress-Test</h4>
+                    <p>Adversarial testing from 3 perspectives. Find weaknesses, blind spots, and hidden assumptions.</p>
+                </div>
+                <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--handoff">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="6" width="10" height="14" rx="2" stroke="#3b82f6" stroke-width="1.5"/>
-                            <rect x="10" y="4" width="10" height="14" rx="2" stroke="#3b82f6" stroke-width="1.5" fill="#12121a"/>
-                            <path d="M13 9 L17 9 M13 12 L17 12" stroke="#3b82f6" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
-                            <path d="M12 20 L18 20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2,2" opacity="0.4"/>
+                            <rect x="4" y="6" width="10" height="14" rx="2" stroke="#5B9BD5" stroke-width="1.5"/>
+                            <rect x="10" y="4" width="10" height="14" rx="2" stroke="#5B9BD5" stroke-width="1.5" fill="#1E1B18"/>
+                            <path d="M13 9 L17 9 M13 12 L17 12" stroke="#5B9BD5" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M12 20 L18 20" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2,2" opacity="0.4"/>
                         </svg>
                     </div>
                     <div class="skill-name">handoff</div>
@@ -1180,66 +1193,94 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Patterns</div>
-                <h2 class="section-title">Two Key Feedback Loops</h2>
+                <h2 class="section-title">Three Key Feedback Loops</h2>
                 <p class="section-subtitle">Skills chain together into powerful workflows.</p>
             </div>
             <div class="loops-grid">
                 <div class="loop-card animate-in">
                     <h4>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14 6 A6 6 0 0 1 14 14" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 14 A6 6 0 0 1 6 6" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-linecap="round"/><polygon points="14,6 16,8 12,8" fill="#f59e0b"/><polygon points="6,14 4,12 8,12" fill="#f59e0b"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14 6 A6 6 0 0 1 14 14" stroke="#E0944D" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 14 A6 6 0 0 1 6 6" stroke="#E0944D" stroke-width="1.5" fill="none" stroke-linecap="round"/><polygon points="14,6 16,8 12,8" fill="#E0944D"/><polygon points="6,14 4,12 8,12" fill="#E0944D"/></svg>
                         Evaluator-Optimizer
                     </h4>
                     <p class="desc">Write, evaluate, improve — like a human review cycle.</p>
                     <div class="loop-svg">
                         <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
-                            <rect x="0" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
-                            <text x="40" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#f59e0b">express</text>
+                            <rect x="0" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#E0944D" stroke-width="1"/>
+                            <text x="40" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#E0944D">express</text>
 
-                            <line x1="84" y1="40" x2="116" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
-                            <polygon points="114,36 120,40 114,44" fill="#2a2a3e"/>
+                            <line x1="84" y1="40" x2="116" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="114,36 120,40 114,44" fill="#3A3430"/>
 
-                            <rect x="120" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#e94560" stroke-width="1"/>
-                            <text x="160" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#e94560">signal-check</text>
+                            <rect x="120" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#D97757" stroke-width="1"/>
+                            <text x="160" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#D97757">signal-check</text>
 
-                            <line x1="204" y1="40" x2="236" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
-                            <polygon points="234,36 240,40 234,44" fill="#2a2a3e"/>
+                            <line x1="204" y1="40" x2="236" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="234,36 240,40 234,44" fill="#3A3430"/>
 
-                            <rect x="240" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#10b981" stroke-width="1"/>
-                            <text x="280" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#10b981">express</text>
+                            <rect x="240" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1"/>
+                            <text x="280" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#7BAF7E">express</text>
 
-                            <text x="100" y="14" text-anchor="middle" font-size="8" fill="#555570">evaluate</text>
-                            <text x="220" y="14" text-anchor="middle" font-size="8" fill="#555570">optimize</text>
+                            <text x="100" y="14" text-anchor="middle" font-size="8" fill="#6B5F50">evaluate</text>
+                            <text x="220" y="14" text-anchor="middle" font-size="8" fill="#6B5F50">optimize</text>
                         </svg>
                     </div>
                 </div>
                 <div class="loop-card animate-in">
                     <h4>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#10b981" stroke-width="1.5" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4 L14 10 L6 16 Z" stroke="#D97757" stroke-width="1.5" fill="none" stroke-linejoin="round"/><line x1="3" y1="10" x2="6" y2="10" stroke="#D97757" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        Evaluator-Challenger
+                    </h4>
+                    <p class="desc">Write, attack, harden — adversarial stress-testing.</p>
+                    <div class="loop-svg">
+                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+                            <rect x="0" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#E0944D" stroke-width="1"/>
+                            <text x="40" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#E0944D">express</text>
+
+                            <line x1="84" y1="40" x2="116" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="114,36 120,40 114,44" fill="#3A3430"/>
+
+                            <rect x="120" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#D97757" stroke-width="1"/>
+                            <text x="160" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#D97757">challenge</text>
+
+                            <line x1="204" y1="40" x2="236" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="234,36 240,40 234,44" fill="#3A3430"/>
+
+                            <rect x="240" y="20" width="80" height="40" rx="8" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1"/>
+                            <text x="280" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#7BAF7E">express</text>
+
+                            <text x="100" y="14" text-anchor="middle" font-size="8" fill="#6B5F50">stress-test</text>
+                            <text x="220" y="14" text-anchor="middle" font-size="8" fill="#6B5F50">harden</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="loop-card animate-in">
+                    <h4>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#7BAF7E" stroke-width="1.5" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#7BAF7E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Knowledge Cycle
                     </h4>
                     <p class="desc">Capture, process, output, verify — continuous learning.</p>
                     <div class="loop-svg">
                         <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
-                            <rect x="0" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#3b82f6" stroke-width="1"/>
-                            <text x="30" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#3b82f6">capture</text>
+                            <rect x="0" y="20" width="60" height="40" rx="8" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1"/>
+                            <text x="30" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#5B9BD5">capture</text>
 
-                            <line x1="64" y1="40" x2="78" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
-                            <polygon points="76,36 82,40 76,44" fill="#2a2a3e"/>
+                            <line x1="64" y1="40" x2="78" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="76,36 82,40 76,44" fill="#3A3430"/>
 
-                            <rect x="82" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
-                            <text x="112" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#7C3AED">distill</text>
+                            <rect x="82" y="20" width="60" height="40" rx="8" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1"/>
+                            <text x="112" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#8B7EC8">distill</text>
 
-                            <line x1="146" y1="40" x2="160" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
-                            <polygon points="158,36 164,40 158,44" fill="#2a2a3e"/>
+                            <line x1="146" y1="40" x2="160" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="158,36 164,40 158,44" fill="#3A3430"/>
 
-                            <rect x="164" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
-                            <text x="194" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#f59e0b">express</text>
+                            <rect x="164" y="20" width="60" height="40" rx="8" fill="#1E1B18" stroke="#E0944D" stroke-width="1"/>
+                            <text x="194" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#E0944D">express</text>
 
-                            <line x1="228" y1="40" x2="242" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
-                            <polygon points="240,36 246,40 240,44" fill="#2a2a3e"/>
+                            <line x1="228" y1="40" x2="242" y2="40" stroke="#3A3430" stroke-width="1.5"/>
+                            <polygon points="240,36 246,40 240,44" fill="#3A3430"/>
 
-                            <rect x="246" y="20" width="74" height="40" rx="8" fill="#12121a" stroke="#e94560" stroke-width="1"/>
-                            <text x="283" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#e94560">signal-check</text>
+                            <rect x="246" y="20" width="74" height="40" rx="8" fill="#1E1B18" stroke="#D97757" stroke-width="1"/>
+                            <text x="283" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#D97757">signal-check</text>
                         </svg>
                     </div>
                 </div>
@@ -1248,7 +1289,7 @@
     </section>
 
     <!-- ── Bigger Picture ────────────────────────── -->
-    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(59, 130, 246, 0.03), transparent);">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(91, 155, 213, 0.03), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">The Bigger Picture</div>
@@ -1260,89 +1301,92 @@
             <div class="system-diagram animate-in">
                 <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" fill="none">
                     <!-- User input -->
-                    <rect x="200" y="5" width="300" height="40" rx="10" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
-                    <text x="350" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#e0e0e8">YOU: "Analyze market data, write summary"</text>
+                    <rect x="200" y="5" width="300" height="40" rx="10" fill="#1E1B18" stroke="#D97757" stroke-width="1.5"/>
+                    <text x="350" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#EDE5D8">YOU: "Analyze market data, write summary"</text>
 
-                    <line x1="350" y1="47" x2="350" y2="68" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3">
+                    <line x1="350" y1="47" x2="350" y2="68" stroke="#3A3430" stroke-width="1.5" stroke-dasharray="3,3">
                         <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite"/>
                     </line>
-                    <polygon points="350,66 346,60 354,60" fill="#2a2a3e"/>
+                    <polygon points="350,66 346,60 354,60" fill="#3A3430"/>
 
                     <!-- Brain -->
-                    <rect x="100" y="70" width="500" height="80" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
-                    <text x="350" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">CLAUDE.md — THE ORCHESTRATOR BRAIN</text>
-                    <text x="200" y="115" text-anchor="middle" font-size="10" fill="#8888a0">Routing Rules</text>
-                    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#8888a0">User Patterns</text>
-                    <text x="500" y="115" text-anchor="middle" font-size="10" fill="#8888a0">Workflow Chains</text>
-                    <text x="350" y="137" text-anchor="middle" font-size="9" fill="#555570">matches "analyze" + "write" → chain: analyze → express</text>
+                    <rect x="100" y="70" width="500" height="80" rx="12" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1.5"/>
+                    <text x="350" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#5B9BD5">CLAUDE.md — THE ORCHESTRATOR BRAIN</text>
+                    <text x="200" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Routing Rules</text>
+                    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">User Patterns</text>
+                    <text x="500" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Workflow Chains</text>
+                    <text x="350" y="137" text-anchor="middle" font-size="9" fill="#6B5F50">matches "analyze" + "write" → chain: analyze → express</text>
 
-                    <line x1="350" y1="152" x2="350" y2="178" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3">
+                    <line x1="350" y1="152" x2="350" y2="178" stroke="#3A3430" stroke-width="1.5" stroke-dasharray="3,3">
                         <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite"/>
                     </line>
-                    <polygon points="350,176 346,170 354,170" fill="#2a2a3e"/>
+                    <polygon points="350,176 346,170 354,170" fill="#3A3430"/>
 
                     <!-- Skills -->
-                    <rect x="100" y="180" width="500" height="75" rx="12" fill="#12121a" stroke="#10b981" stroke-width="1.5"/>
-                    <text x="350" y="205" text-anchor="middle" font-size="13" font-weight="600" fill="#10b981">SKILLS (20+ in full system, 6 in starter kit)</text>
+                    <rect x="100" y="180" width="500" height="75" rx="12" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1.5"/>
+                    <text x="350" y="205" text-anchor="middle" font-size="13" font-weight="600" fill="#7BAF7E">SKILLS (20+ in full system, 7 in starter kit)</text>
 
                     <!-- Skill pills -->
-                    <rect x="120" y="215" width="60" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="150" y="231" text-anchor="middle" font-size="9" fill="#e94560">capture</text>
+                    <rect x="115" y="213" width="58" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="144" y="228" text-anchor="middle" font-size="8" fill="#D97757">capture</text>
 
-                    <rect x="190" y="215" width="52" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="216" y="231" text-anchor="middle" font-size="9" fill="#e94560">distill</text>
+                    <rect x="180" y="213" width="48" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="204" y="228" text-anchor="middle" font-size="8" fill="#D97757">distill</text>
 
-                    <rect x="252" y="215" width="58" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="281" y="231" text-anchor="middle" font-size="9" fill="#e94560">express</text>
+                    <rect x="235" y="213" width="54" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="262" y="228" text-anchor="middle" font-size="8" fill="#D97757">express</text>
 
-                    <rect x="320" y="215" width="58" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="349" y="231" text-anchor="middle" font-size="9" fill="#e94560">analyze</text>
+                    <rect x="296" y="213" width="54" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="323" y="228" text-anchor="middle" font-size="8" fill="#D97757">analyze</text>
 
-                    <rect x="388" y="215" width="80" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="428" y="231" text-anchor="middle" font-size="9" fill="#e94560">signal-check</text>
+                    <rect x="357" y="213" width="74" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="394" y="228" text-anchor="middle" font-size="8" fill="#D97757">signal-check</text>
 
-                    <rect x="478" y="215" width="56" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
-                    <text x="506" y="231" text-anchor="middle" font-size="9" fill="#e94560">handoff</text>
+                    <rect x="438" y="213" width="62" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="469" y="228" text-anchor="middle" font-size="8" fill="#D97757">challenge</text>
+
+                    <rect x="507" y="213" width="52" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
+                    <text x="533" y="228" text-anchor="middle" font-size="8" fill="#D97757">handoff</text>
 
                     <!-- Branching arrows -->
-                    <line x1="250" y1="257" x2="250" y2="298" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3"/>
-                    <polygon points="250,296 246,290 254,290" fill="#2a2a3e"/>
+                    <line x1="250" y1="257" x2="250" y2="298" stroke="#3A3430" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <polygon points="250,296 246,290 254,290" fill="#3A3430"/>
 
-                    <line x1="450" y1="257" x2="450" y2="298" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3"/>
-                    <polygon points="450,296 446,290 454,290" fill="#2a2a3e"/>
+                    <line x1="450" y1="257" x2="450" y2="298" stroke="#3A3430" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <polygon points="450,296 446,290 454,290" fill="#3A3430"/>
 
                     <!-- Memory boxes -->
-                    <rect x="100" y="300" width="130" height="60" rx="10" fill="#12121a" stroke="#e94560" stroke-width="1"/>
-                    <text x="165" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#e94560">SHORT-TERM</text>
-                    <text x="165" y="340" text-anchor="middle" font-size="9" fill="#8888a0">Context window</text>
-                    <text x="165" y="352" text-anchor="middle" font-size="8" fill="#555570">1 session</text>
+                    <rect x="100" y="300" width="130" height="60" rx="10" fill="#1E1B18" stroke="#D97757" stroke-width="1"/>
+                    <text x="165" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#D97757">SHORT-TERM</text>
+                    <text x="165" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Context window</text>
+                    <text x="165" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">1 session</text>
 
-                    <rect x="250" y="300" width="130" height="60" rx="10" fill="#12121a" stroke="#3b82f6" stroke-width="1"/>
-                    <text x="315" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#3b82f6">MID-TERM</text>
-                    <text x="315" y="340" text-anchor="middle" font-size="9" fill="#8888a0">Routing log · Handoffs</text>
-                    <text x="315" y="352" text-anchor="middle" font-size="8" fill="#555570">weeks – months</text>
+                    <rect x="250" y="300" width="130" height="60" rx="10" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1"/>
+                    <text x="315" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#5B9BD5">MID-TERM</text>
+                    <text x="315" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Routing log · Handoffs</text>
+                    <text x="315" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">weeks – months</text>
 
-                    <rect x="400" y="300" width="200" height="60" rx="10" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
-                    <text x="500" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#7C3AED">LONG-TERM</text>
-                    <text x="500" y="340" text-anchor="middle" font-size="9" fill="#8888a0">CLAUDE.md · memory/ · Knowledge</text>
-                    <text x="500" y="352" text-anchor="middle" font-size="8" fill="#555570">permanent</text>
+                    <rect x="400" y="300" width="200" height="60" rx="10" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1"/>
+                    <text x="500" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#8B7EC8">LONG-TERM</text>
+                    <text x="500" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">CLAUDE.md · memory/ · Knowledge</text>
+                    <text x="500" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">permanent</text>
 
                     <!-- Lines down from long-term -->
-                    <line x1="450" y1="362" x2="450" y2="398" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="3,3"/>
-                    <line x1="550" y1="362" x2="550" y2="398" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="450" y1="362" x2="450" y2="398" stroke="#3A3430" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="550" y1="362" x2="550" y2="398" stroke="#3A3430" stroke-width="1" stroke-dasharray="3,3"/>
 
                     <!-- Obsidian + SQLite -->
-                    <rect x="370" y="400" width="160" height="55" rx="10" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
+                    <rect x="370" y="400" width="160" height="55" rx="10" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1"/>
                     <circle cx="400" y="427" r="10" fill="rgba(124,58,237,0.15)"/>
-                    <text x="398" y="431" text-anchor="middle" font-size="12" fill="#7C3AED">⬢</text>
-                    <text x="470" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#e0e0e8">Obsidian</text>
-                    <text x="470" y="438" text-anchor="middle" font-size="9" fill="#8888a0">Your notes = Claude's KB</text>
+                    <text x="398" y="431" text-anchor="middle" font-size="12" fill="#8B7EC8">⬢</text>
+                    <text x="470" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">Obsidian</text>
+                    <text x="470" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Your notes = Claude's KB</text>
 
-                    <rect x="540" y="400" width="160" height="55" rx="10" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
+                    <rect x="540" y="400" width="160" height="55" rx="10" fill="#1E1B18" stroke="#E0944D" stroke-width="1"/>
                     <circle cx="570" y="427" r="10" fill="rgba(245,158,11,0.15)"/>
-                    <text x="568" y="432" text-anchor="middle" font-size="12" fill="#f59e0b">⊞</text>
-                    <text x="640" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#e0e0e8">SQLite DB</text>
-                    <text x="640" y="438" text-anchor="middle" font-size="9" fill="#8888a0">Research · Datasets · Stats</text>
+                    <text x="568" y="432" text-anchor="middle" font-size="12" fill="#E0944D">⊞</text>
+                    <text x="640" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">SQLite DB</text>
+                    <text x="640" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Research · Datasets · Stats</text>
                 </svg>
             </div>
 
@@ -1358,12 +1402,12 @@
                     <tbody>
                         <tr>
                             <td>Skills</td>
-                            <td>6 core skills</td>
+                            <td>7 core skills</td>
                             <td>20+ domain-specific skills</td>
                         </tr>
                         <tr>
                             <td>Routing</td>
-                            <td>6 keyword mappings</td>
+                            <td>7+ keyword mappings + mode detection</td>
                             <td>100+ mappings with disambiguation</td>
                         </tr>
                         <tr>
@@ -1383,7 +1427,7 @@
                         </tr>
                         <tr>
                             <td>Workflow Chains</td>
-                            <td>2 basic loops</td>
+                            <td>3 feedback loops</td>
                             <td>15+ multi-step chains</td>
                         </tr>
                         <tr>
@@ -1443,7 +1487,7 @@
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/skill-development.md">Build Skills</a>
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/faq.md">FAQ</a>
         </div>
-        <p style="font-size: 13px; color: #555570;">
+        <p style="font-size: 13px; color: #6B5F50;">
             MIT License · Built with Claude Code · No dependencies, just markdown.
         </p>
     </footer>

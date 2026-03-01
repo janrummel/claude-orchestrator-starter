@@ -11,6 +11,7 @@
     </a>
   </p>
   <p align="center">
+    <a href="https://janrummel.github.io/claude-orchestrator-starter/">🌐 Website</a> ·
     <a href="README.de.md">Deutsch</a> | <strong>English</strong>
   </p>
 </p>
@@ -42,6 +43,11 @@ You                                     Claude (with Orchestrator)
                                           Flags gaps and framing
                                           Suggests: /express to improve
 
+"What could go wrong with this plan?"   → Detects Reflection mode
+                                          Invokes challenge skill
+                                          Stress-tests from 3 perspectives
+                                          Suggests: /express to harden
+
 "Save state for next time"              → Invokes handoff skill
                                           Captures decisions + context
                                           Writes project state file
@@ -59,6 +65,7 @@ flowchart TB
 
     subgraph BRAIN ["🧠 CLAUDE.md — The Orchestrator Brain"]
         direction TB
+        mode["Mode Detection<br/><i>cognitive state → skill cluster</i>"]
         route["Routing Rules<br/><i>keyword → skill matching</i>"]
         patterns["User Patterns<br/><i>learned preferences</i>"]
     end
@@ -70,6 +77,7 @@ flowchart TB
         express["✍️ express"]
         analyze["🔍 analyze"]
         signal["🎯 signal-check"]
+        challenge["⚔️ challenge"]
         handoff["💾 handoff"]
     end
 
@@ -123,7 +131,7 @@ flowchart TB
 └─────────────────────────────────────────────────────┘
 ```
 
-### Six Core Skills
+### Seven Core Skills
 
 Each skill is a `SKILL.md` file — **instructions, not code**. They tell Claude how to behave, what tools to use, and what output to produce.
 
@@ -134,11 +142,12 @@ Each skill is a `SKILL.md` file — **instructions, not code**. They tell Claude
 | ✍️ | **express** | Write polished output | "Write", "Draft", "Formulate" |
 | 🔍 | **analyze** | Deep analysis with structured thinking | "Analyze", "Investigate" |
 | 🎯 | **signal-check** | Quality check / fact check | "Is this solid?", "Quality check" |
+| ⚔️ | **challenge** | Adversarial stress-testing | "What could go wrong?", "Stress-test this" |
 | 💾 | **handoff** | Save session state for next time | "Save state", "Handoff" |
 
-### Two Key Loops
+### Three Key Loops
 
-These 6 skills form two powerful feedback loops:
+These 7 skills form three powerful feedback loops:
 
 **Evaluator-Optimizer Loop** — Write, evaluate, improve:
 
@@ -153,6 +162,22 @@ flowchart LR
 
     style E fill:#16213e,stroke:#e94560,color:#fff
     style S fill:#16213e,stroke:#0f3460,color:#fff
+    style E2 fill:#16213e,stroke:#e94560,color:#fff
+```
+
+**Evaluator-Challenger Loop** — Write, stress-test, harden:
+
+```mermaid
+flowchart LR
+    E["✍️ express<br/><i>Generate output</i>"]
+    CH["⚔️ challenge<br/><i>Adversarial stress-test</i>"]
+    E2["✍️ express<br/><i>Harden against objections</i>"]
+
+    E -->|"stress-test"| CH
+    CH -->|"harden"| E2
+
+    style E fill:#16213e,stroke:#e94560,color:#fff
+    style CH fill:#16213e,stroke:#e94560,color:#fff
     style E2 fill:#16213e,stroke:#e94560,color:#fff
 ```
 
@@ -303,7 +328,7 @@ This starter kit turns it into a **stateful assistant** that grows with you:
 
 ## The Bigger Picture
 
-This starter kit gives you the **architecture and patterns**. It's intentionally minimal — 6 skills, simple routing, basic memory.
+This starter kit gives you the **architecture and patterns**. It's intentionally focused — 7 skills, mode-aware routing, basic memory.
 
 Here's how the full system looks — the one this kit is extracted from:
 
@@ -329,12 +354,16 @@ Here's how the full system looks — the one this kit is extracted from:
             │
             ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│  ⚡ SKILLS (20+ in full system, 6 in starter kit)                   │
+│  ⚡ SKILLS (20+ in full system, 7 in starter kit)                   │
 │                                                                     │
 │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌───────┐ │
 │  │capture │ │distill │ │express │ │analyze │ │signal- │ │handoff│ │
 │  │   📥   │ │   🔬   │ │   ✍️   │ │   🔍   │ │check🎯│ │  💾   │ │
 │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └───────┘ │
+│  ┌────────┐                                                        │
+│  │challen-│                                                        │
+│  │ge  ⚔️  │                                                        │
+│  └────────┘                                                        │
 │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
 │  │research│ │decide  │ │innovate│ │strategy│ │ ...14+ │           │
 │  │pipeline│ │        │ │        │ │        │ │  more  │           │
@@ -370,12 +399,12 @@ Here's how the full system looks — the one this kit is extracted from:
 
 | | Starter Kit | Full System |
 |---|-------------|-------------|
-| **Skills** | 6 core skills | 20+ domain-specific skills |
-| **Routing** | 6 keyword mappings | 100+ mappings with disambiguation |
+| **Skills** | 7 core skills | 20+ domain-specific skills |
+| **Routing** | 7 keyword mappings + mode detection | 100+ mappings with disambiguation |
 | **Memory** | Template files | Filled with months of context |
 | **Obsidian** | 1 vault (optional) | 6 vaults, 930+ notes |
 | **Database** | Empty schema | Research items, datasets, usage stats |
-| **Workflow Chains** | 2 basic loops | 15+ multi-step chains |
+| **Workflow Chains** | 3 feedback loops | 15+ multi-step chains |
 | **Self-Improvement** | Manual updates | Automated routing analysis |
 
 The goal isn't to give you everything. It's to show you the **building blocks** — so you can build your own system on top.
@@ -394,6 +423,7 @@ claude-orchestrator-starter/
 │   │   ├── express/           ← ✍️ Write polished output
 │   │   ├── analyze/           ← 🔍 Deep structured analysis
 │   │   ├── signal-check/      ← 🎯 Quality & substance check
+│   │   ├── challenge/         ← ⚔️ Adversarial stress-testing
 │   │   └── handoff/           ← 💾 Session state persistence
 │   ├── routing-log.jsonl.example
 │   ├── user-patterns.md.example
