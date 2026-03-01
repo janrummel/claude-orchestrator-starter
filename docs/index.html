@@ -26,6 +26,9 @@
             --orange: #f59e0b;
             --border: #1e1e2e;
             --glow: rgba(233, 69, 96, 0.15);
+            --glow-blue: rgba(59, 130, 246, 0.15);
+            --glow-purple: rgba(124, 58, 237, 0.15);
+            --glow-green: rgba(16, 185, 129, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,25 +54,86 @@
             padding: 0 24px;
         }
 
+        /* ── Animations ──────────────────────────────── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes dash-flow {
+            to { stroke-dashoffset: -20; }
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-in.visible:nth-child(2) { transition-delay: 0.1s; }
+        .animate-in.visible:nth-child(3) { transition-delay: 0.2s; }
+        .animate-in.visible:nth-child(4) { transition-delay: 0.3s; }
+        .animate-in.visible:nth-child(5) { transition-delay: 0.4s; }
+        .animate-in.visible:nth-child(6) { transition-delay: 0.5s; }
+
         /* ── Hero ─────────────────────────────────── */
         .hero {
             text-align: center;
             padding: 100px 24px 80px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-bg svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0.12;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 0; left: 50%;
+            top: -100px; left: 50%;
             transform: translateX(-50%);
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, var(--glow) 0%, rgba(124, 58, 237, 0.08) 40%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
 
-        .hero > * { position: relative; z-index: 1; }
+        .hero > *:not(.hero-bg) { position: relative; z-index: 1; }
+
+        .hero-icon {
+            margin-bottom: 32px;
+            animation: float 4s ease-in-out infinite;
+        }
 
         .badge-row {
             display: flex;
@@ -87,6 +151,11 @@
             font-weight: 500;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .badge:hover {
+            transform: translateY(-1px);
         }
 
         .badge--mit { background: rgba(59, 130, 246, 0.15); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
@@ -95,11 +164,11 @@
         .badge--obsidian { background: rgba(124, 58, 237, 0.15); color: var(--purple); border: 1px solid rgba(124, 58, 237, 0.3); }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #c0c0d0 100%);
+            background: linear-gradient(135deg, #fff 0%, #c0c0d0 50%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -127,20 +196,20 @@
             border-radius: 10px;
             font-size: 15px;
             font-weight: 600;
-            transition: all 0.2s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
         }
 
         .btn--primary {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent) 0%, #c2185b 100%);
             color: #fff;
+            box-shadow: 0 4px 16px rgba(233, 69, 96, 0.3);
         }
 
         .btn--primary:hover {
-            background: #d63651;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(233, 69, 96, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(233, 69, 96, 0.4);
         }
 
         .btn--secondary {
@@ -151,7 +220,13 @@
 
         .btn--secondary:hover {
             background: var(--bg-card-hover);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* ── Problem ──────────────────────────────── */
@@ -170,18 +245,44 @@
         .problem-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .problem-card.bad { border-left: 3px solid #ef4444; }
-        .problem-card.good { border-left: 3px solid var(--green); }
+        .problem-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .problem-card.bad {
+            border-left: 3px solid #ef4444;
+        }
+
+        .problem-card.bad:hover {
+            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+        }
+
+        .problem-card.good {
+            border-left: 3px solid var(--green);
+        }
+
+        .problem-card.good:hover {
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
+        }
 
         .problem-card h3 {
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .problem-card h3 svg {
+            width: 18px;
+            height: 18px;
         }
 
         .problem-card.bad h3 { color: #ef4444; }
@@ -191,18 +292,19 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .problem-card li {
             color: var(--text-muted);
             font-size: 14px;
-            padding-left: 24px;
+            padding-left: 28px;
             position: relative;
+            line-height: 1.5;
         }
 
-        .problem-card.bad li::before { content: '✗'; position: absolute; left: 0; color: #ef4444; }
-        .problem-card.good li::before { content: '✓'; position: absolute; left: 0; color: var(--green); }
+        .problem-card.bad li::before { content: '✗'; position: absolute; left: 0; color: #ef4444; font-weight: 600; }
+        .problem-card.good li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 600; }
 
         /* ── Section Headers ──────────────────────── */
         .section {
@@ -211,7 +313,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
 
         .section-label {
@@ -226,73 +328,133 @@
         .section-title {
             font-size: clamp(1.8rem, 3vw, 2.4rem);
             font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .section-subtitle {
             color: var(--text-muted);
             margin-top: 12px;
             font-size: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* ── Architecture Diagram ─────────────────── */
-        .arch-flow {
+        /* ── Why / Core Insight ──────────────────── */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .why-card:hover::before { opacity: 1; }
+        .why-card:hover { transform: translateY(-4px); }
+
+        .why-card--memory::before { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+        .why-card--memory:hover { box-shadow: 0 8px 32px var(--glow-purple); }
+
+        .why-card--habits::before { background: linear-gradient(90deg, var(--orange), var(--accent)); }
+        .why-card--habits:hover { box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); }
+
+        .why-card--loops::before { background: linear-gradient(90deg, var(--green), var(--blue)); }
+        .why-card--loops:hover { box-shadow: 0 8px 32px var(--glow-green); }
+
+        .why-card-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
+        }
+
+        .why-card--memory .why-card-icon { background: rgba(124, 58, 237, 0.12); }
+        .why-card--habits .why-card-icon { background: rgba(245, 158, 11, 0.12); }
+        .why-card--loops .why-card-icon { background: rgba(16, 185, 129, 0.12); }
+
+        .why-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .why-card p { color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+
+        /* ── Architecture ─────────────────────────── */
+        .arch-svg-container {
             max-width: 700px;
             margin: 0 auto;
         }
 
-        .arch-node {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 32px;
-            text-align: center;
+        .arch-svg-container svg {
             width: 100%;
-            max-width: 500px;
-            position: relative;
-            transition: all 0.3s;
+            height: auto;
         }
 
-        .arch-node:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--glow);
+        .arch-svg-container text {
+            font-family: 'Inter', sans-serif;
         }
-
-        .arch-node .icon { font-size: 24px; margin-bottom: 8px; }
-        .arch-node .label { font-weight: 600; font-size: 16px; }
-        .arch-node .desc { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
-
-        .arch-arrow {
-            font-size: 20px;
-            color: var(--text-muted);
-        }
-
-        .arch-node--input { border-color: var(--accent); }
-        .arch-node--brain { border-color: var(--blue); }
-        .arch-node--skills { border-color: var(--green); }
-        .arch-node--memory { border-color: var(--purple); }
-        .arch-node--output { border-color: var(--orange); }
 
         /* ── Memory Layers ────────────────────────── */
+        .memory-visual {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .memory-svg {
+            flex: 0 0 280px;
+        }
+
+        .memory-svg svg {
+            width: 100%;
+            height: auto;
+        }
+
         .memory-stack {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 0;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .memory-layer {
             padding: 24px 28px;
             border: 1px solid var(--border);
             position: relative;
+            transition: all 0.3s;
         }
 
-        .memory-layer:first-child { border-radius: 12px 12px 0 0; }
-        .memory-layer:last-child { border-radius: 0 0 12px 12px; }
+        .memory-layer:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .memory-layer:first-child { border-radius: 16px 16px 0 0; }
+        .memory-layer:last-child { border-radius: 0 0 16px 16px; }
         .memory-layer + .memory-layer { border-top: none; }
 
         .memory-layer .tag {
@@ -322,27 +484,61 @@
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 20px;
         }
 
         .skill-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 28px;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .skill-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            transform: translateY(-4px);
+            border-color: transparent;
         }
 
-        .skill-card .emoji { font-size: 28px; margin-bottom: 12px; }
-        .skill-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .skill-card:nth-child(1):hover { box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15); }
+        .skill-card:nth-child(2):hover { box-shadow: 0 8px 32px var(--glow-purple); }
+        .skill-card:nth-child(3):hover { box-shadow: 0 8px 32px rgba(245, 158, 11, 0.15); }
+        .skill-card:nth-child(4):hover { box-shadow: 0 8px 32px var(--glow-green); }
+        .skill-card:nth-child(5):hover { box-shadow: 0 8px 32px rgba(233, 69, 96, 0.15); }
+        .skill-card:nth-child(6):hover { box-shadow: 0 8px 32px var(--glow-blue); }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .skill-icon--capture { background: rgba(59, 130, 246, 0.12); }
+        .skill-icon--distill { background: rgba(124, 58, 237, 0.12); }
+        .skill-icon--express { background: rgba(245, 158, 11, 0.12); }
+        .skill-icon--analyze { background: rgba(16, 185, 129, 0.12); }
+        .skill-icon--signal { background: rgba(233, 69, 96, 0.12); }
+        .skill-icon--handoff { background: rgba(59, 130, 246, 0.12); }
+
+        .skill-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
         .skill-card .skill-name { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
-        .skill-card p { color: var(--text-muted); font-size: 13px; margin-top: 8px; }
+        .skill-card p { color: var(--text-muted); font-size: 13px; margin-top: 10px; line-height: 1.5; }
 
         /* ── Loops ────────────────────────────────── */
         .loops-grid {
@@ -354,57 +550,62 @@
         .loop-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px;
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .loop-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
         .loop-card h4 {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .loop-card .desc {
             color: var(--text-muted);
             font-size: 13px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .loop-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
+        .loop-svg {
+            text-align: center;
         }
 
-        .loop-step {
-            background: var(--bg-card-hover);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 14px;
-            font-size: 13px;
-            font-weight: 500;
-            white-space: nowrap;
+        .loop-svg svg {
+            max-width: 100%;
+            height: auto;
         }
-
-        .loop-arrow { color: var(--text-muted); font-size: 16px; }
 
         /* ── Comparison ───────────────────────────── */
+        .comparison-table-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0 auto;
-            max-width: 800px;
         }
 
         .comparison-table th,
         .comparison-table td {
-            padding: 14px 20px;
+            padding: 16px 24px;
             text-align: left;
             border-bottom: 1px solid var(--border);
             font-size: 14px;
         }
+
+        .comparison-table tr:last-child td { border-bottom: none; }
 
         .comparison-table th {
             font-weight: 600;
@@ -412,6 +613,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
+            background: rgba(255,255,255,0.02);
         }
 
         .comparison-table td:first-child {
@@ -427,12 +629,33 @@
             font-weight: 500;
         }
 
+        .comparison-table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* ── System Diagram ──────────────────────── */
+        .system-diagram {
+            margin-bottom: 40px;
+        }
+
+        .system-diagram svg {
+            width: 100%;
+            height: auto;
+            max-width: 800px;
+            display: block;
+            margin: 0 auto;
+        }
+
         /* ── Quickstart ───────────────────────────── */
         .quickstart-block {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
+            border-radius: 16px;
+            padding: 36px;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -440,8 +663,8 @@
         .quickstart-block pre {
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 24px;
             overflow-x: auto;
             font-size: 13px;
             line-height: 1.8;
@@ -454,34 +677,36 @@
         .quickstart-steps {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 16px;
+            margin-top: 28px;
         }
 
         .quickstart-step {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 16px;
         }
 
         .step-num {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), #c2185b);
             color: #fff;
             font-size: 13px;
             font-weight: 700;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
         }
 
         .step-text {
             font-size: 14px;
             color: var(--text-muted);
-            padding-top: 3px;
+            padding-top: 5px;
+            line-height: 1.5;
         }
 
         .step-text strong { color: var(--text); }
@@ -495,15 +720,37 @@
             font-size: 14px;
         }
 
-        .footer a { color: var(--text); }
+        .footer a { color: var(--text); transition: color 0.2s; }
+        .footer a:hover { color: var(--accent); }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        /* ── Divider ─────────────────────────────── */
+        .section-divider {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .section-divider svg {
+            opacity: 0.2;
+        }
 
         /* ── Responsive ───────────────────────────── */
         @media (max-width: 768px) {
             .problem-grid { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr 1fr; }
             .loops-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
             .hero { padding: 60px 24px 40px; }
             .section { padding: 48px 0; }
+            .memory-visual { flex-direction: column; }
+            .memory-svg { flex: 0 0 auto; max-width: 200px; margin: 0 auto; }
         }
 
         @media (max-width: 480px) {
@@ -515,6 +762,63 @@
 
     <!-- ── Hero ─────────────────────────────────── -->
     <section class="hero">
+        <div class="hero-bg">
+            <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grid pattern -->
+                <defs>
+                    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1e1e2e" stroke-width="0.5"/>
+                    </pattern>
+                    <radialGradient id="grid-fade" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="white" stop-opacity="1"/>
+                        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                    </radialGradient>
+                    <mask id="grid-mask">
+                        <rect width="100%" height="100%" fill="url(#grid-fade)"/>
+                    </mask>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" mask="url(#grid-mask)"/>
+                <!-- Floating nodes -->
+                <circle cx="200" cy="150" r="4" fill="#e94560" opacity="0.3">
+                    <animate attributeName="cy" values="150;140;150" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="400" cy="300" r="3" fill="#3b82f6" opacity="0.3">
+                    <animate attributeName="cy" values="300;310;300" dur="5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="800" cy="200" r="5" fill="#7C3AED" opacity="0.2">
+                    <animate attributeName="cy" values="200;190;200" dur="6s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="1000" cy="400" r="3" fill="#10b981" opacity="0.3">
+                    <animate attributeName="cy" values="400;390;400" dur="4.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="600" cy="100" r="4" fill="#f59e0b" opacity="0.2">
+                    <animate attributeName="cy" values="100;110;100" dur="5.5s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Connection lines -->
+                <line x1="200" y1="150" x2="400" y2="300" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                    <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="3s" repeatCount="indefinite"/>
+                </line>
+                <line x1="400" y1="300" x2="800" y2="200" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                    <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="4s" repeatCount="indefinite"/>
+                </line>
+                <line x1="800" y1="200" x2="1000" y2="400" stroke="#1e1e2e" stroke-width="0.5" stroke-dasharray="4,8">
+                    <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="3.5s" repeatCount="indefinite"/>
+                </line>
+            </svg>
+        </div>
+
+        <!-- Hero Icon SVG -->
+        <div class="hero-icon">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="64" height="64" rx="16" fill="#12121a" stroke="#1e1e2e" stroke-width="1.5"/>
+                <circle cx="40" cy="34" r="12" stroke="#e94560" stroke-width="2" fill="none" opacity="0.8"/>
+                <circle cx="40" cy="34" r="5" fill="#e94560" opacity="0.6"/>
+                <path d="M24 52 C24 52 28 46 40 46 C52 46 56 52 56 52" stroke="#7C3AED" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <path d="M20 60 L60 60" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                <path d="M26 66 L54 66" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+            </svg>
+        </div>
+
         <div class="badge-row">
             <span class="badge badge--mit">MIT License</span>
             <span class="badge badge--claude">Claude Code</span>
@@ -527,10 +831,11 @@
         </p>
         <div class="cta-row">
             <a href="https://github.com/janrummel/claude-orchestrator-starter" class="btn btn--primary">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 View on GitHub
             </a>
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/getting-started.md" class="btn btn--secondary">
-                Getting Started
+                Getting Started →
             </a>
         </div>
     </section>
@@ -539,8 +844,11 @@
     <section class="problem">
         <div class="container">
             <div class="problem-grid">
-                <div class="problem-card bad">
-                    <h3>Without Orchestrator</h3>
+                <div class="problem-card bad animate-in">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        Without Orchestrator
+                    </h3>
                     <ul>
                         <li>Every session starts from zero</li>
                         <li>No memory of yesterday's decisions</li>
@@ -549,8 +857,11 @@
                         <li>Generic, inconsistent outputs</li>
                     </ul>
                 </div>
-                <div class="problem-card good">
-                    <h3>With Orchestrator</h3>
+                <div class="problem-card good animate-in">
+                    <h3>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 16 9.5"/></svg>
+                        With Orchestrator
+                    </h3>
                     <ul>
                         <li>Sessions pick up where you left off</li>
                         <li>Three-layer memory persists context</li>
@@ -563,7 +874,7 @@
         </div>
     </section>
 
-    <!-- ── Why ─────────────────────────────────────── -->
+    <!-- ── Why / Core Insight ────────────────────── -->
     <section class="section">
         <div class="container">
             <div class="section-header">
@@ -571,64 +882,147 @@
                 <h2 class="section-title">Not More Intelligence — Better Infrastructure</h2>
                 <p class="section-subtitle">Claude is already smart. What it lacks is structure, memory, and habits.</p>
             </div>
-            <div class="why-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 900px; margin: 0 auto;">
-                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
-                    <div style="font-size: 32px; margin-bottom: 12px;">🧠</div>
-                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Memory</h4>
-                    <p style="color: var(--text-muted); font-size: 13px;">Decisions, context, and preferences persist across sessions — not just within one.</p>
+            <div class="why-grid">
+                <div class="why-card why-card--memory animate-in">
+                    <div class="why-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="12" r="8" stroke="#7C3AED" stroke-width="2"/>
+                            <circle cx="16" cy="12" r="3" fill="#7C3AED" opacity="0.6"/>
+                            <path d="M8 24 C8 20 12 18 16 18 C20 18 24 20 24 24" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="6" y1="28" x2="26" y2="28" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <h4>Memory</h4>
+                    <p>Decisions, context, and preferences persist across sessions — not just within one.</p>
                 </div>
-                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
-                    <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
-                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Habits</h4>
-                    <p style="color: var(--text-muted); font-size: 13px;">Skills encode your best workflows. No more re-explaining the same steps every time.</p>
+                <div class="why-card why-card--habits animate-in">
+                    <div class="why-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 4 L16 14" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+                            <polygon points="16,14 12,10 20,10" fill="#f59e0b" opacity="0.6"/>
+                            <rect x="6" y="18" width="20" height="10" rx="3" stroke="#f59e0b" stroke-width="2" fill="none"/>
+                            <line x1="12" y1="22" x2="20" y2="22" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                            <line x1="12" y1="25" x2="17" y2="25" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <h4>Habits</h4>
+                    <p>Skills encode your best workflows. No more re-explaining the same steps every time.</p>
                 </div>
-                <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center;">
-                    <div style="font-size: 32px; margin-bottom: 12px;">🔄</div>
-                    <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Quality Loops</h4>
-                    <p style="color: var(--text-muted); font-size: 13px;">The Evaluator-Optimizer pattern catches issues that single-pass generation misses.</p>
+                <div class="why-card why-card--loops animate-in">
+                    <div class="why-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 10 A8 8 0 0 1 22 22" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <path d="M10 22 A8 8 0 0 1 10 10" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <polygon points="22,10 25,13 19,13" fill="#10b981"/>
+                            <polygon points="10,22 7,19 13,19" fill="#10b981"/>
+                        </svg>
+                    </div>
+                    <h4>Quality Loops</h4>
+                    <p>The Evaluator-Optimizer pattern catches issues that single-pass generation misses.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── Architecture ──────────────────────────── -->
-    <section class="section">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(124, 58, 237, 0.03), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Architecture</div>
                 <h2 class="section-title">How It Works</h2>
                 <p class="section-subtitle">Your message flows through four stages — from intent to structured output.</p>
             </div>
-            <div class="arch-flow">
-                <div class="arch-node arch-node--input">
-                    <div class="icon">🎯</div>
-                    <div class="label">Your Message</div>
-                    <div class="desc">"Summarize this article"</div>
-                </div>
-                <div class="arch-arrow">▼</div>
-                <div class="arch-node arch-node--brain">
-                    <div class="icon">🧠</div>
-                    <div class="label">CLAUDE.md — The Brain</div>
-                    <div class="desc">Routing rules match keywords to skills. Learned patterns improve over time.</div>
-                </div>
-                <div class="arch-arrow">▼</div>
-                <div class="arch-node arch-node--skills">
-                    <div class="icon">⚡</div>
-                    <div class="label">Skill Execution</div>
-                    <div class="desc">The matched skill (e.g. distill) runs its workflow — checking memory, processing input, generating output.</div>
-                </div>
-                <div class="arch-arrow">▼</div>
-                <div class="arch-node arch-node--memory">
-                    <div class="icon">💾</div>
-                    <div class="label">Three-Layer Memory</div>
-                    <div class="desc">Short-term (session) · Mid-term (weeks) · Long-term (permanent)</div>
-                </div>
-                <div class="arch-arrow">▼</div>
-                <div class="arch-node arch-node--output">
-                    <div class="icon">📤</div>
-                    <div class="label">Structured Output</div>
-                    <div class="desc">Result + next skill suggestions</div>
-                </div>
+            <div class="arch-svg-container animate-in">
+                <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <defs>
+                        <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                        <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Connection lines with animation -->
+                    <line x1="300" y1="68" x2="300" y2="102" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="300" y1="168" x2="300" y2="202" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="300" y1="268" x2="300" y2="302" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="300" y1="368" x2="300" y2="402" stroke="#2a2a3e" stroke-width="2" stroke-dasharray="4,4">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
+                    </line>
+
+                    <!-- Arrows -->
+                    <polygon points="300,100 295,92 305,92" fill="#2a2a3e"/>
+                    <polygon points="300,200 295,192 305,192" fill="#2a2a3e"/>
+                    <polygon points="300,300 295,292 305,292" fill="#2a2a3e"/>
+                    <polygon points="300,400 295,392 305,392" fill="#2a2a3e"/>
+
+                    <!-- Node 1: Your Message -->
+                    <rect x="120" y="10" width="360" height="60" rx="12" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
+                    <circle cx="160" cy="40" r="14" fill="rgba(233,69,96,0.12)"/>
+                    <svg x="150" y="30" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="4" fill="#e94560"/>
+                        <circle cx="12" cy="12" r="9" stroke="#e94560" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    <text x="190" y="36" font-size="14" font-weight="600" fill="#e0e0e8">Your Message</text>
+                    <text x="190" y="52" font-size="11" fill="#8888a0">"Summarize this article"</text>
+
+                    <!-- Node 2: CLAUDE.md -->
+                    <rect x="120" y="110" width="360" height="60" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
+                    <circle cx="160" cy="140" r="14" fill="rgba(59,130,246,0.12)"/>
+                    <svg x="148" y="128" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="10" r="6" stroke="#3b82f6" stroke-width="1.5"/>
+                        <circle cx="12" cy="10" r="2.5" fill="#3b82f6" opacity="0.6"/>
+                        <path d="M6 20 C6 17 9 15 12 15 C15 15 18 17 18 20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <text x="190" y="136" font-size="14" font-weight="600" fill="#e0e0e8">CLAUDE.md — The Brain</text>
+                    <text x="190" y="152" font-size="11" fill="#8888a0">Routes keywords → skills, loads context</text>
+
+                    <!-- Node 3: Skill Execution -->
+                    <rect x="120" y="210" width="360" height="60" rx="12" fill="#12121a" stroke="#10b981" stroke-width="1.5"/>
+                    <circle cx="160" cy="240" r="14" fill="rgba(16,185,129,0.12)"/>
+                    <svg x="148" y="228" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#10b981" stroke-width="1.5" stroke-linejoin="round" fill="rgba(16,185,129,0.2)"/>
+                    </svg>
+                    <text x="190" y="236" font-size="14" font-weight="600" fill="#e0e0e8">Skill Execution</text>
+                    <text x="190" y="252" font-size="11" fill="#8888a0">Matched skill runs its workflow</text>
+
+                    <!-- Node 4: Memory -->
+                    <rect x="120" y="310" width="360" height="60" rx="12" fill="#12121a" stroke="#7C3AED" stroke-width="1.5"/>
+                    <circle cx="160" cy="340" r="14" fill="rgba(124,58,237,0.12)"/>
+                    <svg x="148" y="328" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="4" y="4" width="16" height="16" rx="3" stroke="#7C3AED" stroke-width="1.5"/>
+                        <line x1="4" y1="10" x2="20" y2="10" stroke="#7C3AED" stroke-width="1" opacity="0.5"/>
+                        <line x1="4" y1="15" x2="20" y2="15" stroke="#7C3AED" stroke-width="1" opacity="0.3"/>
+                        <circle cx="12" cy="7" r="1.5" fill="#7C3AED" opacity="0.6"/>
+                    </svg>
+                    <text x="190" y="336" font-size="14" font-weight="600" fill="#e0e0e8">Three-Layer Memory</text>
+                    <text x="190" y="352" font-size="11" fill="#8888a0">Short · Mid · Long-term persistence</text>
+
+                    <!-- Node 5: Output -->
+                    <rect x="120" y="410" width="360" height="60" rx="12" fill="#12121a" stroke="#f59e0b" stroke-width="1.5"/>
+                    <circle cx="160" cy="440" r="14" fill="rgba(245,158,11,0.12)"/>
+                    <svg x="148" y="428" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="4" y="4" width="16" height="16" rx="2" stroke="#f59e0b" stroke-width="1.5"/>
+                        <path d="M8 12 L11 15 L16 9" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <text x="190" y="436" font-size="14" font-weight="600" fill="#e0e0e8">Structured Output</text>
+                    <text x="190" y="452" font-size="11" fill="#8888a0">Result + next skill suggestions</text>
+
+                    <!-- Feedback arrow from Output back to Brain -->
+                    <path d="M 486 440 C 540 440 540 140 486 140" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="4,4" fill="none">
+                        <animate attributeName="stroke-dashoffset" from="0" to="16" dur="3s" repeatCount="indefinite"/>
+                    </path>
+                    <text x="536" y="290" font-size="10" fill="#555570" transform="rotate(90, 536, 290)">feedback loop</text>
+                </svg>
             </div>
         </div>
     </section>
@@ -641,28 +1035,59 @@
                 <h2 class="section-title">Three-Layer Memory</h2>
                 <p class="section-subtitle">Context that persists — from one conversation to months of knowledge.</p>
             </div>
-            <div class="memory-stack">
-                <div class="memory-layer memory-layer--short">
-                    <span class="tag">Short-term</span>
-                    <h4>Context Window</h4>
-                    <p>Current conversation and temporary results. Lifetime: 1 session.</p>
+            <div class="memory-visual">
+                <div class="memory-svg animate-in">
+                    <svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg" fill="none">
+                        <!-- Layer 3 (bottom) - Long-term -->
+                        <rect x="10" y="180" width="220" height="80" rx="12" fill="#12121a" stroke="#7C3AED" stroke-width="1.5"/>
+                        <text x="120" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="#7C3AED">LONG-TERM</text>
+                        <text x="120" y="232" text-anchor="middle" font-size="9" fill="#8888a0">CLAUDE.md · Obsidian · SQLite</text>
+                        <text x="120" y="248" text-anchor="middle" font-size="9" fill="#555570">permanent</text>
+
+                        <!-- Layer 2 (middle) - Mid-term -->
+                        <rect x="30" y="100" width="180" height="70" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
+                        <text x="120" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#3b82f6">MID-TERM</text>
+                        <text x="120" y="147" text-anchor="middle" font-size="9" fill="#8888a0">Handoffs · Routing Log</text>
+                        <text x="120" y="160" text-anchor="middle" font-size="9" fill="#555570">weeks – months</text>
+
+                        <!-- Layer 1 (top) - Short-term -->
+                        <rect x="50" y="30" width="140" height="60" rx="12" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
+                        <text x="120" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#e94560">SHORT-TERM</text>
+                        <text x="120" y="73" text-anchor="middle" font-size="9" fill="#8888a0">Context Window</text>
+
+                        <!-- Connection dots -->
+                        <circle cx="120" cy="92" r="2" fill="#2a2a3e"/>
+                        <circle cx="120" cy="172" r="2" fill="#2a2a3e"/>
+
+                        <!-- Glow effects -->
+                        <circle cx="120" cy="60" r="30" fill="#e94560" opacity="0.04"/>
+                        <circle cx="120" cy="135" r="35" fill="#3b82f6" opacity="0.04"/>
+                        <circle cx="120" cy="220" r="45" fill="#7C3AED" opacity="0.04"/>
+                    </svg>
                 </div>
-                <div class="memory-layer memory-layer--mid">
-                    <span class="tag">Mid-term</span>
-                    <h4>State Files + Routing Log</h4>
-                    <p>Past session handoffs, routing decisions, and project states. Lifetime: weeks to months.</p>
-                </div>
-                <div class="memory-layer memory-layer--long">
-                    <span class="tag">Long-term</span>
-                    <h4>CLAUDE.md + Obsidian + Knowledge Base</h4>
-                    <p>Routing rules, preferences, glossary, contacts, and domain knowledge. Lifetime: permanent.</p>
+                <div class="memory-stack animate-in">
+                    <div class="memory-layer memory-layer--short">
+                        <span class="tag">Short-term</span>
+                        <h4>Context Window</h4>
+                        <p>Current conversation and temporary results. Lifetime: 1 session.</p>
+                    </div>
+                    <div class="memory-layer memory-layer--mid">
+                        <span class="tag">Mid-term</span>
+                        <h4>State Files + Routing Log</h4>
+                        <p>Past session handoffs, routing decisions, and project states. Lifetime: weeks to months.</p>
+                    </div>
+                    <div class="memory-layer memory-layer--long">
+                        <span class="tag">Long-term</span>
+                        <h4>CLAUDE.md + Obsidian + Knowledge Base</h4>
+                        <p>Routing rules, preferences, glossary, contacts, and domain knowledge. Lifetime: permanent.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── Skills ────────────────────────────────── -->
-    <section class="section">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(233, 69, 96, 0.02), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Skills</div>
@@ -670,38 +1095,78 @@
                 <p class="section-subtitle">Reusable workflows defined as markdown files — instructions, not code.</p>
             </div>
             <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="emoji">📥</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--capture">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="4" width="16" height="16" rx="3" stroke="#3b82f6" stroke-width="1.5"/>
+                            <path d="M12 8 L12 16 M8 12 L16 12" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">capture</div>
                     <h4>Quick Capture</h4>
                     <p>Save notes and ideas directly to Obsidian. Fast input, structured storage.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="emoji">🔬</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--distill">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 3 L9 9 L4 15 L4 20 C4 20.5 4.5 21 5 21 L19 21 C19.5 21 20 20.5 20 20 L20 15 L15 9 L15 3" stroke="#7C3AED" stroke-width="1.5" stroke-linejoin="round"/>
+                            <line x1="8" y1="3" x2="16" y2="3" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round"/>
+                            <line x1="7" y1="15" x2="17" y2="15" stroke="#7C3AED" stroke-width="1" opacity="0.4" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">distill</div>
                     <h4>Summarize &amp; Condense</h4>
                     <p>Progressive summarization. Extract key takeaways from any text.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="emoji">✍️</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--express">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6 L8 6" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 10 L14 10" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 14 L18 14" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M4 18 L12 18" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M17 4 L21 8 L12 17 L10 19 L10.5 16.5 L17 4" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round" fill="rgba(245,158,11,0.15)"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">express</div>
                     <h4>Write Output</h4>
                     <p>Generate polished, structured content — articles, posts, emails, concepts.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="emoji">🔍</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--analyze">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="7" stroke="#10b981" stroke-width="1.5"/>
+                            <path d="M16 16 L21 21" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M8 11 L10 13 L14 9" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">analyze</div>
                     <h4>Deep Analysis</h4>
                     <p>Structured ReAct analysis. Investigate topics with iterative reasoning.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="emoji">🎯</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--signal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="3" fill="#e94560" opacity="0.6"/>
+                            <circle cx="12" cy="12" r="7" stroke="#e94560" stroke-width="1.5" fill="none"/>
+                            <circle cx="12" cy="12" r="10" stroke="#e94560" stroke-width="1" fill="none" opacity="0.3"/>
+                            <line x1="12" y1="2" x2="12" y2="5" stroke="#e94560" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+                            <line x1="12" y1="19" x2="12" y2="22" stroke="#e94560" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">signal-check</div>
                     <h4>Quality Check</h4>
                     <p>4-axis substance analysis: meaning, facts, framing, context. Signal vs. noise.</p>
                 </div>
-                <div class="skill-card">
-                    <div class="emoji">💾</div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon skill-icon--handoff">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="4" y="6" width="10" height="14" rx="2" stroke="#3b82f6" stroke-width="1.5"/>
+                            <rect x="10" y="4" width="10" height="14" rx="2" stroke="#3b82f6" stroke-width="1.5" fill="#12121a"/>
+                            <path d="M13 9 L17 9 M13 12 L17 12" stroke="#3b82f6" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M12 20 L18 20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2,2" opacity="0.4"/>
+                        </svg>
+                    </div>
                     <div class="skill-name">handoff</div>
                     <h4>Session Handoff</h4>
                     <p>Save decisions, context, and next steps. Next session picks up seamlessly.</p>
@@ -719,28 +1184,63 @@
                 <p class="section-subtitle">Skills chain together into powerful workflows.</p>
             </div>
             <div class="loops-grid">
-                <div class="loop-card">
-                    <h4>Evaluator-Optimizer</h4>
+                <div class="loop-card animate-in">
+                    <h4>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14 6 A6 6 0 0 1 14 14" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 14 A6 6 0 0 1 6 6" stroke="#f59e0b" stroke-width="1.5" fill="none" stroke-linecap="round"/><polygon points="14,6 16,8 12,8" fill="#f59e0b"/><polygon points="6,14 4,12 8,12" fill="#f59e0b"/></svg>
+                        Evaluator-Optimizer
+                    </h4>
                     <p class="desc">Write, evaluate, improve — like a human review cycle.</p>
-                    <div class="loop-flow">
-                        <span class="loop-step">✍️ express</span>
-                        <span class="loop-arrow">→</span>
-                        <span class="loop-step">🎯 signal-check</span>
-                        <span class="loop-arrow">→</span>
-                        <span class="loop-step">✍️ express</span>
+                    <div class="loop-svg">
+                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+                            <rect x="0" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
+                            <text x="40" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#f59e0b">express</text>
+
+                            <line x1="84" y1="40" x2="116" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
+                            <polygon points="114,36 120,40 114,44" fill="#2a2a3e"/>
+
+                            <rect x="120" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#e94560" stroke-width="1"/>
+                            <text x="160" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#e94560">signal-check</text>
+
+                            <line x1="204" y1="40" x2="236" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
+                            <polygon points="234,36 240,40 234,44" fill="#2a2a3e"/>
+
+                            <rect x="240" y="20" width="80" height="40" rx="8" fill="#12121a" stroke="#10b981" stroke-width="1"/>
+                            <text x="280" y="44" text-anchor="middle" font-size="11" font-weight="500" fill="#10b981">express</text>
+
+                            <text x="100" y="14" text-anchor="middle" font-size="8" fill="#555570">evaluate</text>
+                            <text x="220" y="14" text-anchor="middle" font-size="8" fill="#555570">optimize</text>
+                        </svg>
                     </div>
                 </div>
-                <div class="loop-card">
-                    <h4>Knowledge Cycle</h4>
+                <div class="loop-card animate-in">
+                    <h4>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#10b981" stroke-width="1.5" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Knowledge Cycle
+                    </h4>
                     <p class="desc">Capture, process, output, verify — continuous learning.</p>
-                    <div class="loop-flow">
-                        <span class="loop-step">📥 capture</span>
-                        <span class="loop-arrow">→</span>
-                        <span class="loop-step">🔬 distill</span>
-                        <span class="loop-arrow">→</span>
-                        <span class="loop-step">✍️ express</span>
-                        <span class="loop-arrow">→</span>
-                        <span class="loop-step">🎯 check</span>
+                    <div class="loop-svg">
+                        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
+                            <rect x="0" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#3b82f6" stroke-width="1"/>
+                            <text x="30" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#3b82f6">capture</text>
+
+                            <line x1="64" y1="40" x2="78" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
+                            <polygon points="76,36 82,40 76,44" fill="#2a2a3e"/>
+
+                            <rect x="82" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
+                            <text x="112" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#7C3AED">distill</text>
+
+                            <line x1="146" y1="40" x2="160" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
+                            <polygon points="158,36 164,40 158,44" fill="#2a2a3e"/>
+
+                            <rect x="164" y="20" width="60" height="40" rx="8" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
+                            <text x="194" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#f59e0b">express</text>
+
+                            <line x1="228" y1="40" x2="242" y2="40" stroke="#2a2a3e" stroke-width="1.5"/>
+                            <polygon points="240,36 246,40 240,44" fill="#2a2a3e"/>
+
+                            <rect x="246" y="20" width="74" height="40" rx="8" fill="#12121a" stroke="#e94560" stroke-width="1"/>
+                            <text x="283" y="44" text-anchor="middle" font-size="10" font-weight="500" fill="#e94560">signal-check</text>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -748,98 +1248,152 @@
     </section>
 
     <!-- ── Bigger Picture ────────────────────────── -->
-    <section class="section">
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(59, 130, 246, 0.03), transparent);">
         <div class="container">
             <div class="section-header">
                 <div class="section-label">The Bigger Picture</div>
                 <h2 class="section-title">This Is Just the Foundation</h2>
                 <p class="section-subtitle">The starter kit gives you the building blocks. The full system goes much deeper.</p>
             </div>
-            <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 40px; overflow-x: auto;">
-                <pre style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--text-muted); margin: 0; white-space: pre; overflow-x: auto;"><span style="color: var(--text);">YOU:</span> "Analyze the market data and write a summary"
-          │
-          ▼
-┌──────────────────────────────────────────────────────────┐
-│  <span style="color: var(--blue);">🧠 CLAUDE.md — THE ORCHESTRATOR BRAIN</span>                    │
-│                                                          │
-│  <span style="color: var(--text);">Routing Rules</span>  ·  <span style="color: var(--text);">User Patterns</span>  ·  <span style="color: var(--text);">Workflow Chains</span>  │
-│  100+ mappings     learned prefs     15+ sequences       │
-│                                                          │
-│  matches "analyze" + "write" → chain: analyze → express  │
-└─────────────────────────┬────────────────────────────────┘
-                          │
-                          ▼
-┌──────────────────────────────────────────────────────────┐
-│  <span style="color: var(--green);">⚡ SKILLS</span> (20+ in full system, 6 in starter kit)         │
-│                                                          │
-│  <span style="color: var(--accent);">capture  distill  express  analyze  signal-check  handoff</span>│
-│  <span style="color: var(--text-muted);">research  decide  innovate  strategy  ...14+ more</span>       │
-│                                                          │
-│  Each skill = SKILL.md with workflow, rules, format      │
-└────────────┬─────────────────────┬───────────────────────┘
-             │                     │
-             ▼                     ▼
-┌─────────────────┐  ┌─────────────────┐  ┌────────────────┐
-│ <span style="color: var(--accent);">💾 SHORT-TERM</span>   │  │ <span style="color: var(--blue);">📋 MID-TERM</span>    │  │ <span style="color: var(--purple);">🏛️ LONG-TERM</span>   │
-│ Context window  │  │ Routing log    │  │ CLAUDE.md      │
-│ 1 session       │  │ Handoff files  │  │ memory/        │
-│                 │  │ Weeks–months   │  │ Permanent      │
-└─────────────────┘  └────────────────┘  └──────┬─────────┘
-                                                │
-                                   ┌────────────┴────────────┐
-                                   ▼                         ▼
-                        ┌──────────────────┐   ┌───────────────────┐
-                        │ <span style="color: var(--purple);">🟣 Obsidian</span>       │   │ <span style="color: var(--orange);">🗃️ SQLite DB</span>       │
-                        │ Your notes =     │   │ Research items,   │
-                        │ Claude's KB      │   │ datasets, stats   │
-                        └──────────────────┘   └───────────────────┘</pre>
+
+            <!-- Full System SVG Diagram -->
+            <div class="system-diagram animate-in">
+                <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <!-- User input -->
+                    <rect x="200" y="5" width="300" height="40" rx="10" fill="#12121a" stroke="#e94560" stroke-width="1.5"/>
+                    <text x="350" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#e0e0e8">YOU: "Analyze market data, write summary"</text>
+
+                    <line x1="350" y1="47" x2="350" y2="68" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <polygon points="350,66 346,60 354,60" fill="#2a2a3e"/>
+
+                    <!-- Brain -->
+                    <rect x="100" y="70" width="500" height="80" rx="12" fill="#12121a" stroke="#3b82f6" stroke-width="1.5"/>
+                    <text x="350" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">CLAUDE.md — THE ORCHESTRATOR BRAIN</text>
+                    <text x="200" y="115" text-anchor="middle" font-size="10" fill="#8888a0">Routing Rules</text>
+                    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#8888a0">User Patterns</text>
+                    <text x="500" y="115" text-anchor="middle" font-size="10" fill="#8888a0">Workflow Chains</text>
+                    <text x="350" y="137" text-anchor="middle" font-size="9" fill="#555570">matches "analyze" + "write" → chain: analyze → express</text>
+
+                    <line x1="350" y1="152" x2="350" y2="178" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3">
+                        <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite"/>
+                    </line>
+                    <polygon points="350,176 346,170 354,170" fill="#2a2a3e"/>
+
+                    <!-- Skills -->
+                    <rect x="100" y="180" width="500" height="75" rx="12" fill="#12121a" stroke="#10b981" stroke-width="1.5"/>
+                    <text x="350" y="205" text-anchor="middle" font-size="13" font-weight="600" fill="#10b981">SKILLS (20+ in full system, 6 in starter kit)</text>
+
+                    <!-- Skill pills -->
+                    <rect x="120" y="215" width="60" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="150" y="231" text-anchor="middle" font-size="9" fill="#e94560">capture</text>
+
+                    <rect x="190" y="215" width="52" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="216" y="231" text-anchor="middle" font-size="9" fill="#e94560">distill</text>
+
+                    <rect x="252" y="215" width="58" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="281" y="231" text-anchor="middle" font-size="9" fill="#e94560">express</text>
+
+                    <rect x="320" y="215" width="58" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="349" y="231" text-anchor="middle" font-size="9" fill="#e94560">analyze</text>
+
+                    <rect x="388" y="215" width="80" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="428" y="231" text-anchor="middle" font-size="9" fill="#e94560">signal-check</text>
+
+                    <rect x="478" y="215" width="56" height="24" rx="6" fill="rgba(233,69,96,0.12)" stroke="#e94560" stroke-width="0.5"/>
+                    <text x="506" y="231" text-anchor="middle" font-size="9" fill="#e94560">handoff</text>
+
+                    <!-- Branching arrows -->
+                    <line x1="250" y1="257" x2="250" y2="298" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <polygon points="250,296 246,290 254,290" fill="#2a2a3e"/>
+
+                    <line x1="450" y1="257" x2="450" y2="298" stroke="#2a2a3e" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <polygon points="450,296 446,290 454,290" fill="#2a2a3e"/>
+
+                    <!-- Memory boxes -->
+                    <rect x="100" y="300" width="130" height="60" rx="10" fill="#12121a" stroke="#e94560" stroke-width="1"/>
+                    <text x="165" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#e94560">SHORT-TERM</text>
+                    <text x="165" y="340" text-anchor="middle" font-size="9" fill="#8888a0">Context window</text>
+                    <text x="165" y="352" text-anchor="middle" font-size="8" fill="#555570">1 session</text>
+
+                    <rect x="250" y="300" width="130" height="60" rx="10" fill="#12121a" stroke="#3b82f6" stroke-width="1"/>
+                    <text x="315" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#3b82f6">MID-TERM</text>
+                    <text x="315" y="340" text-anchor="middle" font-size="9" fill="#8888a0">Routing log · Handoffs</text>
+                    <text x="315" y="352" text-anchor="middle" font-size="8" fill="#555570">weeks – months</text>
+
+                    <rect x="400" y="300" width="200" height="60" rx="10" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
+                    <text x="500" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#7C3AED">LONG-TERM</text>
+                    <text x="500" y="340" text-anchor="middle" font-size="9" fill="#8888a0">CLAUDE.md · memory/ · Knowledge</text>
+                    <text x="500" y="352" text-anchor="middle" font-size="8" fill="#555570">permanent</text>
+
+                    <!-- Lines down from long-term -->
+                    <line x1="450" y1="362" x2="450" y2="398" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="550" y1="362" x2="550" y2="398" stroke="#2a2a3e" stroke-width="1" stroke-dasharray="3,3"/>
+
+                    <!-- Obsidian + SQLite -->
+                    <rect x="370" y="400" width="160" height="55" rx="10" fill="#12121a" stroke="#7C3AED" stroke-width="1"/>
+                    <circle cx="400" y="427" r="10" fill="rgba(124,58,237,0.15)"/>
+                    <text x="398" y="431" text-anchor="middle" font-size="12" fill="#7C3AED">⬢</text>
+                    <text x="470" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#e0e0e8">Obsidian</text>
+                    <text x="470" y="438" text-anchor="middle" font-size="9" fill="#8888a0">Your notes = Claude's KB</text>
+
+                    <rect x="540" y="400" width="160" height="55" rx="10" fill="#12121a" stroke="#f59e0b" stroke-width="1"/>
+                    <circle cx="570" y="427" r="10" fill="rgba(245,158,11,0.15)"/>
+                    <text x="568" y="432" text-anchor="middle" font-size="12" fill="#f59e0b">⊞</text>
+                    <text x="640" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#e0e0e8">SQLite DB</text>
+                    <text x="640" y="438" text-anchor="middle" font-size="9" fill="#8888a0">Research · Datasets · Stats</text>
+                </svg>
             </div>
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Dimension</th>
-                        <th>Starter Kit</th>
-                        <th>Full System</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Skills</td>
-                        <td>6 core skills</td>
-                        <td>20+ domain-specific skills</td>
-                    </tr>
-                    <tr>
-                        <td>Routing</td>
-                        <td>6 keyword mappings</td>
-                        <td>100+ mappings with disambiguation</td>
-                    </tr>
-                    <tr>
-                        <td>Memory</td>
-                        <td>Template files</td>
-                        <td>Months of accumulated context</td>
-                    </tr>
-                    <tr>
-                        <td>Obsidian</td>
-                        <td>1 vault (optional)</td>
-                        <td>6 connected vaults, 930+ notes</td>
-                    </tr>
-                    <tr>
-                        <td>Database</td>
-                        <td>Empty schema</td>
-                        <td>Research items, datasets, usage stats</td>
-                    </tr>
-                    <tr>
-                        <td>Workflow Chains</td>
-                        <td>2 basic loops</td>
-                        <td>15+ multi-step chains</td>
-                    </tr>
-                    <tr>
-                        <td>Self-Improvement</td>
-                        <td>Manual updates</td>
-                        <td>Automated routing analysis</td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <div class="comparison-table-wrap animate-in">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Starter Kit</th>
+                            <th>Full System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Skills</td>
+                            <td>6 core skills</td>
+                            <td>20+ domain-specific skills</td>
+                        </tr>
+                        <tr>
+                            <td>Routing</td>
+                            <td>6 keyword mappings</td>
+                            <td>100+ mappings with disambiguation</td>
+                        </tr>
+                        <tr>
+                            <td>Memory</td>
+                            <td>Template files</td>
+                            <td>Months of accumulated context</td>
+                        </tr>
+                        <tr>
+                            <td>Obsidian</td>
+                            <td>1 vault (optional)</td>
+                            <td>6 connected vaults, 930+ notes</td>
+                        </tr>
+                        <tr>
+                            <td>Database</td>
+                            <td>Empty schema</td>
+                            <td>Research items, datasets, usage stats</td>
+                        </tr>
+                        <tr>
+                            <td>Workflow Chains</td>
+                            <td>2 basic loops</td>
+                            <td>15+ multi-step chains</td>
+                        </tr>
+                        <tr>
+                            <td>Self-Improvement</td>
+                            <td>Manual updates</td>
+                            <td>Automated routing analysis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -850,7 +1404,7 @@
                 <div class="section-label">Get Started</div>
                 <h2 class="section-title">Up and Running in 5 Minutes</h2>
             </div>
-            <div class="quickstart-block">
+            <div class="quickstart-block animate-in">
                 <pre><span class="comment"># Clone the repo</span>
 <span class="cmd">git clone https://github.com/janrummel/claude-orchestrator-starter.git</span>
 <span class="cmd">cd claude-orchestrator-starter</span>
@@ -883,16 +1437,35 @@
 
     <!-- ── Footer ────────────────────────────────── -->
     <footer class="footer">
-        <p>
-            <a href="https://github.com/janrummel/claude-orchestrator-starter">GitHub</a> ·
-            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/architecture.md">Architecture</a> ·
-            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/skill-development.md">Build Skills</a> ·
+        <div class="footer-links">
+            <a href="https://github.com/janrummel/claude-orchestrator-starter">GitHub</a>
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/architecture.md">Architecture</a>
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/skill-development.md">Build Skills</a>
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/faq.md">FAQ</a>
-        </p>
-        <p style="margin-top: 16px; font-size: 13px; color: #555570;">
+        </div>
+        <p style="font-size: 13px; color: #555570;">
             MIT License · Built with Claude Code · No dependencies, just markdown.
         </p>
     </footer>
+
+    <!-- ── Scroll Animation Script ───────────────── -->
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 
 </body>
 </html>
