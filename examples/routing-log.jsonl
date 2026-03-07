@@ -1,0 +1,5 @@
+{"ts":"2026-03-07T09:00:00Z","input_summary":"blog post about remote work, unsure about angle","skill_invoked":"analyze","outcome":"positive"}
+{"ts":"2026-03-07T09:08:00Z","input_summary":"write blog post with deep work angle","skill_invoked":"express","outcome":"positive"}
+{"ts":"2026-03-07T09:15:00Z","input_summary":"is this solid?","skill_invoked":"signal-check","outcome":"positive"}
+{"ts":"2026-03-07T09:18:00Z","input_summary":"improve based on feedback","skill_invoked":"express","outcome":"pending"}
+{"ts":"2026-03-07T09:25:00Z","input_summary":"save state for next time","skill_invoked":"handoff","outcome":"positive"}
