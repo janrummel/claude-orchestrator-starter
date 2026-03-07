@@ -2,74 +2,71 @@
 
 # Language / Sprache
 # Set your preferred language here. Skills and outputs will follow this setting.
-# Stellen Sie hier Ihre bevorzugte Sprache ein.
 # Options: "English" | "Deutsch" | or any language you prefer
 LANGUAGE: English
 
 ## Session Start Protocol
 
-At the beginning of every new session, before responding:
+At the beginning of every new session:
 
-1. Read `~/.claude/orchestrator/user-patterns.md` for learned preferences
-2. Check for active project states: `ls ~/.claude/orchestrator/projects/*.md`
-3. If a project state matches the user's request, present the handoff summary:
-   > "Last state for **[Project]**: [Active context]. Next step: [First step]. Continue?"
+1. Check for active project states: `ls ~/.claude/orchestrator/projects/*.md`
+2. If a project state exists:
+   > "Active project: **[Name]**. Next step: [First open item]. Continue?"
+3. If no projects exist:
+   > "No active project. What would you like to work on?"
+4. If `~/.claude/orchestrator/user-patterns.md` exists, read it for learned preferences.
+
+## Workflow: Clarify → Build → Verify
+
+Every task follows three phases. Don't skip phases.
+
+| Phase | Question | Skills | Result |
+|-------|----------|--------|--------|
+| **Clarify** | What exactly is the problem? | `analyze`, `distill` | Clear problem definition |
+| **Build** | Produce the output | `express`, `capture` | Concrete output |
+| **Verify** | Is it good enough? | `signal-check`, `challenge` | Finished result |
+
+New ideas during work → capture to inbox, do NOT pursue. Stay on the current task.
 
 ## Core Principle
 
-Before responding to ANY user request, determine which skill(s) best handle it.
-Check the routing table below and invoke the matching skill.
+Not every message needs a skill. Skills are for **structured work** — analysis, writing, evaluation, capture. For simple questions, conversations, or quick answers: respond directly.
 
-## Cognitive Mode Detection (Pre-Routing)
+When a task matches a skill, check the routing table and invoke it.
 
-**BEFORE** matching keywords: Recognize the user's cognitive mode. This improves skill selection, especially for ambiguous requests.
+## Cognitive Mode Detection
 
-### The 4 Modes (based on Tey Bannerman's "The Four Modes")
+Before matching keywords, recognize the user's cognitive state. This helps with ambiguous requests.
 
-| Mode | Signals | User State | Preferred Skill Cluster |
-|------|---------|-----------|------------------------|
-| **Compression** | "too much", "overview", "summarize", "what matters", "key points", "TL;DR" | Overwhelmed by information — needs reduction | `distill`, `signal-check` |
-| **Expansion** | "ideas", "alternatives", "what else", "stuck", "creative", "how might we" | Stuck — needs new directions | `analyze`, `express` |
-| **Reflection** | "does this hold up", "am I sure", "objections", "blind spots", "what am I missing", "robust enough" | Has a draft/decision — needs validation | `challenge`, `signal-check` |
-| **Execution** | "write", "create", "draft", "make this into", "finalize", "output", "build" | Knows what — needs production | `express`, `capture`, `handoff` |
+| Mode | Signals | User State | Preferred Skills |
+|------|---------|-----------|-----------------|
+| **Compression** | "too much", "overview", "summarize", "key points" | Overwhelmed — needs reduction | `distill`, `signal-check` |
+| **Expansion** | "ideas", "alternatives", "what else", "stuck" | Stuck — needs new directions | `analyze`, `express` |
+| **Reflection** | "does this hold up", "objections", "blind spots" | Has a draft — needs validation | `challenge`, `signal-check` |
+| **Execution** | "write", "create", "draft", "finalize" | Knows what — needs production | `express`, `capture` |
 
-### Application
-
-1. **Detect mode** — Read the emotional/cognitive state, not just keywords
-2. **Prioritize cluster** — When ambiguous: prefer skills from the detected mode cluster
-3. **Then match keywords** — Normal keyword routing within the prioritized cluster
-
-**Examples:**
-- "I have 5 options and can't decide" → **Compression** → `distill` or decision support, not brainstorming
-- "My plan is ready, but something's off" → **Reflection** → `challenge` or `signal-check`, not `express`
-- "I'm going in circles" → **Expansion** → open up thinking, not narrow down
-- "This needs to go out now" → **Execution** → `express`, not `signal-check`
-
-**Important:** Mode Detection does NOT replace keyword routing — it supplements it. For explicit keywords (e.g. "write a blog post") route directly. Mode Detection helps with vague or emotional requests where the user doesn't precisely name their need.
+Mode Detection supplements keyword routing. For explicit keywords (e.g., "write a blog post"), route directly.
 
 ## Routing Rules
 
-| Signal Keywords | Skill | Purpose |
-|----------------|-------|---------|
-| note, idea, capture, save, remember | `capture` | Quick capture to Obsidian |
-| summarize, condense, key points, distill, essence | `distill` | Progressive summarization |
-| write, draft, create content, blog, post, formulate | `express` | Polished output generation |
-| analyze, investigate, evaluate, deep dive, what's behind | `analyze` | Structured ReAct analysis |
-| quality check, fact check, is this solid, substance | `signal-check` | 4-axis substance analysis |
-| challenge, stress-test, red team, objections, counter-arguments, what could go wrong, weaknesses, devil's advocate, blind spots, find holes, robust enough | `challenge` | Adversarial stress-testing |
-| handoff, save state, end session, for next time | `handoff` | Session state persistence |
+| Signal Keywords | Skill | Phase | Purpose |
+|----------------|-------|-------|---------|
+| note, idea, capture, save, remember | `capture` | Build | Quick capture to notes |
+| summarize, condense, key points, distill, essence | `distill` | Clarify | Progressive summarization |
+| write, draft, create content, blog, post, formulate | `express` | Build | Polished output generation |
+| analyze, investigate, evaluate, deep dive, what's behind | `analyze` | Clarify | Structured ReAct analysis |
+| quality check, fact check, is this solid, substance | `signal-check` | Verify | 4-axis substance check |
+| challenge, stress-test, red team, objections, what could go wrong, devil's advocate | `challenge` | Verify | Adversarial stress-testing |
+| handoff, save state, end session, for next time | `handoff` | — | Session state persistence |
 
-### Disambiguation Rules
+### Disambiguation
 
-When context is ambiguous:
-1. **"Summarize"** → Short text: `distill`. Create new text: `express`.
-2. **"Check"** → Substance/facts: `signal-check`. Weaknesses/objections: `challenge`. Data: domain-specific.
-3. **"Analyze"** → Data/numbers: domain-specific. Concept/topic: `analyze`.
+1. **"Summarize"** → Reduce existing text: `distill`. Create new text: `express`.
+2. **"Check"** → Substance/facts: `signal-check`. Weaknesses: `challenge`.
+3. **"Analyze"** → Data: domain-specific. Concept/topic: `analyze`.
 4. **"Review"** → Content quality: `signal-check`. Stress-test: `challenge`.
 
 ## Workflow Chains
-
-Suggest the next skill after each output:
 
 ### Evaluator-Optimizer Loop
 `express` → `signal-check` → `express` (improved based on feedback)
@@ -77,38 +74,39 @@ Suggest the next skill after each output:
 ### Evaluator-Challenger Loop
 `express` → `challenge` → `express` (hardened against objections)
 
-### Decision Hardening
-`analyze` → `challenge` → `express` (stress-tested conclusions)
+### Deep Analysis
+`analyze` → `signal-check` → `express`
 
 ### Knowledge Cycle
 `capture` → `distill` → `express` → `signal-check`
 
-### Deep Analysis
-`analyze` → `signal-check` → `express`
+## After Each Skill Output
 
-### Session End
-`[any skill]` → `handoff`
-
-## Proactive Suggestions
-
-After EVERY skill output, suggest matching next skills. Format:
-
-```
----
-**Next:** `/signal-check` (quality check) · `/challenge` (stress-test) · `/capture` (save to Obsidian)
-```
+Suggest **one** logical next step — not a menu of options.
 
 | Just executed | Suggest |
 |--------------|---------|
-| `/analyze` | `/signal-check`, `/challenge`, `/express` |
-| `/distill` | `/express`, `/capture` |
-| `/express` | `/signal-check` (evaluator), `/challenge` (stress-test), `/capture` |
-| `/signal-check` | `/express` (optimizer), `/capture` |
-| `/challenge` | `/express` (make robust), `/capture` |
-| `/capture` | (endpoint — no suggestion) |
-| `/handoff` | (endpoint — no suggestion) |
+| `/analyze` | → `/signal-check` to verify findings |
+| `/distill` | → `/express` to create output from summary |
+| `/express` | → `/signal-check` to evaluate quality |
+| `/signal-check` | → `/express` to improve based on feedback |
+| `/challenge` | → `/express` to harden against objections |
+| `/capture` | (endpoint) |
+| `/handoff` | (endpoint) |
 
-Maximum 3 suggestions. Suggest only, never auto-execute.
+## Quality Principles
+
+1. **Traceability:** Every step should be explainable. Mark assumptions as assumptions.
+2. **Source criticism:** Always cite and assess sources (peer-reviewed > preprint > blog > claim).
+3. **Less + high-quality > more + low-quality:** One finished result beats five started ones.
+4. **Honesty:** When something is unclear, say so — don't guess.
+
+## Not-ToDo
+
+1. No system scoring or dashboard optimization
+2. No new skills without proven need
+3. No skill chains longer than 4 steps
+4. Don't auto-execute skills — always suggest, let the user decide
 
 ## Output Standards
 
@@ -151,17 +149,16 @@ Update outcome based on feedback:
 ### Adding Skills
 1. Create `~/.claude/orchestrator/skills/<name>/SKILL.md`
 2. Add routing keywords to the table above
-3. Add to workflow chains if applicable
+3. Assign to a workflow phase (Clarify, Build, or Verify)
 
 ### Adding Memory
-- **New glossary term** → `~/.claude/memory/glossary.md`
-- **New contact** → `~/.claude/memory/people/<name>.md`
+- **Glossary** → `~/.claude/memory/glossary.md`
+- **Contact** → `~/.claude/memory/people/<name>.md`
 - **Company context** → `~/.claude/memory/context/company.md`
-- **Project info** → `~/.claude/memory/projects/<name>.md`
+- **Project** → `~/.claude/memory/projects/<name>.md`
 
 ## Meta
 
-- **Version:** 2.0.0
+- **Version:** 2.5.0
 - **Skills:** capture, distill, express, analyze, signal-check, challenge, handoff
-- **Features:** Cognitive Mode Detection (Pre-Routing), Evaluator-Challenger Pattern
-- **Based on:** Claude Orchestrator v3.8 by Jan Rummel
+- **Architecture:** Three-phase workflow (Clarify → Build → Verify) with cognitive mode detection
