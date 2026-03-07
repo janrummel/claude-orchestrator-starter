@@ -1,6 +1,6 @@
 ---
 name: capture
-description: Captures ideas, notes, links, and thoughts quickly into Obsidian. Use when the user says 'note', 'idea', 'capture', 'save this', 'remember', or wants to save something for later.
+description: Captures ideas, notes, links, and thoughts quickly. Use when the user says 'note', 'idea', 'capture', 'save this', 'remember', or wants to save something for later.
 ---
 
 # Capture — Quick Note Taking
@@ -26,9 +26,13 @@ Suggest a category (don't force it):
 - **Resource** → Material for later use
 - **Inbox** → Default when unsure
 
-### Step 3: Save to Obsidian
-Use Obsidian MCP tools (if available) or suggest file creation:
-- **Target folder:** `Inbox/` (default) or matching PARA folder
+### Step 3: Save
+Choose the best available storage:
+1. **Obsidian vault** (if MCP tools available) → use Obsidian MCP to create note
+2. **Local memory** (default fallback) → write to `~/.claude/memory/projects/` or `~/.claude/memory/decisions/`
+3. **Inline** (if no file access) → format the note for the user to copy
+
+- **Target folder:** `Inbox/` (Obsidian) or appropriate memory subdirectory
 - **Format:**
   ```markdown
   # [Title]
@@ -38,7 +42,7 @@ Use Obsidian MCP tools (if available) or suggest file creation:
 
   [Content]
   ```
-- Confirmation: "Captured in [folder]!"
+- Confirmation: "Captured in [location]!"
 
 ### Step 4: Optional — Connections
 - Related to an active project? → Offer to link

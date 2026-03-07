@@ -11,6 +11,10 @@ Thumbs.db
 # Obsidian
 .obsidian/
 
+# Databases
+*.db
+*.db-journal
+
 # Personal data (never commit these)
 *.credentials
 *.env
