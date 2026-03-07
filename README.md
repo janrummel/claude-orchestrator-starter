@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">Claude Orchestrator Starter Kit</h1>
   <p align="center">
-    Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and Obsidian as your second brain.
+    Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and structured workflows.
   </p>
   <p align="center">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
@@ -18,7 +18,7 @@
 
 ---
 
-> **This starter kit is extracted from a real-world personal orchestrator** built for daily use in engineering, research, and knowledge management. The full system includes 20+ custom skills, 6 connected Obsidian vaults, a SQLite knowledge database, and automated session handoffs. What you see here are the **foundational building blocks** — the architecture and patterns that make everything else possible.
+> **This starter kit is extracted from a real-world personal orchestrator** built for daily use in engineering, research, and knowledge management. What you see here are the **foundational building blocks** — the architecture and patterns that make everything else possible. Obsidian and SQLite are optional add-ons — the kit works standalone with plain markdown files.
 
 ---
 
@@ -33,20 +33,20 @@ Every Claude Code session starts from zero. No memory of yesterday's decisions. 
 ```
 You                                     Claude (with Orchestrator)
 ─────────────────────────────           ──────────────────────────────────
-"Summarize this article"                → Invokes distill skill
-                                          Checks existing knowledge first
-                                          Produces structured output
-                                          Suggests: /signal-check or /capture
+"Summarize this article"                → Phase: Clarify
+                                          Invokes distill skill
+                                          Produces structured summary
+                                          Next: /express to write output
 
-"Is this analysis solid?"               → Invokes signal-check skill
+"Is this analysis solid?"               → Phase: Verify
+                                          Invokes signal-check skill
                                           Evaluates across 4 axes
-                                          Flags gaps and framing
-                                          Suggests: /express to improve
+                                          Next: /express to improve
 
-"What could go wrong with this plan?"   → Detects Reflection mode
+"What could go wrong with this plan?"   → Phase: Verify
                                           Invokes challenge skill
                                           Stress-tests from 3 perspectives
-                                          Suggests: /express to harden
+                                          Next: /express to harden
 
 "Save state for next time"              → Invokes handoff skill
                                           Captures decisions + context
@@ -85,11 +85,11 @@ flowchart TB
         direction TB
         short["Short-term<br/><i>Context window (1 session)</i>"]
         mid["Mid-term<br/><i>Routing log + handoffs (weeks)</i>"]
-        long["Long-term<br/><i>CLAUDE.md + Obsidian (permanent)</i>"]
+        long["Long-term<br/><i>CLAUDE.md + memory files (permanent)</i>"]
     end
 
     subgraph OUTPUT ["📤 Output"]
-        result["Structured result<br/>+ next skill suggestions"]
+        result["Structured result<br/>+ next step suggestion"]
     end
 
     INPUT --> BRAIN
@@ -106,6 +106,21 @@ flowchart TB
 ```
 
 ## The Architecture
+
+### Three-Phase Workflow
+
+Every task follows three phases — don't skip any:
+
+```
+  Clarify              Build               Verify
+  ─────────────────    ─────────────────    ─────────────────
+  What's the problem?  Produce the output   Is it good enough?
+
+  analyze              express              signal-check
+  distill              capture              challenge
+```
+
+This prevents aimless skill-chaining. Each skill belongs to a phase, and each phase has a clear question to answer before moving on.
 
 ### Three-Layer Memory
 
@@ -137,7 +152,7 @@ Each skill is a `SKILL.md` file — **instructions, not code**. They tell Claude
 
 | | Skill | Purpose | You say... |
 |---|-------|---------|-----------|
-| 📥 | **capture** | Quick note-taking into Obsidian | "Note this", "Save this idea" |
+| 📥 | **capture** | Quick note-taking | "Note this", "Save this idea" |
 | 🔬 | **distill** | Summarize and condense | "Summarize", "Key takeaways" |
 | ✍️ | **express** | Write polished output | "Write", "Draft", "Formulate" |
 | 🔍 | **analyze** | Deep analysis with structured thinking | "Analyze", "Investigate" |
@@ -219,7 +234,7 @@ CLAUDE.md routing table
 Invokes distill skill
       │
       ▼
-Structured summary + suggests: /signal-check · /express · /capture
+Structured summary → suggests: /express to write output
 ```
 
 ### Memory
@@ -321,91 +336,20 @@ This starter kit turns it into a **stateful assistant** that grows with you:
 | **Memory** | Forgets everything after each session | Remembers decisions, context, preferences |
 | **Workflows** | You describe the same steps every time | Skills automate your common patterns |
 | **Quality** | Output quality varies unpredictably | Evaluator-Optimizer loop catches issues |
-| **Knowledge** | Scattered across tools and notes | Centralized in Obsidian + SQLite |
+| **Knowledge** | Scattered across tools and notes | Centralized in memory files (+ optional Obsidian/SQLite) |
 | **Continuity** | "Where were we?" every morning | Handoff picks up exactly where you left off |
 
 **The core insight:** Claude is already smart. What it lacks is **structure, memory, and habits**. That's what an orchestrator provides — not more intelligence, but better infrastructure around it.
 
-## The Bigger Picture
+## Growing Beyond the Starter Kit
 
-This starter kit gives you the **architecture and patterns**. It's intentionally focused — 7 skills, mode-aware routing, basic memory.
+This kit gives you the **architecture and patterns**. It's intentionally focused — 7 skills, three-phase workflow, basic memory.
 
-Here's how the full system looks — the one this kit is extracted from:
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│    YOU: "Analyze the market data and write a summary"               │
-│                                                                     │
-└──────────────────────────────┬──────────────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│  🧠 CLAUDE.md — THE ORCHESTRATOR BRAIN                              │
-│                                                                     │
-│  ┌─────────────────┐  ┌──────────────────┐  ┌───────────────────┐  │
-│  │  Routing Rules   │  │  User Patterns    │  │  Workflow Chains  │  │
-│  │  100+ keyword →  │  │  learned from     │  │  15+ multi-step   │  │
-│  │  skill mappings  │  │  past corrections │  │  skill sequences  │  │
-│  └────────┬────────┘  └──────────────────┘  └───────────────────┘  │
-│           │                                                         │
-│           │  matches "analyze" + "write" → chain: analyze → express │
-└───────────┼─────────────────────────────────────────────────────────┘
-            │
-            ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│  ⚡ SKILLS (20+ in full system, 7 in starter kit)                   │
-│                                                                     │
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌───────┐ │
-│  │capture │ │distill │ │express │ │analyze │ │signal- │ │handoff│ │
-│  │   📥   │ │   🔬   │ │   ✍️   │ │   🔍   │ │check🎯│ │  💾   │ │
-│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ └───────┘ │
-│  ┌────────┐                                                        │
-│  │challen-│                                                        │
-│  │ge  ⚔️  │                                                        │
-│  └────────┘                                                        │
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
-│  │research│ │decide  │ │innovate│ │strategy│ │ ...14+ │           │
-│  │pipeline│ │        │ │        │ │        │ │  more  │           │
-│  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘           │
-│                                                                     │
-│  Each skill = a SKILL.md file with workflow, rules, output format   │
-└──────────────────────────────┬──────────────────────────────────────┘
-                               │
-           ┌───────────────────┼───────────────────┐
-           ▼                   ▼                   ▼
-┌────────────────┐  ┌────────────────┐  ┌────────────────────────────┐
-│ 💾 SHORT-TERM  │  │ 📋 MID-TERM   │  │ 🏛️ LONG-TERM               │
-│                │  │                │  │                            │
-│ Context window │  │ Routing log    │  │ CLAUDE.md (routing rules)  │
-│ Current convo  │  │ Project states │  │ memory/ (glossary, people, │
-│                │  │ Handoff files  │  │   projects, decisions)     │
-│ 1 session      │  │ Weeks–months   │  │ Permanent                  │
-└────────────────┘  └────────────────┘  └─────┬──────────┬───────────┘
-                                              │          │
-                                    ┌─────────┘          └──────────┐
-                                    ▼                               ▼
-                         ┌─────────────────────┐     ┌──────────────────────┐
-                         │ 🟣 Obsidian Vaults   │     │ 🗃️ SQLite Knowledge   │
-                         │                     │     │    Database           │
-                         │ Your notes become   │     │                      │
-                         │ Claude's knowledge  │     │ Research items,      │
-                         │ base. Read + write  │     │ imported datasets,   │
-                         │ via MCP.            │     │ skill usage stats    │
-                         └─────────────────────┘     └──────────────────────┘
-```
-
-**Starter Kit vs. Full System:**
-
-| | Starter Kit | Full System |
-|---|-------------|-------------|
-| **Skills** | 7 core skills | 20+ domain-specific skills |
-| **Routing** | 7 keyword mappings + mode detection | 100+ mappings with disambiguation |
-| **Memory** | Template files | Filled with months of context |
-| **Obsidian** | 1 vault (optional) | 6 vaults, 930+ notes |
-| **Database** | Empty schema | Research items, datasets, usage stats |
-| **Workflow Chains** | 3 feedback loops | 15+ multi-step chains |
-| **Self-Improvement** | Manual updates | Automated routing analysis |
+From here, you can:
+- **Add domain-specific skills** (research, strategy, decision-making)
+- **Connect Obsidian** as a long-term knowledge base ([setup guide](obsidian/README.md))
+- **Add a SQLite database** for structured data ([setup guide](knowledge-db/README.md))
+- **Build workflow chains** that combine multiple skills for complex tasks
 
 The goal isn't to give you everything. It's to show you the **building blocks** — so you can build your own system on top.
 
@@ -418,7 +362,7 @@ claude-orchestrator-starter/
 │
 ├── orchestrator/
 │   ├── skills/
-│   │   ├── capture/           ← 📥 Quick capture to Obsidian
+│   │   ├── capture/           ← 📥 Quick capture
 │   │   ├── distill/           ← 🔬 Summarize and condense
 │   │   ├── express/           ← ✍️ Write polished output
 │   │   ├── analyze/           ← 🔍 Deep structured analysis

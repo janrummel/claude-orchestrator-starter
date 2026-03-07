@@ -22,7 +22,16 @@ chmod +x ~/.claude/hooks/session-start.sh
 
 ### 2. Wire Hooks in Claude Code
 
-Add to your `.claude/settings.json` (create it if it doesn't exist):
+Copy the example settings file, or add to your existing `.claude/settings.json`:
+
+```bash
+# If you don't have a settings.json yet:
+cp hooks/settings.json.example ~/.claude/settings.json
+
+# If you already have one, merge the "hooks" section manually.
+```
+
+The settings should contain:
 
 ```json
 {
