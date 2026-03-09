@@ -1,12 +1,85 @@
 #!/bin/bash
-# Session Start Hook — Context Essentials
-# Injects minimal context at every session start.
-# Output is printed to stdout and delivered to Claude as additional context.
+# Session Start Hook — Smart Context Injection
+#
+# At every session start:
+# 1. Checks for a recent handoff file (written by context-monitor when context was full)
+# 2. Checks for an active project file
+# 3. Injects relevant context as a system message
+#
+# This makes session transitions seamless: Claude knows where you left off.
 
-# Customize the values below for your setup:
+# --- Configuration (customize these) ---
 USER_NAME="Your Name"
 USER_ROLE="Your Role"
 USER_INDUSTRY="Your Industry"
-SKILLS="capture, distill, express, analyze, signal-check, handoff"
+SKILLS="capture, distill, express, analyze, signal-check, challenge"
 
-echo "Session context: ${USER_NAME} is a ${USER_ROLE} in ${USER_INDUSTRY}. Available skills: ${SKILLS}. Project states: ~/.claude/orchestrator/projects/. Memory: ~/.claude/memory/."
+# --- Paths ---
+ORCHESTRATOR_DIR="${HOME}/.claude/orchestrator"
+HANDOFF_FILE="${ORCHESTRATOR_DIR}/last-session.md"
+HANDOFF_CONSUMED="${ORCHESTRATOR_DIR}/last-session.consumed.md"
+PROJECTS_DIR="${ORCHESTRATOR_DIR}/projects"
+HANDOFF_MAX_AGE=3600  # 1 hour
+
+# --- Build context ---
+BASE_CONTEXT="Session context: ${USER_NAME} is a ${USER_ROLE} in ${USER_INDUSTRY}. Available skills: ${SKILLS}. Project states: ${PROJECTS_DIR}/. Memory: ~/.claude/memory/."
+
+HANDOFF_CONTEXT=""
+PROJECT_CONTEXT=""
+
+# Check for recent handoff (session continuation)
+if [[ -f "$HANDOFF_FILE" ]]; then
+  NOW=$(date +%s)
+  if [[ "$(uname)" == "Darwin" ]]; then
+    FILE_MTIME=$(stat -f%m "$HANDOFF_FILE" 2>/dev/null || echo 0)
+  else
+    FILE_MTIME=$(stat -c%Y "$HANDOFF_FILE" 2>/dev/null || echo 0)
+  fi
+  FILE_AGE=$((NOW - FILE_MTIME))
+
+  if [[ $FILE_AGE -lt $HANDOFF_MAX_AGE ]]; then
+    HANDOFF_CONTENT=$(cat "$HANDOFF_FILE")
+    HANDOFF_CONTEXT="
+
+--- SESSION CONTINUATION ---
+This session continues from a previous one. Here is the saved state:
+
+${HANDOFF_CONTENT}
+
+Resume from where the previous session left off. Briefly confirm the state and ask the user if they want to continue with the next step."
+
+    # Move handoff file so it's not re-injected on subsequent sessions
+    mv "$HANDOFF_FILE" "$HANDOFF_CONSUMED" 2>/dev/null || true
+  fi
+fi
+
+# Check for active project (if no handoff — handoff takes priority)
+if [[ -z "$HANDOFF_CONTEXT" ]] && [[ -d "$PROJECTS_DIR" ]]; then
+  # Find the most recently modified .md file in projects/
+  if [[ "$(uname)" == "Darwin" ]]; then
+    ACTIVE_PROJECT=$(find "$PROJECTS_DIR" -name "*.md" -not -name "template.md" -maxdepth 1 -print0 2>/dev/null | xargs -0 ls -t 2>/dev/null | head -1)
+  else
+    ACTIVE_PROJECT=$(find "$PROJECTS_DIR" -name "*.md" -not -name "template.md" -maxdepth 1 -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)
+  fi
+
+  if [[ -n "$ACTIVE_PROJECT" ]] && [[ -f "$ACTIVE_PROJECT" ]]; then
+    PROJECT_NAME=$(basename "$ACTIVE_PROJECT" .md)
+    PROJECT_CONTENT=$(cat "$ACTIVE_PROJECT")
+    PROJECT_CONTEXT="
+
+--- ACTIVE PROJECT ---
+${PROJECT_CONTENT}"
+  fi
+fi
+
+# Output as JSON system message
+FULL_CONTEXT="${BASE_CONTEXT}${HANDOFF_CONTEXT}${PROJECT_CONTEXT}"
+
+# Escape for JSON (handle newlines and quotes)
+JSON_CONTEXT=$(printf '%s' "$FULL_CONTEXT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))' 2>/dev/null || printf '%s' "$FULL_CONTEXT" | sed 's/"/\\"/g' | tr '\n' ' ')
+
+cat <<EOF
+{
+  "systemMessage": ${JSON_CONTEXT}
+}
+EOF

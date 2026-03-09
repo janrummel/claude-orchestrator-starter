@@ -15,6 +15,10 @@ Thumbs.db
 *.db
 *.db-journal
 
+# Session state (generated at runtime)
+last-session.md
+last-session.consumed.md
+
 # Personal data (never commit these)
 *.credentials
 *.env

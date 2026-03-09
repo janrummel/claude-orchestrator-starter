@@ -101,6 +101,37 @@ Suggest **one** logical next step — not a menu of options.
 3. **Less + high-quality > more + low-quality:** One finished result beats five started ones.
 4. **Honesty:** When something is unclear, say so — don't guess.
 
+## Context Management
+
+### Proactive State Saves
+
+Update the active project file (`~/.claude/orchestrator/projects/<name>.md`) after:
+- Important decisions (with reasoning)
+- Completing a task or milestone
+- Discovering key information
+
+Don't wait for context to run out. State should be in files, not just in context.
+
+### Context Pressure
+
+When the context window gets low, the `context-monitor` hook will notify you:
+
+- **WARNING (45% remaining):** Finish the current task, don't start new complex tasks. Inform the user.
+- **CRITICAL (35% remaining):** Write a session handoff to `~/.claude/orchestrator/last-session.md` immediately:
+
+```markdown
+# Session Handoff
+- **Date:** [today]
+- **Task:** [what you were working on]
+- **Status:** [current progress]
+- **Key decisions:** [decisions made this session]
+- **Next step:** [exact next action]
+- **Open questions:** [anything unresolved]
+- **Key files:** [relevant file paths]
+```
+
+Also update the active project file if one exists. Then inform the user that state has been saved and they can continue seamlessly in a new session.
+
 ## Not-ToDo
 
 1. No system scoring or dashboard optimization

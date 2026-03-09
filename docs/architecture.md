@@ -1,35 +1,98 @@
 # Architecture
 
-## The Three-Layer Memory Model
+## Overview
 
-The orchestrator uses three memory layers with different lifetimes:
+The orchestrator has four layers:
 
 ```
-┌─────────────────────────────────────────────────┐
-│  SHORT-TERM (Context Window)                    │
-│                                                 │
-│  What: Current conversation, temporary results  │
-│  Where: Claude's context window                 │
-│  Lifetime: 1 session                            │
-│  Size: ~200K tokens                             │
-├─────────────────────────────────────────────────┤
-│  MID-TERM (State Files + Episodic Memory)       │
-│                                                 │
-│  What: Session handoffs, routing log, decisions │
-│  Where: orchestrator/projects/, routing-log     │
-│  Lifetime: Weeks to months                      │
-│  Size: Grows with usage                         │
-├─────────────────────────────────────────────────┤
-│  LONG-TERM (CLAUDE.md + Knowledge Base)         │
-│                                                 │
-│  What: Rules, preferences, glossary, contacts   │
-│  Where: CLAUDE.md, memory/, Obsidian vaults     │
-│  Lifetime: Permanent                            │
-│  Size: Manually curated                         │
-└─────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────┐
+│  CONTEXT MANAGEMENT (Hooks + Session Chaining)                │
+│                                                               │
+│  What: Monitors context usage, auto-saves state, chains       │
+│        sessions seamlessly                                    │
+│  Where: hooks/, claude-loop                                   │
+│  Handles: Context-full transitions without losing state       │
+├───────────────────────────────────────────────────────────────┤
+│  SHORT-TERM MEMORY (Context Window)                           │
+│                                                               │
+│  What: Current conversation, temporary results                │
+│  Where: Claude's context window                               │
+│  Lifetime: 1 session (~200K tokens)                           │
+├───────────────────────────────────────────────────────────────┤
+│  MID-TERM MEMORY (State Files + Episodic Memory)              │
+│                                                               │
+│  What: Session handoffs, routing log, decisions               │
+│  Where: orchestrator/projects/, routing-log, last-session.md  │
+│  Lifetime: Weeks to months                                    │
+├───────────────────────────────────────────────────────────────┤
+│  LONG-TERM MEMORY (CLAUDE.md + Knowledge Base)                │
+│                                                               │
+│  What: Rules, preferences, glossary, contacts                 │
+│  Where: CLAUDE.md, memory/, Obsidian vaults                   │
+│  Lifetime: Permanent                                          │
+└───────────────────────────────────────────────────────────────┘
 ```
 
-## How It Flows
+## Context Management Layer
+
+This layer solves the CLI's biggest pain point: when the context window fills up, you lose your working state.
+
+### How It Works
+
+```
+context-statusline.js
+│  Runs on every render. Shows context usage in the statusbar.
+│  Writes metrics to a bridge file in /tmp/.
+│
+▼
+context-monitor.js (PostToolUse hook)
+│  Reads the bridge file after every tool use.
+│  WARNING at 35% remaining: tells Claude to wrap up.
+│  CRITICAL at 25% remaining: tells Claude to save state NOW.
+│
+▼
+Claude writes ~/.claude/orchestrator/last-session.md
+│  Contains: current task, progress, decisions, next step.
+│  This is the automatic handoff — no user action needed.
+│
+▼
+Session ends
+│
+▼
+claude-loop (wrapper script)
+│  Detects the handoff file.
+│  Asks: "Start new session with context? [Y/n]"
+│
+▼
+session-start.sh (SessionStart hook)
+│  Reads last-session.md, injects it as system context.
+│  Claude knows exactly where the previous session left off.
+│
+▼
+New session continues seamlessly
+```
+
+### Bridge File Pattern
+
+The statusline and context monitor communicate through a temporary JSON file:
+
+```
+context-statusline.js  ──writes──▶  /tmp/claude-ctx-{session-id}.json
+context-monitor.js     ──reads───▶  /tmp/claude-ctx-{session-id}.json
+```
+
+This avoids duplicate API calls — the statusline already has the metrics, so the monitor just reads them.
+
+### Two Types of Handoff
+
+| Type | Trigger | Written by | Read by |
+|------|---------|-----------|---------|
+| **Automatic** | Context hits 25% remaining | Claude (instructed by context-monitor hook) | session-start.sh |
+| **Manual** | User says "save state" / "handoff" | Claude (via handoff skill) | session-start.sh |
+
+Both produce state files that the session-start hook can read. Automatic handoff writes to `last-session.md`, manual handoff writes to `orchestrator/projects/<name>.md`.
+
+## How Routing Flows
 
 ```
 User Message
@@ -54,7 +117,7 @@ User Message
        │
        ▼
 ┌──────────────┐
-│  Output +    │ ← Suggests next skills
+│  Output +    │ ← Suggests next skill
 │  Log         │
 └──────────────┘
 ```
@@ -93,7 +156,7 @@ Skills are **instruction files**, not code. They tell Claude how to behave, what
 | **Input** | Get information into the system | capture |
 | **Processing** | Transform and analyze | distill, analyze |
 | **Output** | Produce finished results | express |
-| **Quality** | Evaluate and improve | signal-check |
+| **Quality** | Evaluate and improve | signal-check, challenge |
 | **Meta** | System maintenance | handoff |
 
 ### The Evaluator-Optimizer Pattern

@@ -276,6 +276,20 @@ Claude will now:
 - **Route your requests** to matching skills
 - **Remember context** across sessions via memory files
 
+### Session Chaining (CLI)
+
+When context fills up, you no longer need to open a new terminal. The hooks handle it automatically:
+
+```bash
+# Use claude-loop instead of claude
+claude-loop
+
+# When context gets critical, Claude saves state automatically.
+# Press Y to start a fresh session — it picks up where you left off.
+```
+
+See [hooks/README.md](hooks/README.md) for setup details.
+
 ### Optional Add-ons
 
 <details>
@@ -381,7 +395,7 @@ claude-orchestrator-starter/
 │   ├── decisions/
 │   └── workflows/
 │
-├── hooks/                     ← Session lifecycle hooks
+├── hooks/                     ← Session lifecycle hooks + session chaining
 ├── obsidian/                  ← Obsidian vault integration guide
 ├── knowledge-db/              ← SQLite knowledge database
 └── docs/                      ← Architecture, guides, FAQ
