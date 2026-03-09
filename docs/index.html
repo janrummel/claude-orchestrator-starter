@@ -871,6 +871,7 @@
                     <ul>
                         <li>Sessions pick up where you left off</li>
                         <li>Three-layer memory persists context</li>
+                        <li>Seamless session chaining when context fills up</li>
                         <li>Skills automate common workflows</li>
                         <li>Keyword routing invokes the right skill</li>
                         <li>Structured, consistent, quality-checked output</li>
@@ -1086,6 +1087,41 @@
                         <span class="tag">Long-term</span>
                         <h4>CLAUDE.md + Memory Files + Knowledge Base</h4>
                         <p>Routing rules, preferences, glossary, contacts, and domain knowledge. Lifetime: permanent.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Session Chaining ──────────────────────── -->
+    <section class="section" style="background: linear-gradient(180deg, transparent, rgba(91, 155, 213, 0.02), transparent);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">CLI Continuity</div>
+                <h2 class="section-title">Session Chaining</h2>
+                <p class="section-subtitle">When context fills up, your state is saved automatically. The next session picks up where you left off.</p>
+            </div>
+            <div class="quickstart-block animate-in">
+                <pre><span class="comment"># Use claude-loop instead of claude</span>
+<span class="cmd">claude-loop</span>
+
+<span class="comment"># Work normally. When context gets critical:</span>
+<span class="comment"># 1. Claude saves your state automatically</span>
+<span class="comment"># 2. Session ends</span>
+<span class="comment"># 3. claude-loop asks: "New session with context? [Y/n]"</span>
+<span class="comment"># 4. Press Y — picks up where you left off</span></pre>
+                <div class="quickstart-steps">
+                    <div class="quickstart-step">
+                        <span class="step-num">1</span>
+                        <span class="step-text"><strong>Statusbar</strong> shows context usage in real-time with color-coded progress bar</span>
+                    </div>
+                    <div class="quickstart-step">
+                        <span class="step-num">2</span>
+                        <span class="step-text"><strong>Auto-handoff</strong> saves task, decisions, and next steps when context is critical</span>
+                    </div>
+                    <div class="quickstart-step">
+                        <span class="step-num">3</span>
+                        <span class="step-text"><strong>Smart restart</strong> injects saved state into the new session automatically</span>
                     </div>
                 </div>
             </div>
@@ -1463,10 +1499,21 @@
 <span class="cmd">cp CLAUDE.md.example ~/.claude/CLAUDE.md</span>
 <span class="cmd">cp -r orchestrator/ ~/.claude/orchestrator/</span>
 <span class="cmd">cp -r memory/ ~/.claude/memory/</span>
-<span class="cmd">cp -r hooks/ ~/.claude/hooks/</span>
+<span class="cmd">mkdir -p ~/.claude/orchestrator/projects</span>
+
+<span class="comment"># Set up hooks (statusbar, context monitor, session start)</span>
+<span class="cmd">cp hooks/session-start.sh.example ~/.claude/hooks/session-start.sh</span>
+<span class="cmd">cp hooks/context-monitor.js ~/.claude/hooks/context-monitor.js</span>
+<span class="cmd">cp hooks/context-statusline.js ~/.claude/hooks/context-statusline.js</span>
+<span class="cmd">cp hooks/settings.json.example ~/.claude/settings.json</span>
+<span class="cmd">chmod +x ~/.claude/hooks/session-start.sh</span>
+
+<span class="comment"># Optional: install session chaining wrapper</span>
+<span class="cmd">cp hooks/claude-loop.sh ~/.local/bin/claude-loop</span>
+<span class="cmd">chmod +x ~/.local/bin/claude-loop</span>
 
 <span class="comment"># Start Claude Code</span>
-<span class="cmd">claude</span></pre>
+<span class="cmd">claude-loop</span></pre>
                 <div class="quickstart-steps">
                     <div class="quickstart-step">
                         <span class="step-num">1</span>
@@ -1474,11 +1521,11 @@
                     </div>
                     <div class="quickstart-step">
                         <span class="step-num">2</span>
-                        <span class="step-text"><strong>Routing rules</strong> match your keywords to skills automatically</span>
+                        <span class="step-text"><strong>Hooks</strong> monitor context, auto-save state, and inject context at startup</span>
                     </div>
                     <div class="quickstart-step">
                         <span class="step-num">3</span>
-                        <span class="step-text"><strong>Memory files</strong> persist context across sessions</span>
+                        <span class="step-text"><strong>Session chaining</strong> keeps you in the same terminal when context fills up</span>
                     </div>
                 </div>
             </div>

@@ -276,6 +276,20 @@ Claude wird jetzt:
 - **Deine Anfragen weiterleiten** an passende Skills
 - **Kontext merken** ueber Sessions hinweg via Memory-Dateien
 
+### Session-Verkettung (CLI)
+
+Wenn der Context voll wird, musst du kein neues Terminal mehr oeffnen. Die Hooks regeln das automatisch:
+
+```bash
+# claude-loop statt claude verwenden
+claude-loop
+
+# Wenn der Context knapp wird, sichert Claude den Zustand automatisch.
+# Druecke J fuer eine neue Session — sie knuepft nahtlos an.
+```
+
+Siehe [hooks/README.md](hooks/README.md) fuer die Einrichtung.
+
 ### Optionale Erweiterungen
 
 <details>
@@ -381,7 +395,7 @@ claude-orchestrator-starter/
 │   ├── decisions/
 │   └── workflows/
 │
-├── hooks/                     ← Session-Lifecycle-Hooks
+├── hooks/                     ← Session-Lifecycle-Hooks + Session-Verkettung
 ├── obsidian/                  ← Obsidian-Vault-Integrationsanleitung
 ├── knowledge-db/              ← SQLite-Wissensdatenbank
 └── docs/                      ← Architektur, Anleitungen, FAQ
