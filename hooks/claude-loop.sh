@@ -19,7 +19,7 @@
 #   cp hooks/claude-loop.sh ~/.local/bin/claude-loop
 #   chmod +x ~/.local/bin/claude-loop
 
-set -euo pipefail
+set -eo pipefail
 
 HANDOFF_FILE="${HOME}/.claude/orchestrator/last-session.md"
 HANDOFF_MAX_AGE=3600  # seconds — ignore handoff files older than 1 hour
