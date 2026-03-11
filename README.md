@@ -4,6 +4,7 @@
     Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and structured workflows.
   </p>
   <p align="center">
+    <a href="https://github.com/janrummel/claude-orchestrator-starter/stargazers"><img src="https://img.shields.io/github/stars/janrummel/claude-orchestrator-starter?style=social" alt="GitHub Stars"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
     <a href="https://docs.anthropic.com/en/docs/claude-code"><img src="https://img.shields.io/badge/built_for-Claude_Code-cc785c.svg" alt="Built for Claude Code"></a>
     <img src="https://img.shields.io/badge/no_dependencies-just_markdown-brightgreen.svg" alt="No Dependencies">
@@ -24,7 +25,7 @@
 
 ## The Problem
 
-Every Claude Code session starts from zero. No memory of yesterday's decisions. No idea what you're working on. No reusable workflows. You explain the same things over and over.
+You spend 10 minutes re-explaining your project every Monday morning. You build the same summarization workflow for the third time because last week's session is gone. You open 5 tabs, and Claude doesn't know about any of them. Your quality varies wildly because there's no feedback loop — just single-pass generation and hope.
 
 **This kit fixes that.**
 
@@ -441,6 +442,56 @@ claude-orchestrator-starter/
 ## License
 
 [MIT](LICENSE) — use it, fork it, make it yours.
+
+## Example Session
+
+Here's what a typical session looks like with the orchestrator:
+
+```
+$ claude-loop
+
+> Your active project is EV Charging Analysis. Next step: Verify data sources. Continue?
+
+You: "Yes, check if the DOE dataset is still current"
+
+Claude: Using analyze skill...
+  → Checking knowledge DB: 3 entries found for DOE/charging data
+  → Most recent: 2025-11-15. Gap: 4 months.
+  → Searching for updates...
+
+  Result: DOE AFDC dataset updated 2026-02-28.
+  Your local data is stale. Shall I update?
+
+You: "Yes, then summarize what changed"
+
+Claude: Phase: Build → invoking distill skill
+  → 47 new stations added, 3 decommissioned
+  → New fast-charging corridor: I-80 Nevada segment
+  → Summary saved to memory/projects/ev-charging.md
+
+  Next step: /signal-check to verify these numbers?
+```
+
+Every response follows the three-phase workflow. Context carries over between sessions. Skills chain automatically.
+
+## Privacy & Data
+
+- **100% local.** All memory files, routing logs, and project states live in `~/.claude/` on your machine.
+- **No cloud uploads.** The orchestrator is pure markdown — no server, no telemetry, no analytics.
+- **No API keys needed** for the core kit. Only Claude Code itself requires an Anthropic account.
+- **You own everything.** All files are plain text. Export, backup, or delete anytime.
+
+Optional add-ons (Obsidian, SQLite) also run locally.
+
+## Why Claude Code Only?
+
+This is a deliberate choice, not a limitation. The orchestrator is built around Claude Code's specific capabilities:
+
+- **CLAUDE.md** is read automatically at startup — no plugin or wrapper needed
+- **Hooks** (context monitor, session chaining) use Claude Code's native hook system
+- **Skills** are `SKILL.md` files that Claude Code loads via its skill mechanism
+
+The architecture patterns (three-phase workflow, memory layers, quality loops) are transferable. But the implementation leverages what Claude Code does uniquely well: treating markdown as executable instructions.
 
 ## Contributing
 
