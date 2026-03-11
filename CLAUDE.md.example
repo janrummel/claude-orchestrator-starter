@@ -24,7 +24,7 @@ Every task follows three phases. Don't skip phases.
 |-------|----------|--------|--------|
 | **Clarify** | What exactly is the problem? | `analyze`, `distill` | Clear problem definition |
 | **Build** | Produce the output | `express`, `capture` | Concrete output |
-| **Verify** | Is it good enough? | `signal-check`, `challenge` | Finished result |
+| **Verify** | Is it good enough? | `signal-check`, `quality-gate`, `challenge` | Finished result |
 
 New ideas during work → capture to inbox, do NOT pursue. Stay on the current task.
 
@@ -56,6 +56,7 @@ Mode Detection supplements keyword routing. For explicit keywords (e.g., "write 
 | write, draft, create content, blog, post, formulate | `express` | Build | Polished output generation |
 | analyze, investigate, evaluate, deep dive, what's behind | `analyze` | Clarify | Structured ReAct analysis |
 | quality check, fact check, is this solid, substance | `signal-check` | Verify | 4-axis substance check |
+| quality gate, qg, verify output, is this accurate, check quality | `quality-gate` | Verify | Output quality orchestration |
 | challenge, stress-test, red team, objections, what could go wrong, devil's advocate | `challenge` | Verify | Adversarial stress-testing |
 | handoff, save state, end session, for next time | `handoff` | — | Session state persistence |
 
@@ -74,6 +75,9 @@ Mode Detection supplements keyword routing. For explicit keywords (e.g., "write 
 ### Evaluator-Challenger Loop
 `express` → `challenge` → `express` (hardened against objections)
 
+### Evaluator-Gate-Optimizer Loop
+`express` → `quality-gate` → `express` (verified and improved based on findings)
+
 ### Deep Analysis
 `analyze` → `signal-check` → `express`
 
@@ -90,6 +94,7 @@ Suggest **one** logical next step — not a menu of options.
 | `/distill` | → `/express` to create output from summary |
 | `/express` | → `/signal-check` to evaluate quality |
 | `/signal-check` | → `/express` to improve based on feedback |
+| `/quality-gate` | → `/express` to revise based on findings |
 | `/challenge` | → `/express` to harden against objections |
 | `/capture` | (endpoint) |
 | `/handoff` | (endpoint) |
@@ -190,6 +195,6 @@ Update outcome based on feedback:
 
 ## Meta
 
-- **Version:** 2.5.0
-- **Skills:** capture, distill, express, analyze, signal-check, challenge, handoff
+- **Version:** 3.0.0
+- **Skills:** capture, distill, express, analyze, signal-check, quality-gate, challenge, handoff (8 core skills)
 - **Architecture:** Three-phase workflow (Clarify → Build → Verify) with cognitive mode detection
