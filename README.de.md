@@ -105,11 +105,11 @@ flowchart TB
     MEMORY --> SKILLS
     SKILLS --> OUTPUT
 
-    style INPUT fill:#1a1a2e,stroke:#e94560,color:#fff
-    style BRAIN fill:#1a1a2e,stroke:#0f3460,color:#fff
-    style SKILLS fill:#1a1a2e,stroke:#16213e,color:#fff
-    style MEMORY fill:#1a1a2e,stroke:#533483,color:#fff
-    style OUTPUT fill:#1a1a2e,stroke:#e94560,color:#fff
+    style INPUT stroke:#e94560
+    style BRAIN stroke:#0f3460
+    style SKILLS stroke:#16213e
+    style MEMORY stroke:#533483
+    style OUTPUT stroke:#e94560
 ```
 
 ## Die Architektur
@@ -184,9 +184,9 @@ flowchart LR
     E -->|"evaluieren"| S
     S -->|"optimieren"| E2
 
-    style E fill:#16213e,stroke:#e94560,color:#fff
-    style S fill:#16213e,stroke:#0f3460,color:#fff
-    style E2 fill:#16213e,stroke:#e94560,color:#fff
+    style E stroke:#e94560
+    style S stroke:#0f3460
+    style E2 stroke:#e94560
 ```
 
 **Evaluator-Challenger-Schleife** — Schreiben, Stress-Test, haerten:
@@ -200,9 +200,9 @@ flowchart LR
     E -->|"stress-testen"| CH
     CH -->|"haerten"| E2
 
-    style E fill:#16213e,stroke:#e94560,color:#fff
-    style CH fill:#16213e,stroke:#e94560,color:#fff
-    style E2 fill:#16213e,stroke:#e94560,color:#fff
+    style E stroke:#e94560
+    style CH stroke:#e94560
+    style E2 stroke:#e94560
 ```
 
 **Evaluator-Gate-Optimizer-Schleife** — Schreiben, mit Triage verifizieren, verbessern:
@@ -216,9 +216,9 @@ flowchart LR
     E -->|"verifizieren"| QG
     QG -->|"ueberarbeiten"| E2
 
-    style E fill:#16213e,stroke:#e94560,color:#fff
-    style QG fill:#16213e,stroke:#0f3460,color:#fff
-    style E2 fill:#16213e,stroke:#e94560,color:#fff
+    style E stroke:#e94560
+    style QG stroke:#0f3460
+    style E2 stroke:#e94560
 ```
 
 **Wissenszyklus** — Erfassen, verarbeiten, ausgeben, pruefen:
@@ -237,12 +237,12 @@ flowchart LR
     A -.-> H
     H -.-> C
 
-    style C fill:#16213e,stroke:#533483,color:#fff
-    style D fill:#16213e,stroke:#533483,color:#fff
-    style X fill:#16213e,stroke:#e94560,color:#fff
-    style S fill:#16213e,stroke:#0f3460,color:#fff
-    style A fill:#16213e,stroke:#16213e,color:#fff
-    style H fill:#16213e,stroke:#16213e,color:#fff
+    style C stroke:#533483
+    style D stroke:#533483
+    style X stroke:#e94560
+    style S stroke:#0f3460
+    style A stroke:#16213e
+    style H stroke:#16213e
 ```
 
 ### Routing
