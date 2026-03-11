@@ -7,4 +7,4 @@ These rules ALWAYS apply, even after context compression:
 3. **Memory:** Check existing knowledge before external research
 4. **Paths:** Skills in `~/.claude/orchestrator/skills/`, Memory in `~/.claude/memory/`
 5. **Logging:** Log every skill usage to routing log
-6. **Evaluator-Optimizer:** After larger outputs suggest `/signal-check`
+6. **Quality-Gate:** For risk outputs (numbers, forecasts, causal claims) run automatic trigger check. After larger outputs suggest `/signal-check` or `/qg`
