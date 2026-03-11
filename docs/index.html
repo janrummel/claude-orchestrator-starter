@@ -235,6 +235,33 @@
             height: 18px;
         }
 
+        /* ── Typewriter ───────────────────────────── */
+        .typewriter-wrap {
+            margin: 32px auto 0;
+            max-width: 600px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .typewriter-prompt {
+            color: var(--accent);
+        }
+
+        .typewriter-text {
+            color: var(--text);
+            border-right: 2px solid var(--accent);
+            animation: blink-caret 0.8s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            50% { border-color: transparent; }
+        }
+
         /* ── Problem ──────────────────────────────── */
         .problem {
             padding: 60px 0;
@@ -966,6 +993,7 @@
             <span class="badge badge--claude">Claude Code</span>
             <span class="badge badge--md">Just Markdown</span>
             <span class="badge badge--obsidian">Obsidian</span>
+            <span class="badge badge--md">Built from Daily Use</span>
         </div>
         <h1>Claude Orchestrator<br>Starter Kit</h1>
         <p class="subtitle">
@@ -980,6 +1008,10 @@
                 Quick Start ↓
             </a>
         </div>
+
+        <div class="typewriter-wrap">
+            <span class="typewriter-prompt">You: </span><span class="typewriter-text" id="typewriter"></span>
+        </div>
     </section>
 
     <!-- ── Problem ────────────────────────────────── -->
@@ -992,11 +1024,11 @@
                         Without Orchestrator
                     </h3>
                     <ul>
-                        <li>Every session starts from zero</li>
+                        <li>10 minutes re-explaining your project every morning</li>
                         <li>Context fills up — open a new terminal, start over</li>
-                        <li>No memory of yesterday's decisions</li>
-                        <li>Explain the same things over and over</li>
-                        <li>No reusable workflows</li>
+                        <li>You build the same workflow for the third time</li>
+                        <li>Quality varies — no feedback loop, just single-pass and hope</li>
+                        <li>Knowledge scattered across tabs, notes, and memory</li>
                     </ul>
                 </div>
                 <div class="problem-card good animate-in">
@@ -1731,6 +1763,30 @@
         </div>
     </section>
 
+    <!-- ── Privacy ───────────────────────────────── -->
+    <section class="section" style="padding: 40px 0 60px;">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 32px;">
+                <div class="section-label" style="color: var(--green);">Privacy & Data</div>
+                <h2 class="section-title">100% Local. Zero Telemetry.</h2>
+            </div>
+            <div class="why-grid" style="max-width: 800px; margin: 0 auto;">
+                <div class="why-card why-card--memory animate-in" style="text-align: center;">
+                    <h4 style="color: var(--green); margin-bottom: 8px;">Your Machine Only</h4>
+                    <p>All memory files, routing logs, and project states live in <code>~/.claude/</code>. No server, no cloud upload, no analytics.</p>
+                </div>
+                <div class="why-card why-card--habits animate-in" style="text-align: center;">
+                    <h4 style="color: var(--green); margin-bottom: 8px;">Plain Text, Full Control</h4>
+                    <p>Everything is markdown. Export, backup, version-control, or delete anytime. You own your data.</p>
+                </div>
+                <div class="why-card why-card--loops animate-in" style="text-align: center;">
+                    <h4 style="color: var(--green); margin-bottom: 8px;">No Extra API Keys</h4>
+                    <p>The core kit needs zero API keys. Only Claude Code itself requires an Anthropic account.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── Footer ────────────────────────────────── -->
     <footer class="footer">
         <div class="footer-links">
@@ -1761,6 +1817,50 @@
         document.querySelectorAll('.animate-in').forEach(el => {
             observer.observe(el);
         });
+
+        // Typewriter effect
+        (function() {
+            const phrases = [
+                '"Summarize this article" → distill → structured summary',
+                '"What could go wrong?" → challenge → stress-test from 3 angles',
+                '"Is this analysis solid?" → signal-check → 4-axis evaluation',
+                '"Save state for next time" → handoff → picks up tomorrow',
+                '"Analyze the DOE dataset" → analyze → ReAct cycle with sources',
+                '"Write a post about this" → express → polished draft + next step',
+                '"Check the numbers" → quality-gate → triage + verification',
+                '"Note this idea" → capture → saved to inbox in 2 seconds',
+            ];
+            const el = document.getElementById('typewriter');
+            if (!el) return;
+            let phraseIdx = 0;
+            let charIdx = 0;
+            let deleting = false;
+
+            function tick() {
+                const current = phrases[phraseIdx];
+                if (!deleting) {
+                    el.textContent = current.substring(0, charIdx + 1);
+                    charIdx++;
+                    if (charIdx >= current.length) {
+                        setTimeout(function() { deleting = true; tick(); }, 2500);
+                        return;
+                    }
+                    setTimeout(tick, 40);
+                } else {
+                    el.textContent = current.substring(0, charIdx);
+                    charIdx--;
+                    if (charIdx < 0) {
+                        deleting = false;
+                        charIdx = 0;
+                        phraseIdx = (phraseIdx + 1) % phrases.length;
+                        setTimeout(tick, 400);
+                        return;
+                    }
+                    setTimeout(tick, 20);
+                }
+            }
+            tick();
+        })();
     </script>
 
 </body>

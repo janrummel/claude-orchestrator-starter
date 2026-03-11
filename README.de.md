@@ -4,6 +4,7 @@
     Mache aus Claude Code einen persoenlichen KI-Assistenten — mit persistentem Gedaechtnis, eigenen Skills und strukturierten Workflows.
   </p>
   <p align="center">
+    <a href="https://github.com/janrummel/claude-orchestrator-starter/stargazers"><img src="https://img.shields.io/github/stars/janrummel/claude-orchestrator-starter?style=social" alt="GitHub Stars"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/Lizenz-MIT-blue.svg" alt="MIT Lizenz"></a>
     <a href="https://docs.anthropic.com/en/docs/claude-code"><img src="https://img.shields.io/badge/gebaut_fuer-Claude_Code-cc785c.svg" alt="Gebaut fuer Claude Code"></a>
     <img src="https://img.shields.io/badge/keine_Abhaengigkeiten-nur_Markdown-brightgreen.svg" alt="Keine Abhaengigkeiten">
@@ -24,7 +25,7 @@
 
 ## Das Problem
 
-Jede Claude Code Session startet bei Null. Kein Gedaechtnis an gestrige Entscheidungen. Keine Ahnung, woran du arbeitest. Keine wiederverwendbaren Workflows. Du erklaerst immer wieder das Gleiche.
+Du verbringst jeden Montagmorgen 10 Minuten damit, dein Projekt neu zu erklaeren. Du baust den gleichen Zusammenfassungs-Workflow zum dritten Mal, weil die Session von letzter Woche weg ist. Du hast 5 Tabs offen, und Claude weiss von keinem. Deine Qualitaet schwankt, weil es keine Feedback-Schleife gibt — nur Single-Pass-Generierung und Hoffen.
 
 **Dieses Kit aendert das.**
 
@@ -441,6 +442,56 @@ claude-orchestrator-starter/
 ## Lizenz
 
 [MIT](LICENSE) — nutzen, forken, zu deinem machen.
+
+## Beispiel-Session
+
+So sieht eine typische Session mit dem Orchestrator aus:
+
+```
+$ claude-loop
+
+> Dein aktives Projekt ist EV-Ladeanalyse. Naechster Schritt: Datenquellen verifizieren. Weiter?
+
+Du: "Ja, pruef ob der DOE-Datensatz noch aktuell ist"
+
+Claude: Nutze analyze Skill...
+  → Pruefe Knowledge DB: 3 Eintraege fuer DOE/Ladedaten gefunden
+  → Letzter Stand: 2025-11-15. Luecke: 4 Monate.
+  → Suche nach Updates...
+
+  Ergebnis: DOE AFDC Datensatz aktualisiert am 2026-02-28.
+  Deine lokalen Daten sind veraltet. Soll ich aktualisieren?
+
+Du: "Ja, dann fasse zusammen was sich geaendert hat"
+
+Claude: Phase: Machen → rufe distill Skill auf
+  → 47 neue Stationen, 3 stillgelegt
+  → Neuer Schnelllade-Korridor: I-80 Nevada-Abschnitt
+  → Zusammenfassung gespeichert in memory/projects/ev-charging.md
+
+  Naechster Schritt: /signal-check um die Zahlen zu verifizieren?
+```
+
+Jede Antwort folgt dem Drei-Phasen-Workflow. Kontext bleibt ueber Sessions erhalten. Skills verketten sich automatisch.
+
+## Datenschutz & Daten
+
+- **100% lokal.** Alle Memory-Dateien, Routing-Logs und Projekt-States liegen in `~/.claude/` auf deinem Rechner.
+- **Kein Cloud-Upload.** Der Orchestrator ist reines Markdown — kein Server, keine Telemetrie, keine Analytics.
+- **Keine API-Keys noetig** fuer das Kern-Kit. Nur Claude Code selbst braucht einen Anthropic-Account.
+- **Dir gehoert alles.** Alle Dateien sind Plain Text. Exportieren, sichern oder loeschen jederzeit.
+
+Optionale Erweiterungen (Obsidian, SQLite) laufen ebenfalls lokal.
+
+## Warum nur Claude Code?
+
+Das ist eine bewusste Entscheidung, keine Einschraenkung. Der Orchestrator nutzt spezifische Claude Code Faehigkeiten:
+
+- **CLAUDE.md** wird beim Start automatisch gelesen — kein Plugin oder Wrapper noetig
+- **Hooks** (Context Monitor, Session Chaining) nutzen Claude Codes natives Hook-System
+- **Skills** sind `SKILL.md`-Dateien, die Claude Code ueber seinen Skill-Mechanismus laedt
+
+Die Architektur-Muster (Drei-Phasen-Workflow, Memory-Schichten, Quality Loops) sind uebertragbar. Aber die Implementierung nutzt, was Claude Code einzigartig gut kann: Markdown als ausfuehrbare Anweisungen behandeln.
 
 ## Mitmachen
 
