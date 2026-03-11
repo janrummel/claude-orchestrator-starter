@@ -48,6 +48,12 @@ You                                     Claude (with Orchestrator)
                                           Stress-tests from 3 perspectives
                                           Next: /express to harden
 
+"Is this analysis accurate?"            → Phase: Verify
+                                          Invokes quality-gate skill
+                                          Triage → Deep Check (Level 2)
+                                          Verifies claims, calculates quality score
+                                          Next: /express to revise
+
 "Save state for next time"              → Invokes handoff skill
                                           Captures decisions + context
                                           Writes project state file
@@ -78,6 +84,7 @@ flowchart TB
         analyze["🔍 analyze"]
         signal["🎯 signal-check"]
         challenge["⚔️ challenge"]
+        qgate["🛡️ quality-gate"]
         handoff["💾 handoff"]
     end
 
@@ -117,7 +124,8 @@ Every task follows three phases — don't skip any:
   What's the problem?  Produce the output   Is it good enough?
 
   analyze              express              signal-check
-  distill              capture              challenge
+  distill              capture              quality-gate
+                                            challenge
 ```
 
 This prevents aimless skill-chaining. Each skill belongs to a phase, and each phase has a clear question to answer before moving on.
@@ -146,7 +154,7 @@ This prevents aimless skill-chaining. Each skill belongs to a phase, and each ph
 └─────────────────────────────────────────────────────┘
 ```
 
-### Seven Core Skills
+### Eight Core Skills
 
 Each skill is a `SKILL.md` file — **instructions, not code**. They tell Claude how to behave, what tools to use, and what output to produce.
 
@@ -158,11 +166,12 @@ Each skill is a `SKILL.md` file — **instructions, not code**. They tell Claude
 | 🔍 | **analyze** | Deep analysis with structured thinking | "Analyze", "Investigate" |
 | 🎯 | **signal-check** | Quality check / fact check | "Is this solid?", "Quality check" |
 | ⚔️ | **challenge** | Adversarial stress-testing | "What could go wrong?", "Stress-test this" |
+| 🛡️ | **quality-gate** | Output quality orchestration | "Check this", "Is this accurate?" |
 | 💾 | **handoff** | Save session state for next time | "Save state", "Handoff" |
 
-### Three Key Loops
+### Four Key Loops
 
-These 7 skills form three powerful feedback loops:
+These 8 skills form four powerful feedback loops:
 
 **Evaluator-Optimizer Loop** — Write, evaluate, improve:
 
@@ -193,6 +202,22 @@ flowchart LR
 
     style E fill:#16213e,stroke:#e94560,color:#fff
     style CH fill:#16213e,stroke:#e94560,color:#fff
+    style E2 fill:#16213e,stroke:#e94560,color:#fff
+```
+
+**Evaluator-Gate-Optimizer Loop** — Write, verify with triage, improve:
+
+```mermaid
+flowchart LR
+    E["✍️ express<br/><i>Generate output</i>"]
+    QG["🛡️ quality-gate<br/><i>Triage + verify</i>"]
+    E2["✍️ express<br/><i>Revise based on findings</i>"]
+
+    E -->|"verify"| QG
+    QG -->|"revise"| E2
+
+    style E fill:#16213e,stroke:#e94560,color:#fff
+    style QG fill:#16213e,stroke:#0f3460,color:#fff
     style E2 fill:#16213e,stroke:#e94560,color:#fff
 ```
 
@@ -357,7 +382,7 @@ This starter kit turns it into a **stateful assistant** that grows with you:
 
 ## Growing Beyond the Starter Kit
 
-This kit gives you the **architecture and patterns**. It's intentionally focused — 7 skills, three-phase workflow, basic memory.
+This kit gives you the **architecture and patterns**. It's intentionally focused — 8 skills, three-phase workflow, basic memory.
 
 From here, you can:
 - **Add domain-specific skills** (research, strategy, decision-making)
@@ -382,6 +407,7 @@ claude-orchestrator-starter/
 │   │   ├── analyze/           ← 🔍 Deep structured analysis
 │   │   ├── signal-check/      ← 🎯 Quality & substance check
 │   │   ├── challenge/         ← ⚔️ Adversarial stress-testing
+│   │   ├── quality-gate/      ← 🛡️ Output quality orchestration
 │   │   └── handoff/           ← 💾 Session state persistence
 │   ├── routing-log.jsonl.example
 │   ├── user-patterns.md.example

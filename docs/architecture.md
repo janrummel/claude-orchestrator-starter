@@ -156,7 +156,7 @@ Skills are **instruction files**, not code. They tell Claude how to behave, what
 | **Input** | Get information into the system | capture |
 | **Processing** | Transform and analyze | distill, analyze |
 | **Output** | Produce finished results | express |
-| **Quality** | Evaluate and improve | signal-check, challenge |
+| **Quality** | Evaluate and improve | signal-check, quality-gate, challenge |
 | **Meta** | System maintenance | handoff |
 
 ### The Evaluator-Optimizer Pattern
@@ -168,6 +168,25 @@ express (generate) → signal-check (evaluate) → express (optimize)
 ```
 
 This mirrors how humans write: draft → review → revise.
+
+### The Evaluator-Gate-Optimizer Pattern
+
+For outputs with risk indicators (numbers, forecasts, causal claims), the quality-gate adds structured verification:
+
+```
+express (generate) → quality-gate (triage + verify) → express (revise)
+```
+
+The quality-gate **orchestrates** signal-check and challenge rather than replacing them. It adds:
+- **Triage levels** (0-3) based on risk indicators in the output
+- **External verification** of quantitative claims
+- **Quality Score (QS)** from 5 measurable sub-metrics
+- **Synthesis** of all findings into a prioritized report
+
+When to use which:
+- **signal-check**: Quick substance check on any content
+- **quality-gate**: Structured verification for outputs with numbers, forecasts, or causal claims
+- **challenge**: Adversarial stress-testing of ideas and strategies
 
 ## Routing Architecture
 
