@@ -48,6 +48,12 @@ Du                                      Claude (mit Orchestrator)
                                           Stress-Test aus 3 Perspektiven
                                           Naechster Schritt: /express zum Haerten
 
+"Ist diese Analyse korrekt?"           → Phase: Fertig machen
+                                          Ruft quality-gate Skill auf
+                                          Triage → Deep Check (Stufe 2)
+                                          Verifiziert Claims, berechnet Quality-Score
+                                          Naechster Schritt: /express zum Ueberarbeiten
+
 "Zustand sichern fuer naechstes Mal"   → Ruft handoff Skill auf
                                           Erfasst Entscheidungen + Kontext
                                           Schreibt Projekt-State-Datei
@@ -78,6 +84,7 @@ flowchart TB
         analyze["🔍 analyze"]
         signal["🎯 signal-check"]
         challenge["⚔️ challenge"]
+        qgate["🛡️ quality-gate"]
         handoff["💾 handoff"]
     end
 
@@ -117,7 +124,8 @@ Jede Aufgabe durchlaeuft drei Phasen — keine ueberspringen:
   Was ist das Problem? Output produzieren   Ist es gut genug?
 
   analyze              express              signal-check
-  distill              capture              challenge
+  distill              capture              quality-gate
+                                            challenge
 ```
 
 Das verhindert zielloses Skill-Chaining. Jeder Skill gehoert zu einer Phase, und jede Phase hat eine klare Frage, die beantwortet werden muss.
@@ -146,7 +154,7 @@ Das verhindert zielloses Skill-Chaining. Jeder Skill gehoert zu einer Phase, und
 └─────────────────────────────────────────────────────┘
 ```
 
-### Sieben Kern-Skills
+### Acht Kern-Skills
 
 Jeder Skill ist eine `SKILL.md`-Datei — **Anweisungen, kein Code**. Sie sagen Claude, wie es sich verhalten, welche Tools es nutzen und welchen Output es produzieren soll.
 
@@ -158,11 +166,12 @@ Jeder Skill ist eine `SKILL.md`-Datei — **Anweisungen, kein Code**. Sie sagen 
 | 🔍 | **analyze** | Tiefenanalyse mit strukturiertem Denken | "Analysiere", "Untersuche" |
 | 🎯 | **signal-check** | Qualitaetspruefung / Faktencheck | "Ist das solide?", "Substanz-Check" |
 | ⚔️ | **challenge** | Adversarischer Stress-Test | "Was kann schiefgehen?", "Stress-Test" |
+| 🛡️ | **quality-gate** | Output-Qualitaetsorchestrierung | "Prüf das", "Ist das korrekt?" |
 | 💾 | **handoff** | Session-Zustand fuer naechstes Mal sichern | "Zustand sichern", "Handoff" |
 
-### Drei zentrale Schleifen
+### Vier zentrale Schleifen
 
-Diese 7 Skills bilden drei kraftvolle Feedback-Schleifen:
+Diese 8 Skills bilden vier kraftvolle Feedback-Schleifen:
 
 **Evaluator-Optimizer-Schleife** — Schreiben, evaluieren, verbessern:
 
@@ -193,6 +202,22 @@ flowchart LR
 
     style E fill:#16213e,stroke:#e94560,color:#fff
     style CH fill:#16213e,stroke:#e94560,color:#fff
+    style E2 fill:#16213e,stroke:#e94560,color:#fff
+```
+
+**Evaluator-Gate-Optimizer-Schleife** — Schreiben, mit Triage verifizieren, verbessern:
+
+```mermaid
+flowchart LR
+    E["✍️ express<br/><i>Output generieren</i>"]
+    QG["🛡️ quality-gate<br/><i>Triage + verifizieren</i>"]
+    E2["✍️ express<br/><i>Basierend auf Findings ueberarbeiten</i>"]
+
+    E -->|"verifizieren"| QG
+    QG -->|"ueberarbeiten"| E2
+
+    style E fill:#16213e,stroke:#e94560,color:#fff
+    style QG fill:#16213e,stroke:#0f3460,color:#fff
     style E2 fill:#16213e,stroke:#e94560,color:#fff
 ```
 
@@ -357,7 +382,7 @@ Dieses Starter Kit macht daraus einen **zustandsbehafteten Assistenten**, der mi
 
 ## Ueber das Starter Kit hinaus
 
-Dieses Kit gibt dir die **Architektur und Muster**. Es ist bewusst fokussiert — 7 Skills, Drei-Phasen-Workflow, grundlegendes Gedaechtnis.
+Dieses Kit gibt dir die **Architektur und Muster**. Es ist bewusst fokussiert — 8 Skills, Drei-Phasen-Workflow, grundlegendes Gedaechtnis.
 
 Von hier aus kannst du:
 - **Domainenspezifische Skills ergaenzen** (Recherche, Strategie, Entscheidungsfindung)
@@ -382,6 +407,7 @@ claude-orchestrator-starter/
 │   │   ├── analyze/           ← 🔍 Tiefe strukturierte Analyse
 │   │   ├── signal-check/      ← 🎯 Qualitaets- und Substanz-Check
 │   │   ├── challenge/         ← ⚔️ Adversarischer Stress-Test
+│   │   ├── quality-gate/      ← 🛡️ Output-Qualitaetsorchestrierung
 │   │   └── handoff/           ← 💾 Session-Zustand sichern
 │   ├── routing-log.jsonl.example
 │   ├── user-patterns.md.example
