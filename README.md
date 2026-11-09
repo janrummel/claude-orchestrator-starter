@@ -439,6 +439,10 @@ claude-orchestrator-starter/
 | [Obsidian Setup](obsidian/README.md) | Connect your Obsidian vault |
 | [Knowledge DB](knowledge-db/README.md) | Set up the SQLite database |
 
+## Publishing
+
+https://janrummel.github.io/claude-orchestrator-starter/ is served by GitHub Pages straight from branch `main`, folder `/docs`. No build step: the files are static HTML, CSS and JavaScript.
+
 ## License
 
 [MIT](LICENSE) — use it, fork it, make it yours.
