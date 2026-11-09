@@ -39,19 +39,19 @@
 
   <!-- Title -->
   <text x="600" y="265" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#EDE5D8" letter-spacing="0.5">
-    Claude Orchestrator
+    Agent Orchestrator
   </text>
   <text x="600" y="330" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#EDE5D8" letter-spacing="0.5">
-    Starter Kit
+    Starter
   </text>
 
   <!-- Subtitle -->
   <text x="600" y="385" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="22" font-weight="400" fill="#9C8E7C" letter-spacing="0.3">
-    Turn Claude Code into a personal AI assistant
+    Memory and project state as plain files, for any agent
   </text>
 
   <!-- Footer stats -->
   <text x="600" y="545" text-anchor="middle" font-family="'Space Grotesk', Arial, Helvetica, sans-serif" font-size="16" font-weight="400" fill="#9C8E7C" letter-spacing="1.5">
-    8 Skills  &#xB7;  4 Loops  &#xB7;  Persistent Memory
+    Claude Code  &#xB7;  Codex  &#xB7;  Copilot (draft)  &#xB7;  AGENTS.md
   </text>
 </svg>

@@ -52,8 +52,6 @@ the main cost; two template flaws were found and fixed. Details: `VALIDATION.md`
 - `scripts/check-kit.sh` does not validate `.md.example` / `.md.template` files and only
   recognizes code fences that start in column 0.
 - `scripts/check-depersonalized.sh` scans files, not commit metadata.
-- The website's social preview image (`docs/og-image.png`, `.svg`) still shows the old
-  name and tagline.
 - The "bigger picture" diagram on the website repeats the optional stores in two places;
   a cleaner redraw is open.
 - Older files (`docs/getting-started.md`, `docs/faq.md`,
