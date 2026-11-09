@@ -1,0 +1,6 @@
+https://github\.com/janrummel/claude-orchestrator-starter[^ "<>)]*
+https://janrummel\.github\.io/claude-orchestrator-starter[^ "<>)]*
+https://img\.shields\.io/github/stars/janrummel/claude-orchestrator-starter[^ "<>)]*
+Copyright \(c\) 2026 Jan Rummel
+Built with Claude Code by <a href="https://github\.com/janrummel" style="color: \#9C8E7C;">Jan Rummel</a>
+https://github\.com/janrummel/readable-repo-standard[^ "<>)]*

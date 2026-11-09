@@ -1,0 +1,17 @@
+# STATE - <project name>
+
+> Single source of truth for the working state. Lives in this repo.
+> Last updated: <YYYY-MM-DD>.
+
+## The ONE next action
+
+<One concrete step. If blocked: "Blocked on <X>", and what unblocks it.>
+
+## Status
+
+- Done: <finished items, newest first>
+- Open: <what remains, prioritized>
+
+## Decisions
+
+- <YYYY-MM-DD> <decision> - because <reason>.

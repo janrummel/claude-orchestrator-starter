@@ -1,0 +1,18 @@
+# Memory index
+
+> Pointers only. One line per memory: link + hook. Content lives in the files.
+
+## User
+
+- `user_profile.md` - <your name, role, what you work on>
+
+## Working rules (feedback)
+
+<!-- examples, replace with your own; turn each into a link once the file exists -->
+
+- `feedback_numbers_need_sources.md` - every number carries source, date, scope
+- `feedback_finish_before_start.md` - one closure decision per session
+
+## Projects (pointers, no status copies)
+
+- **example-project** - `~/projects/example-project/` (state lives IN the repo, `STATE.md`)

@@ -1,0 +1,10 @@
+---
+name: <short-kebab-case-slug>
+description: <one line - used to decide relevance when recalling>
+type: user | feedback | project | reference
+---
+
+<The fact itself, short and concrete.>
+
+**Why:** <for feedback/project types: the reason behind the rule or decision.>
+**How to apply:** <for feedback types: what to do differently next time.>
