@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Orchestrator Starter Kit</title>
-    <meta name="description" content="Turn Claude Code into a personal AI assistant with persistent memory, custom skills, and structured workflows.">
-    <meta property="og:title" content="Claude Orchestrator Starter Kit">
-    <meta property="og:description" content="Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and structured workflows.">
+    <title>Agent Orchestrator Starter</title>
+    <meta name="description" content="Persistent memory, project states and a knowledge vault for your AI agent, as plain files. For Claude Code, GitHub Copilot, Codex and any agent that reads AGENTS.md.">
+    <meta property="og:title" content="Agent Orchestrator Starter">
+    <meta property="og:description" content="Persistent memory, project states and a knowledge vault for your AI agent, as plain files. For Claude Code, GitHub Copilot, Codex and any agent that reads AGENTS.md.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://janrummel.github.io/claude-orchestrator-starter/og-image.png">
     <meta property="og:url" content="https://janrummel.github.io/claude-orchestrator-starter/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Claude Orchestrator Starter Kit">
-    <meta name="twitter:description" content="Turn Claude Code into a personal AI assistant — with persistent memory, custom skills, and structured workflows.">
+    <meta name="twitter:title" content="Agent Orchestrator Starter">
+    <meta name="twitter:description" content="Persistent memory, project states and a knowledge vault for your AI agent, as plain files. For Claude Code, GitHub Copilot, Codex and any agent that reads AGENTS.md.">
     <meta name="twitter:image" content="https://janrummel.github.io/claude-orchestrator-starter/og-image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -820,6 +820,8 @@
         }
 
         /* ── Quickstart ───────────────────────────── */
+        .chaining-grid > * { min-width: 0; }
+
         .quickstart-block {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -990,14 +992,17 @@
 
         <div class="badge-row">
             <span class="badge badge--mit">MIT License</span>
-            <span class="badge badge--claude">Claude Code</span>
+            <span class="badge badge--claude">Claude Code · Codex · Copilot</span>
             <span class="badge badge--md">Just Markdown</span>
             <span class="badge badge--obsidian">Obsidian</span>
             <span class="badge badge--md">Built from Daily Use</span>
         </div>
-        <h1>Claude Orchestrator<br>Starter Kit</h1>
+        <h1>Agent Orchestrator<br>Starter</h1>
         <p class="subtitle">
-            Turn Claude Code into a personal AI assistant — with persistent memory, seamless session chaining, and structured workflows.
+            Your agent setup should outlive your choice of vendor. Memory, project states and a knowledge vault as plain files, for Claude Code, Codex, GitHub Copilot (adapter still a draft) and any agent that reads <code>AGENTS.md</code>.
+        </p>
+        <p class="subtitle" style="font-size:0.95rem;opacity:0.8">
+            Formerly Claude Orchestrator Starter Kit. The Claude Code part has been in daily use since March 2026; the vendor-neutral core is new (November 2026) and has run in 3 real-work sessions outside Claude Code, all on Codex; the Copilot adapter is untested.
         </p>
         <div class="cta-row">
             <a href="https://github.com/janrummel/claude-orchestrator-starter" class="btn btn--primary">
@@ -1024,10 +1029,10 @@
                         Without Orchestrator
                     </h3>
                     <ul>
-                        <li>10 minutes re-explaining your project every morning</li>
-                        <li>Context fills up — open a new terminal, start over</li>
-                        <li>You build the same workflow for the third time</li>
-                        <li>Quality varies — no feedback loop, just single-pass and hope</li>
+                        <li>Re-explain project context each session</li>
+                        <li>Decisions stay buried in chat history</li>
+                        <li>Rebuild workflows when changing tools</li>
+                        <li>Rules may be requested without being enforced</li>
                         <li>Knowledge scattered across tabs, notes, and memory</li>
                     </ul>
                 </div>
@@ -1037,12 +1042,12 @@
                         With Orchestrator
                     </h3>
                     <ul>
-                        <li>Sessions pick up where you left off</li>
-                        <li>Three-layer memory persists context</li>
-                        <li>Seamless session chaining when context fills up</li>
-                        <li>Skills automate common workflows</li>
-                        <li>Keyword routing invokes the right skill</li>
-                        <li>Structured, consistent, quality-checked output</li>
+                        <li>Read STATE.md to resume work</li>
+                        <li>Keep decisions and project state in portable markdown</li>
+                        <li>Session chaining depends on your adapter</li>
+                        <li>Skills describe reusable workflows</li>
+                        <li>Automatic routing depends on your harness</li>
+                        <li>Enforcement depends on your harness and adapter</li>
                     </ul>
                 </div>
             </div>
@@ -1055,7 +1060,7 @@
             <div class="section-header">
                 <div class="section-label">The Core Insight</div>
                 <h2 class="section-title">Not More Intelligence — Better Infrastructure</h2>
-                <p class="section-subtitle">Claude is already smart. What it lacks is structure, memory, and habits.</p>
+                <p class="section-subtitle">Your agent needs persistent memory, project state and reusable workflows that survive a change of tool.</p>
             </div>
             <div class="why-grid">
                 <div class="why-card why-card--memory animate-in">
@@ -1093,7 +1098,7 @@
                         </svg>
                     </div>
                     <h4>Quality Loops</h4>
-                    <p>The Evaluator-Optimizer pattern catches issues that single-pass generation misses.</p>
+                    <p>The Evaluator-Optimizer pattern adds a second pass that can catch what a single pass misses.</p>
                 </div>
             </div>
         </div>
@@ -1103,10 +1108,10 @@
     <section class="feature-highlight">
         <div class="container">
             <div class="section-header">
-                <span class="badge-new">New</span>
+                
                 <div class="section-label" style="color: var(--blue);">CLI Continuity</div>
                 <h2 class="section-title">Session Chaining</h2>
-                <p class="section-subtitle">Claude's context window is finite. Session Chaining makes it infinite — your state is saved automatically and the next session picks up where you left off.</p>
+                <p class="section-subtitle">Claude Code adapter: register the hooks and put claude-loop on your PATH. Context monitoring prompts state saving; press Y to start a fresh session from saved state. Context windows remain finite.</p>
             </div>
             <div class="chaining-grid">
                 <div class="chaining-visual animate-in">
@@ -1116,7 +1121,7 @@
                         </div>
                         <div class="chain-node-text">
                             <strong>Context Monitor</strong>
-                            <span>Statusbar tracks usage in real-time</span>
+                            <span>Registered hooks monitor context usage</span>
                         </div>
                     </div>
                     <div class="chain-connector"></div>
@@ -1125,8 +1130,8 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="#D97757" stroke-width="1.5"/><path d="M17 21v-8H7v8" stroke="#D97757" stroke-width="1.5"/><path d="M7 3v5h8" stroke="#D97757" stroke-width="1.5" opacity="0.6"/></svg>
                         </div>
                         <div class="chain-node-text">
-                            <strong>Auto-Handoff</strong>
-                            <span>Saves task, decisions &amp; next steps</span>
+                            <strong>Save State</strong>
+                            <span>Saves task, decisions &amp; next step</span>
                         </div>
                     </div>
                     <div class="chain-connector"></div>
@@ -1135,21 +1140,21 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M23 4v6h-6" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </div>
                         <div class="chain-node-text">
-                            <strong>Smart Restart</strong>
-                            <span>New session loads saved state automatically</span>
+                            <strong>Confirmed Restart</strong>
+                            <span>Press Y to restart from saved state</span>
                         </div>
                     </div>
                 </div>
                 <div class="chaining-content animate-in">
-                    <h3>Work without context limits</h3>
-                    <p>Use <code>claude-loop</code> as a drop-in replacement for <code>claude</code>. When context gets critical, your work is preserved and the next session continues seamlessly.</p>
-                    <pre class="chaining-code"><span class="comment"># Just use claude-loop instead of claude</span>
+                    <h3>Resume from saved state</h3>
+                    <p>After hook registration, use <code>claude-loop</code> from your PATH instead of <code>claude</code>. Save state when prompted, then confirm the fresh session with Y.</p>
+                    <pre class="chaining-code"><span class="comment"># After registering hooks and installing the wrapper on PATH</span>
 <span class="cmd">claude-loop</span>
 
 <span class="comment"># When context fills up:</span>
-<span class="comment"># → State saved automatically</span>
-<span class="comment"># → "New session with context? [Y/n]"</span>
-<span class="comment"># → Press Y — picks up where you left off</span></pre>
+<span class="comment"># → Context monitoring prompts state saving</span>
+<span class="comment"># → "Start new session with context? [Y/n]"</span>
+<span class="comment"># → Press Y to resume from saved state</span></pre>
                 </div>
             </div>
         </div>
@@ -1161,7 +1166,7 @@
             <div class="section-header">
                 <div class="section-label">Architecture</div>
                 <h2 class="section-title">How It Works</h2>
-                <p class="section-subtitle">Your message flows through four stages — from intent to structured output.</p>
+                <p class="section-subtitle">Your harness reads AGENTS.md for workflow and rules, memory files for reusable facts, and each project's STATE.md for its next action. Optional Obsidian connects via MCP; hooks and automatic skill routing belong to adapters.</p>
             </div>
             <div class="arch-svg-container animate-in">
                 <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg" fill="none">
@@ -1214,8 +1219,8 @@
                         <circle cx="12" cy="10" r="2.5" fill="#5B9BD5" opacity="0.6"/>
                         <path d="M6 20 C6 17 9 15 12 15 C15 15 18 17 18 20" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
-                    <text x="190" y="136" font-size="14" font-weight="600" fill="#EDE5D8">CLAUDE.md — The Brain</text>
-                    <text x="190" y="152" font-size="11" fill="#9C8E7C">Routes keywords → skills, loads context</text>
+                    <text x="190" y="136" font-size="14" font-weight="600" fill="#EDE5D8">AGENTS.md: Workflow &amp; Rules</text>
+                    <text x="190" y="152" font-size="11" fill="#9C8E7C">Read rules; routing depends on adapter</text>
 
                     <!-- Node 3: Skill Execution -->
                     <rect x="120" y="210" width="360" height="60" rx="12" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1.5"/>
@@ -1224,7 +1229,7 @@
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#7BAF7E" stroke-width="1.5" stroke-linejoin="round" fill="rgba(16,185,129,0.2)"/>
                     </svg>
                     <text x="190" y="236" font-size="14" font-weight="600" fill="#EDE5D8">Skill Execution</text>
-                    <text x="190" y="252" font-size="11" fill="#9C8E7C">Matched skill runs its workflow</text>
+                    <text x="190" y="252" font-size="11" fill="#9C8E7C">Read a chosen markdown procedure</text>
 
                     <!-- Node 4: Memory -->
                     <rect x="120" y="310" width="360" height="60" rx="12" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1.5"/>
@@ -1235,8 +1240,8 @@
                         <line x1="4" y1="15" x2="20" y2="15" stroke="#8B7EC8" stroke-width="1" opacity="0.3"/>
                         <circle cx="12" cy="7" r="1.5" fill="#8B7EC8" opacity="0.6"/>
                     </svg>
-                    <text x="190" y="336" font-size="14" font-weight="600" fill="#EDE5D8">Three-Layer Memory</text>
-                    <text x="190" y="352" font-size="11" fill="#9C8E7C">Short · Mid · Long-term persistence</text>
+                    <text x="190" y="336" font-size="14" font-weight="600" fill="#EDE5D8">Portable Memory &amp; Project State</text>
+                    <text x="190" y="352" font-size="11" fill="#9C8E7C">Fact files + project-local STATE.md</text>
 
                     <!-- Node 5: Output -->
                     <rect x="120" y="410" width="360" height="60" rx="12" fill="#1E1B18" stroke="#E0944D" stroke-width="1.5"/>
@@ -1263,28 +1268,28 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Memory</div>
-                <h2 class="section-title">Three-Layer Memory</h2>
-                <p class="section-subtitle">Context that persists — from one conversation to months of knowledge.</p>
+                <h2 class="section-title">Portable Memory &amp; Project State</h2>
+                <p class="section-subtitle">Portable memory holds one fact per file with a pointer-only MEMORY.md index. Each project keeps STATE.md; an optional Obsidian vault holds human-curated knowledge. Context windows, routing logs and handoffs depend on your harness.</p>
             </div>
             <div class="memory-visual">
                 <div class="memory-svg animate-in">
                     <svg viewBox="0 0 240 280" xmlns="http://www.w3.org/2000/svg" fill="none">
                         <!-- Layer 3 (bottom) - Long-term -->
                         <rect x="10" y="180" width="220" height="80" rx="12" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1.5"/>
-                        <text x="120" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="#8B7EC8">LONG-TERM</text>
-                        <text x="120" y="232" text-anchor="middle" font-size="9" fill="#9C8E7C">CLAUDE.md · memory/ · optional DB</text>
-                        <text x="120" y="248" text-anchor="middle" font-size="9" fill="#6B5F50">permanent</text>
+                        <text x="120" y="215" text-anchor="middle" font-size="11" font-weight="600" fill="#8B7EC8">OPTIONAL KNOWLEDGE</text>
+                        <text x="120" y="232" text-anchor="middle" font-size="9" fill="#9C8E7C">Obsidian vault</text>
+                        <text x="120" y="248" text-anchor="middle" font-size="9" fill="#6B5F50">Human-curated</text>
 
                         <!-- Layer 2 (middle) - Mid-term -->
                         <rect x="30" y="100" width="180" height="70" rx="12" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1.5"/>
-                        <text x="120" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#5B9BD5">MID-TERM</text>
-                        <text x="120" y="147" text-anchor="middle" font-size="9" fill="#9C8E7C">Handoffs · Routing Log</text>
-                        <text x="120" y="160" text-anchor="middle" font-size="9" fill="#6B5F50">weeks – months</text>
+                        <text x="120" y="130" text-anchor="middle" font-size="11" font-weight="600" fill="#5B9BD5">PROJECT STATE</text>
+                        <text x="120" y="147" text-anchor="middle" font-size="9" fill="#9C8E7C">STATE.md in each project</text>
+                        <text x="120" y="160" text-anchor="middle" font-size="9" fill="#6B5F50">Next action + decisions</text>
 
                         <!-- Layer 1 (top) - Short-term -->
                         <rect x="50" y="30" width="140" height="60" rx="12" fill="#1E1B18" stroke="#D97757" stroke-width="1.5"/>
-                        <text x="120" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#D97757">SHORT-TERM</text>
-                        <text x="120" y="73" text-anchor="middle" font-size="9" fill="#9C8E7C">Context Window</text>
+                        <text x="120" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#D97757">PORTABLE MEMORY</text>
+                        <text x="120" y="73" text-anchor="middle" font-size="9" fill="#9C8E7C">One fact per file</text>
 
                         <!-- Connection dots -->
                         <circle cx="120" cy="92" r="2" fill="#3A3430"/>
@@ -1298,19 +1303,19 @@
                 </div>
                 <div class="memory-stack animate-in">
                     <div class="memory-layer memory-layer--short">
-                        <span class="tag">Short-term</span>
-                        <h4>Context Window</h4>
-                        <p>Current conversation and temporary results. Lifetime: 1 session.</p>
+                        <span class="tag">Portable memory</span>
+                        <h4>One fact per file</h4>
+                        <p>One fact per file, indexed by pointers in MEMORY.md.</p>
                     </div>
                     <div class="memory-layer memory-layer--mid">
-                        <span class="tag">Mid-term</span>
-                        <h4>State Files + Routing Log</h4>
-                        <p>Past session handoffs, routing decisions, and project states. Lifetime: weeks to months.</p>
+                        <span class="tag">Project state</span>
+                        <h4>Project-local STATE.md</h4>
+                        <p>Keep one next action, status and decisions with their reasons in each project.</p>
                     </div>
                     <div class="memory-layer memory-layer--long">
-                        <span class="tag">Long-term</span>
-                        <h4>CLAUDE.md + Memory Files + Knowledge Base</h4>
-                        <p>Routing rules, preferences, glossary, contacts, and domain knowledge. Lifetime: permanent.</p>
+                        <span class="tag">Optional knowledge</span>
+                        <h4>Human-curated Obsidian Vault</h4>
+                        <p>Keep knowledge you curate in an optional vault connected via MCP.</p>
                     </div>
                 </div>
             </div>
@@ -1323,7 +1328,7 @@
             <div class="section-header">
                 <div class="section-label">Skills</div>
                 <h2 class="section-title">Eight Core Skills</h2>
-                <p class="section-subtitle">Reusable workflows defined as markdown files — instructions, not code.</p>
+                <p class="section-subtitle">Eight skills are markdown procedures. Claude Code loads them as skills; other agents read them when AGENTS.md points to them. Cross-harness skill use still needs validation.</p>
             </div>
             <div class="skills-grid">
                 <div class="skill-card animate-in">
@@ -1335,7 +1340,7 @@
                     </div>
                     <div class="skill-name">capture</div>
                     <h4>Quick Capture</h4>
-                    <p>Save notes and ideas quickly. Works with Obsidian, local files, or inline.</p>
+                    <p>Capture ideas into the connected vault's Inbox/ or, without a vault, inbox.md next to MEMORY.md for later human review.</p>
                 </div>
                 <div class="skill-card animate-in">
                     <div class="skill-icon skill-icon--distill">
@@ -1424,7 +1429,7 @@
                     </div>
                     <div class="skill-name">handoff</div>
                     <h4>Session Handoff</h4>
-                    <p>Save decisions, context, and next steps. Next session picks up seamlessly.</p>
+                    <p>Save decisions, context and the next action so a later session can resume by reading the saved state.</p>
                 </div>
             </div>
         </div>
@@ -1436,7 +1441,7 @@
             <div class="section-header">
                 <div class="section-label">Patterns</div>
                 <h2 class="section-title">Four Key Feedback Loops</h2>
-                <p class="section-subtitle">Skills chain together into powerful workflows.</p>
+                <p class="section-subtitle">Use these feedback patterns within the clarify, build and verify phases. Each step suggests the next skill for you to choose.</p>
             </div>
             <div class="loops-grid">
                 <div class="loop-card animate-in">
@@ -1528,7 +1533,7 @@
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#7BAF7E" stroke-width="1.5" fill="none"/><path d="M10 6 L10 10 L13 13" stroke="#7BAF7E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         Knowledge Cycle
                     </h4>
-                    <p class="desc">Capture, process, output, verify — continuous learning.</p>
+                    <p class="desc">capture → distill → express → signal-check; return through analyze → handoff → capture when further work is needed.</p>
                     <div class="loop-svg">
                         <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" fill="none">
                             <rect x="0" y="20" width="60" height="40" rx="8" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1"/>
@@ -1564,7 +1569,7 @@
             <div class="section-header">
                 <div class="section-label">The Bigger Picture</div>
                 <h2 class="section-title">This Is Just the Foundation</h2>
-                <p class="section-subtitle">The starter kit gives you the building blocks. The full system goes much deeper.</p>
+                <p class="section-subtitle">This kit is a foundation. Grow it through real work, adding procedures and harness-specific enforcement only when needed. Optional Obsidian via MCP allows Inbox/ and curated Gallery/ writes; other zones are read-only by convention.</p>
             </div>
 
             <!-- Full System SVG Diagram -->
@@ -1581,11 +1586,11 @@
 
                     <!-- Brain -->
                     <rect x="100" y="70" width="500" height="80" rx="12" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1.5"/>
-                    <text x="350" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#5B9BD5">CLAUDE.md — THE ORCHESTRATOR BRAIN</text>
-                    <text x="200" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Routing Rules</text>
-                    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">User Patterns</text>
-                    <text x="500" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Workflow Chains</text>
-                    <text x="350" y="137" text-anchor="middle" font-size="9" fill="#6B5F50">matches "analyze" + "write" → chain: analyze → express</text>
+                    <text x="350" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#5B9BD5">AGENTS.md: WORKFLOW AND RULES</text>
+                    <text x="200" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Workflow</text>
+                    <text x="350" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Quality Rules</text>
+                    <text x="500" y="115" text-anchor="middle" font-size="10" fill="#9C8E7C">Adapter Hooks</text>
+                    <text x="350" y="137" text-anchor="middle" font-size="9" fill="#6B5F50">Adapter hooks: harness-specific enforcement</text>
 
                     <line x1="350" y1="152" x2="350" y2="178" stroke="#3A3430" stroke-width="1.5" stroke-dasharray="3,3">
                         <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite"/>
@@ -1594,7 +1599,7 @@
 
                     <!-- Skills -->
                     <rect x="100" y="180" width="500" height="75" rx="12" fill="#1E1B18" stroke="#7BAF7E" stroke-width="1.5"/>
-                    <text x="350" y="205" text-anchor="middle" font-size="13" font-weight="600" fill="#7BAF7E">SKILLS (20+ in full system, 8 in starter kit)</text>
+                    <text x="350" y="205" text-anchor="middle" font-size="13" font-weight="600" fill="#7BAF7E">SKILLS: REUSABLE MARKDOWN PROCEDURES</text>
 
                     <!-- Skill pills -->
                     <rect x="108" y="213" width="52" height="22" rx="6" fill="rgba(217,119,87,0.12)" stroke="#D97757" stroke-width="0.5"/>
@@ -1630,19 +1635,19 @@
 
                     <!-- Memory boxes -->
                     <rect x="100" y="300" width="130" height="60" rx="10" fill="#1E1B18" stroke="#D97757" stroke-width="1"/>
-                    <text x="165" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#D97757">SHORT-TERM</text>
-                    <text x="165" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Context window</text>
-                    <text x="165" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">1 session</text>
+                    <text x="165" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#D97757">MEMORY.md</text>
+                    <text x="165" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Pointers to fact files</text>
+                    <text x="165" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">One fact per file</text>
 
                     <rect x="250" y="300" width="130" height="60" rx="10" fill="#1E1B18" stroke="#5B9BD5" stroke-width="1"/>
-                    <text x="315" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#5B9BD5">MID-TERM</text>
-                    <text x="315" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Routing log · Handoffs</text>
-                    <text x="315" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">weeks – months</text>
+                    <text x="315" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#5B9BD5">STATE.md</text>
+                    <text x="315" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Project state</text>
+                    <text x="315" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">One next action</text>
 
                     <rect x="400" y="300" width="200" height="60" rx="10" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1"/>
-                    <text x="500" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#8B7EC8">LONG-TERM</text>
-                    <text x="500" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">CLAUDE.md · memory/ · Knowledge</text>
-                    <text x="500" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">permanent</text>
+                    <text x="500" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#8B7EC8">OPTIONAL KNOWLEDGE</text>
+                    <text x="500" y="340" text-anchor="middle" font-size="9" fill="#9C8E7C">Obsidian via MCP · SQLite</text>
+                    <text x="500" y="352" text-anchor="middle" font-size="8" fill="#6B5F50">Human-curated vault · structured storage</text>
 
                     <!-- Lines down from long-term -->
                     <line x1="450" y1="362" x2="450" y2="398" stroke="#3A3430" stroke-width="1" stroke-dasharray="3,3"/>
@@ -1652,14 +1657,14 @@
                     <rect x="370" y="400" width="160" height="55" rx="10" fill="#1E1B18" stroke="#8B7EC8" stroke-width="1"/>
                     <circle cx="400" y="427" r="10" fill="rgba(124,58,237,0.15)"/>
                     <text x="398" y="431" text-anchor="middle" font-size="12" fill="#8B7EC8">⬢</text>
-                    <text x="470" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">Obsidian</text>
-                    <text x="470" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Your notes = Claude's KB</text>
+                    <text x="470" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">Optional Obsidian</text>
+                    <text x="470" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Via MCP</text>
 
                     <rect x="540" y="400" width="160" height="55" rx="10" fill="#1E1B18" stroke="#E0944D" stroke-width="1"/>
                     <circle cx="570" y="427" r="10" fill="rgba(245,158,11,0.15)"/>
                     <text x="568" y="432" text-anchor="middle" font-size="12" fill="#E0944D">⊞</text>
-                    <text x="640" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">SQLite DB</text>
-                    <text x="640" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Research · Datasets · Stats</text>
+                    <text x="640" y="422" text-anchor="middle" font-size="11" font-weight="500" fill="#EDE5D8">Optional SQLite</text>
+                    <text x="640" y="438" text-anchor="middle" font-size="9" fill="#9C8E7C">Structured storage</text>
                 </svg>
             </div>
 
@@ -1669,44 +1674,34 @@
                         <tr>
                             <th>Dimension</th>
                             <th>Starter Kit</th>
-                            <th>Full System</th>
+                            <th>Grown System</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>Instructions</td>
+                            <td>One AGENTS.md</td>
+                            <td>Layered context</td>
+                        </tr>
+                        <tr>
                             <td>Skills</td>
-                            <td>7 core skills</td>
-                            <td>20+ domain-specific skills</td>
+                            <td>Eight markdown procedures</td>
+                            <td>Reusable library</td>
                         </tr>
                         <tr>
-                            <td>Routing</td>
-                            <td>7 keyword mappings + mode detection</td>
-                            <td>100+ mappings with disambiguation</td>
+                            <td>Enforcement</td>
+                            <td>Requested rules; some Claude Code hooks</td>
+                            <td>Hooks and gates</td>
                         </tr>
                         <tr>
-                            <td>Memory</td>
-                            <td>Template files</td>
-                            <td>Months of accumulated context</td>
+                            <td>Validation</td>
+                            <td>Manual</td>
+                            <td>Evaluator and critic subagents</td>
                         </tr>
                         <tr>
-                            <td>Obsidian</td>
-                            <td>1 vault (optional)</td>
-                            <td>6 connected vaults, 930+ notes</td>
-                        </tr>
-                        <tr>
-                            <td>Database</td>
-                            <td>Empty schema</td>
-                            <td>Research items, datasets, usage stats</td>
-                        </tr>
-                        <tr>
-                            <td>Workflow Chains</td>
-                            <td>3 feedback loops</td>
-                            <td>15+ multi-step chains</td>
-                        </tr>
-                        <tr>
-                            <td>Self-Improvement</td>
-                            <td>Manual updates</td>
-                            <td>Automated routing analysis</td>
+                            <td>Audit</td>
+                            <td>Repository self-check scripts</td>
+                            <td>Tracked rubric</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1719,44 +1714,47 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-label">Get Started</div>
-                <h2 class="section-title">Up and Running in 5 Minutes</h2>
+                <h2 class="section-title">Get Started with Your Harness</h2>
             </div>
             <div class="quickstart-block animate-in">
                 <pre><span class="comment"># Clone the repo</span>
 <span class="cmd">git clone https://github.com/janrummel/claude-orchestrator-starter.git</span>
 <span class="cmd">cd claude-orchestrator-starter</span>
 
-<span class="comment"># Copy to your Claude config</span>
+<span class="comment"># Any agent: copy these templates into your project:
+# AGENTS.md.example → AGENTS.md
+# core/memory/MEMORY.md.example → memory/MEMORY.md
+# core/projects/STATE.md.template → STATE.md
+# Ask the agent to read all three and continue.</span>
+<span class="comment"># Claude Code (a clean-machine install from these steps is not yet verified)</span>
+<span class="comment"># Back up existing configuration before copying; register hooks using the setup guide.</span>
 <span class="cmd">cp CLAUDE.md.example ~/.claude/CLAUDE.md</span>
+<span class="cmd">cp AGENTS.md.example ~/.claude/AGENTS.md</span>
 <span class="cmd">cp -r orchestrator/ ~/.claude/orchestrator/</span>
-<span class="cmd">cp -r memory/ ~/.claude/memory/</span>
-<span class="cmd">mkdir -p ~/.claude/orchestrator/projects</span>
+<span class="cmd">mkdir -p ~/.claude/skills && for d in ~/.claude/orchestrator/skills/*/; do ln -sfn &quot;$d&quot; ~/.claude/skills/&quot;$(basename &quot;$d&quot;)&quot;; done</span>
+<span class="cmd">mkdir -p ~/.claude/memory ~/.claude/orchestrator/projects</span>
+<span class="cmd">cp core/memory/MEMORY.md.example ~/.claude/memory/MEMORY.md</span>
 
-<span class="comment"># Set up hooks (statusbar, context monitor, session start)</span>
-<span class="cmd">cp hooks/session-start.sh.example ~/.claude/hooks/session-start.sh</span>
-<span class="cmd">cp hooks/context-monitor.js ~/.claude/hooks/context-monitor.js</span>
-<span class="cmd">cp hooks/context-statusline.js ~/.claude/hooks/context-statusline.js</span>
-<span class="cmd">cp hooks/settings.json.example ~/.claude/settings.json</span>
-<span class="cmd">chmod +x ~/.claude/hooks/session-start.sh</span>
+<span class="comment"># Register hooks: step 3 of docs/getting-started.md; claude-loop: hooks/README.md</span>
 
-<span class="comment"># Optional: install session chaining wrapper</span>
-<span class="cmd">cp hooks/claude-loop.sh ~/.local/bin/claude-loop</span>
-<span class="cmd">chmod +x ~/.local/bin/claude-loop</span>
+<span class="comment"># Optional wrapper: install only if you want session chaining</span>
+<span class="cmd"># Install claude-loop on your PATH using hooks/README.md.</span>
+<span class="cmd"># Use claude-loop only after that optional setup; restart with Y.</span>
 
 <span class="comment"># Start Claude Code</span>
-<span class="cmd">claude-loop</span></pre>
+<span class="cmd">claude</span></pre>
                 <div class="quickstart-steps">
                     <div class="quickstart-step">
                         <span class="step-num">1</span>
-                        <span class="step-text"><strong>CLAUDE.md</strong> is read at startup — Claude understands its role</span>
+                        <span class="step-text"><strong>All harnesses:</strong> read AGENTS.md, memory/MEMORY.md and STATE.md.</span>
                     </div>
                     <div class="quickstart-step">
                         <span class="step-num">2</span>
-                        <span class="step-text"><strong>Hooks</strong> monitor context, auto-save state, and inject context at startup</span>
+                        <span class="step-text"><strong>Claude Code adapter:</strong> CLAUDE.md supplies routing; registered hooks monitor context and request state saving.</span>
                     </div>
                     <div class="quickstart-step">
                         <span class="step-num">3</span>
-                        <span class="step-text"><strong>Session chaining</strong> keeps you in the same terminal when context fills up</span>
+                        <span class="step-text"><strong>Optional Claude Code wrapper:</strong> restart from saved state after confirmation.</span>
                     </div>
                 </div>
             </div>
@@ -1768,20 +1766,20 @@
         <div class="container">
             <div class="section-header" style="margin-bottom: 32px;">
                 <div class="section-label" style="color: var(--green);">Privacy & Data</div>
-                <h2 class="section-title">100% Local. Zero Telemetry.</h2>
+                <h2 class="section-title">Local Files. No Kit Telemetry.</h2>
             </div>
             <div class="why-grid" style="max-width: 800px; margin: 0 auto;">
                 <div class="why-card why-card--memory animate-in" style="text-align: center;">
-                    <h4 style="color: var(--green); margin-bottom: 8px;">Your Machine Only</h4>
-                    <p>All memory files, routing logs, and project states live in <code>~/.claude/</code>. No server, no cloud upload, no analytics.</p>
+                    <h4 style="color: var(--green); margin-bottom: 8px;">Local Files, Vendor Processing</h4>
+                    <p>The kit stores files locally and collects no telemetry. Keep project state in each project's <code>STATE.md</code>. Claude Code, Copilot and Codex send agent-read content to their vendors under their terms. Keep sensitive content outside agent-readable files and vault zones.</p>
                 </div>
                 <div class="why-card why-card--habits animate-in" style="text-align: center;">
                     <h4 style="color: var(--green); margin-bottom: 8px;">Plain Text, Full Control</h4>
-                    <p>Everything is markdown. Export, backup, version-control, or delete anytime. You own your data.</p>
+                    <p>The portable core is plain markdown you can copy, back up and version-control. Optional hooks, MCP integration and SQLite use additional code, configuration or storage.</p>
                 </div>
                 <div class="why-card why-card--loops animate-in" style="text-align: center;">
                     <h4 style="color: var(--green); margin-bottom: 8px;">No Extra API Keys</h4>
-                    <p>The core kit needs zero API keys. Only Claude Code itself requires an Anthropic account.</p>
+                    <p>The kit itself needs no API keys; your chosen agent tool needs its own account. Optional Obsidian and SQLite add-ons run locally, but agent-read content goes to the vendor. Pin reviewed MCP package versions. This website loads fonts from Google Fonts.</p>
                 </div>
             </div>
         </div>
@@ -1791,12 +1789,12 @@
     <footer class="footer">
         <div class="footer-links">
             <a href="https://github.com/janrummel/claude-orchestrator-starter">GitHub</a>
-            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/architecture.md">Architecture</a>
+            <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/architecture.md">Claude Code architecture</a>
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/skill-development.md">Build Skills</a>
             <a href="https://github.com/janrummel/claude-orchestrator-starter/blob/main/docs/faq.md">FAQ</a>
         </div>
         <p style="font-size: 13px; color: #6B5F50;">
-            MIT License · Built with Claude Code by <a href="https://github.com/janrummel" style="color: #9C8E7C;">Jan Rummel</a> · No dependencies, just markdown.
+            MIT License · Built with Claude Code by <a href="https://github.com/janrummel" style="color: #9C8E7C;">Jan Rummel</a> · The core is markdown only; Claude Code hooks need Node.js, and vault integration needs an MCP server. Portable architecture: README; harness adapters: adapters/; portability limits: docs/portability.md.
         </p>
     </footer>
 
@@ -1824,11 +1822,11 @@
                 '"Summarize this article" → distill → structured summary',
                 '"What could go wrong?" → challenge → stress-test from 3 angles',
                 '"Is this analysis solid?" → signal-check → 4-axis evaluation',
-                '"Save state for next time" → handoff → picks up tomorrow',
+                '"Save state for next time" → handoff → next session reads the saved state',
                 '"Analyze the DOE dataset" → analyze → ReAct cycle with sources',
                 '"Write a post about this" → express → polished draft + next step',
                 '"Check the numbers" → quality-gate → triage + verification',
-                '"Note this idea" → capture → saved to inbox in 2 seconds',
+                '"Note this idea" → capture → saved to the vault Inbox/ or inbox.md',
             ];
             const el = document.getElementById('typewriter');
             if (!el) return;

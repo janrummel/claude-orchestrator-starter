@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "vault": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/absolute/path/to/your/vault/Inbox",
+        "/absolute/path/to/your/vault/Gallery"
+      ]
+    }
+  }
+}

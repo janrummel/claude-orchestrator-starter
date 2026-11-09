@@ -5,6 +5,24 @@
 # Options: "English" | "Deutsch" | or any language you prefer
 LANGUAGE: English
 
+## Vendor-neutral core
+
+@AGENTS.md
+
+`AGENTS.md` (from `AGENTS.md.example`) holds the workflow, memory and project-state rules
+that work with any agent. This file adds what only Claude Code can do: skill routing,
+hooks and session chaining. Where the two overlap:
+
+- **Project state:** the `STATE.md` inside the project wins. `~/.claude/orchestrator/projects/`
+  holds one pointer file per project, never a copy of its status.
+- **Memory:** one fact per file with the `memory/MEMORY.md` index, as in `AGENTS.md`. The
+  folder routing further down (glossary, people, context) is the older layout; keep it
+  only if you already use it.
+- **Everything else:** the stricter rule wins.
+
+Note: a global `~/.claude/AGENTS.md` applies to every project. If you also use Codex,
+see `adapters/codex/README.md` for why it prefers a per-project `AGENTS.md`.
+
 ## Session Start Protocol
 
 At the beginning of every new session:
@@ -30,7 +48,7 @@ New ideas during work → capture to inbox, do NOT pursue. Stay on the current t
 
 ## Core Principle
 
-Not every message needs a skill. Skills are for **structured work** — analysis, writing, evaluation, capture. For simple questions, conversations, or quick answers: respond directly.
+Not every message needs a skill. Skills are for **structured work**, analysis, writing, evaluation, capture. For simple questions, conversations, or quick answers: respond directly.
 
 When a task matches a skill, check the routing table and invoke it.
 
@@ -40,10 +58,10 @@ Before matching keywords, recognize the user's cognitive state. This helps with 
 
 | Mode | Signals | User State | Preferred Skills |
 |------|---------|-----------|-----------------|
-| **Compression** | "too much", "overview", "summarize", "key points" | Overwhelmed — needs reduction | `distill`, `signal-check` |
-| **Expansion** | "ideas", "alternatives", "what else", "stuck" | Stuck — needs new directions | `analyze`, `express` |
-| **Reflection** | "does this hold up", "objections", "blind spots" | Has a draft — needs validation | `challenge`, `signal-check` |
-| **Execution** | "write", "create", "draft", "finalize" | Knows what — needs production | `express`, `capture` |
+| **Compression** | "too much", "overview", "summarize", "key points" | Overwhelmed, needs reduction | `distill`, `signal-check` |
+| **Expansion** | "ideas", "alternatives", "what else", "stuck" | Stuck, needs new directions | `analyze`, `express` |
+| **Reflection** | "does this hold up", "objections", "blind spots" | Has a draft, needs validation | `challenge`, `signal-check` |
+| **Execution** | "write", "create", "draft", "finalize" | Knows what, needs production | `express`, `capture` |
 
 Mode Detection supplements keyword routing. For explicit keywords (e.g., "write a blog post"), route directly.
 
@@ -58,7 +76,7 @@ Mode Detection supplements keyword routing. For explicit keywords (e.g., "write 
 | quality check, fact check, is this solid, substance | `signal-check` | Verify | 4-axis substance check |
 | quality gate, qg, verify output, is this accurate, check quality | `quality-gate` | Verify | Output quality orchestration |
 | challenge, stress-test, red team, objections, what could go wrong, devil's advocate | `challenge` | Verify | Adversarial stress-testing |
-| handoff, save state, end session, for next time | `handoff` | — | Session state persistence |
+| handoff, save state, end session, for next time | `handoff` | none | Session state persistence |
 
 ### Disambiguation
 
@@ -86,7 +104,7 @@ Mode Detection supplements keyword routing. For explicit keywords (e.g., "write 
 
 ## After Each Skill Output
 
-Suggest **one** logical next step — not a menu of options.
+Suggest **one** logical next step, not a menu of options.
 
 | Just executed | Suggest |
 |--------------|---------|
@@ -104,13 +122,13 @@ Suggest **one** logical next step — not a menu of options.
 1. **Traceability:** Every step should be explainable. Mark assumptions as assumptions.
 2. **Source criticism:** Always cite and assess sources (peer-reviewed > preprint > blog > claim).
 3. **Less + high-quality > more + low-quality:** One finished result beats five started ones.
-4. **Honesty:** When something is unclear, say so — don't guess.
+4. **Honesty:** When something is unclear, say so, don't guess.
 
 ## Context Management
 
 ### Proactive State Saves
 
-Update the active project file (`~/.claude/orchestrator/projects/<name>.md`) after:
+Update the project's `STATE.md` (the pointer in `~/.claude/orchestrator/projects/` only says where it is) after:
 - Important decisions (with reasoning)
 - Completing a task or milestone
 - Discovering key information
@@ -142,12 +160,12 @@ Also update the active project file if one exists. Then inform the user that sta
 1. No system scoring or dashboard optimization
 2. No new skills without proven need
 3. No skill chains longer than 4 steps
-4. Don't auto-execute skills — always suggest, let the user decide
+4. Don't auto-execute skills, always suggest, let the user decide
 
 ## Output Standards
 
 - **Language:** As configured above
-- **Structure:** Headings, lists, tables where useful — no walls of text
+- **Structure:** Headings, lists, tables where useful, no walls of text
 - **Length:** As short as possible, as long as necessary
 
 ## Memory Architecture

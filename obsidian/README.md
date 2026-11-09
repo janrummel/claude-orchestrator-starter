@@ -1,38 +1,69 @@
-# Obsidian Integration (Optional)
+# Obsidian as the knowledge layer
 
-Connect your Obsidian vault to Claude Code so it can read and write your notes.
+Obsidian is the one knowledge vault this kit recommends, and it is optional: the
+human-owned knowledge vault. The agent connects to it via MCP, which every target harness speaks.
 
-## Why Obsidian?
+## Connection: filesystem MCP server
 
-Obsidian serves as Claude's **long-term memory** — a searchable, linkable knowledge base that persists forever. Claude can:
+The simplest robust option needs no Obsidian plugin: a filesystem MCP server
+scoped to the vault path. The agent sees the vault as files; Obsidian sees
+the same files and renders them. See `mcp-config.json.example` and your
+harness adapter for where the config goes.
 
-- **Read** your notes for context before answering
-- **Write** new notes (captures, summaries, drafts)
-- **Search** semantically across your vault
+If you want richer, Obsidian-aware operations (search over links, frontmatter
+queries), an Obsidian-specific MCP server can replace the filesystem server
+later; the zone rules below stay the same.
 
-## Requirements
+## Write zones (the important part)
+
+The agent is asked to write to two zones only. Only scoping the MCP server to those
+folders (see `mcp-config.json.example`) actually enforces it:
+
+| Zone       | Who writes            | Purpose                              |
+|------------|-----------------------|--------------------------------------|
+| `Inbox/`   | agent (and you)       | transient capture, triage zone       |
+| `Gallery/` | agent, curated only   | polished output examples             |
+| everything else | you (the human)  | the agent reads, never writes        |
+
+The human promotes notes out of `Inbox/` into the vault proper. This keeps
+the vault yours: the agent feeds it, you curate it.
+
+Why so strict: an agent that writes anywhere in a knowledge vault will,
+over months, quietly restructure it around its own conventions. The vault
+then belongs to the tool, not to you.
+
+## Note format
+
+Notes going to `Inbox/` carry a date-prefixed filename
+(`YYYY-MM-DD-<topic>.md`) and a one-line source note at the top (who wrote
+it, from which session or task).
+
+## Alternative: Obsidian plugins
+
+If you want the agent to search through Obsidian itself (links, frontmatter), use the two community plugins instead of the filesystem server. The write zones above stay the same.
+
+### Requirements
 
 1. [Obsidian](https://obsidian.md) installed
 2. [Local REST API](https://github.com/coddingtonbear/obsidian-local-rest-api) plugin (v3.4+)
 3. [MCP Tools](https://github.com/jacksteamdev/obsidian-mcp-tools) plugin (v0.2+)
 
-## Setup
 
-### 1. Install Obsidian Plugins
+#### 1. Install Obsidian Plugins
 
 In Obsidian → Settings → Community Plugins:
 - Install "Local REST API"
 - Install "MCP Tools"
 - Enable both
 
-### 2. Configure Local REST API
+#### 2. Configure Local REST API
 
 - Settings → Local REST API
 - Note the **port** (default: 27124) and **API key**
 
-### 3. Connect to Claude Code
+#### 3. Connect your harness
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Add the server to your harness MCP config (for Claude Code: `claude mcp add` or `.mcp.json`; others: see your adapter):
 
 ```json
 {
@@ -47,9 +78,9 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-### 4. Test the Connection
+#### 4. Test the Connection
 
-Start Claude Code and try:
+Start your agent and try:
 ```
 Search my Obsidian vault for "test"
 ```
